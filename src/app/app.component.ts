@@ -9,7 +9,7 @@ import { WebserviceService } from './servicios/webservice.service';
 })
 export class AppComponent {
   title = 'app works!';    
-  cuenta='Pablo';
+  cuenta='pdececco';
   password='72256';
   datosTraidos;
     constructor(private WebserviceService : WebserviceService) {        
