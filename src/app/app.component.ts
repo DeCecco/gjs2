@@ -20,9 +20,13 @@ export class AppComponent {
 }
   TraerPersonas(){
     this.WebserviceService.TraerPersonas()
-      .then(data => {
-        console.info(data);
-        this.datosTraidos = data;
+      .then(data => {        
+        this.datosTraidos = data;        
+        if(this.cuenta==this.datosTraidos[0].cuenta && this.password==this.datosTraidos[0].password ){
+          console.warn('ADENTRO')
+        }else{
+          console.warn('ERROR')
+        }
       }) 
       .catch(error => {
         console.log(error);

@@ -5,7 +5,7 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class WebserviceService {
 
-  route : string = "http://localhost/index.php/";
+  route : string = "http://localhost/UTN/GJS2/API/index.php/";
   constructor(private http : Http) { }
 
   TraerPersonas(){
