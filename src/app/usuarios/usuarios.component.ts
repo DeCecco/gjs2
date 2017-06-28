@@ -10,7 +10,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 })
 export class UsuariosComponent implements OnInit {
   settings: {};
-  data: {};
+  data: any;
   constructor(private WebserviceService: WebserviceService) {
 
   }
@@ -18,12 +18,28 @@ export class UsuariosComponent implements OnInit {
   ngOnInit() {
     this.WebserviceService.TraerPersonas()
       .then(data => {
+
         this.data = data;
+
         this.settings = {
+          delete: {
+            confirmDelete: true,
+          },
+          add: {
+            confirmCreate: true,
+          },
+          edit: {
+            confirmSave: true,
+          },
+          /*actions: {
+            add: false,
+            edit: false,
+            delete:false
+          },*/
           columns: {
             idusuario: {
               title: 'ID',
-              hideSubHeader:true
+               notShownField: false,
             },
             nombre: {
               title: 'Nombre'
@@ -61,4 +77,28 @@ export class UsuariosComponent implements OnInit {
       });
   }
 
+  editar(e) {
+    console.info(e)
+  }
+  delete(e) {
+    
+    if (window.confirm('¿Esta seguro que desea eliminar?')) {
+      e.confirm.resolve();
+      var array={id:e.data.idusuario}
+      this.WebserviceService.EliminarPersona(array)
+      .then(data => {
+        console.info(data)
+      })
+      .catch(error => {
+        console.log(error);
+      });
+      
+      
+    } else {
+      e.confirm.reject();
+    }
+  }
+  crear(e) {
+    console.warn(e)
+  }
 }

@@ -11,5 +11,8 @@ export class WebserviceService {
   TraerPersonas(){
     return this.http.get(this.route + "persona/obtenerTodas").toPromise().then(data => data.json());
   }
-
+  EliminarPersona(id){
+     var data = {"id":id}
+    return this.http.post(this.route + "persona/eliminar",data).toPromise().then(data => data.json());
+  }
 }

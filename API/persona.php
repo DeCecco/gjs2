@@ -21,44 +21,18 @@ class Persona
 	}
 	//OBTENCION DE TODOS LAS PERSONAS DE LA BASE DE DATOS
 	public static function TraerTodasLasPersonas(){
-		$sql = 'SELECT u.*,r.descripcion roles FROM usuarios u
-				left join roles r ON  u.idrol=r.idrol';
+		$sql = "SELECT u.*,r.descripcion roles FROM usuarios u
+				left join roles r ON  u.idrol=r.idrol
+				WHERE u.estado=1";
         $consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
 	    $consulta->execute();			
 		return $consulta->fetchAll(PDO::FETCH_ASSOC);	
 	}
 	//ELIMINACION DE UNA PERSONA DE LA BASE DE DATOS
 	public static function BorrarPersona($id){	
-		$sql = 'DELETE FROM personas WHERE id = :id';
+		$sql = 'UPDATE usuarios set estado=0 WHERE idusuario = :id';
 		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
 		$consulta->bindValue(':id', $id);		
 		$consulta->execute();
-	}
-	//CREACION DEL PERSONA EN LA BASE DE DATOS
-	public static function InsertarPersona($persona){
-		//VERIFICACION DE EXISTENCIA DEL USUARIO
-		if (Persona::ObtenerPersona($persona) != NULL) {
-			return false;//EL USUARIO YA EXISTIA PREVIAMENTE EN LA BASE DE DATOS
-		}
-		else{
-			//CREACION DEL USUARIO EN LA BASE DE DATOS
-			$sql = 'INSERT INTO personas (nombre, apellido, dni, sexo, password) VALUES (:nombre, :apellido, :dni, :sexo, :password)';
-			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
-			$consulta->bindValue(':nombre', $persona->nombre);
-			$consulta->bindValue(':apellido', $persona->apellido);
-			$consulta->bindValue(':dni', $persona->dni);
-			$consulta->bindValue(':sexo', $persona->sexo);
-			$consulta->bindValue(':password', $persona->password);
-			$consulta->execute();
-			return true;//ALTA EXITOSA
-		}
-	}
-	//OBTENCION DE UN USUARIO
-	public static function ObtenerPersona($persona){
-		$sql = 'SELECT * FROM personas WHERE dni = :dni';
-        $consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
-		$consulta->bindParam(':dni', $persona->dni);
-	    $consulta->execute();
-	    return $consulta->fetch(PDO::FETCH_ASSOC);
-	}
+	} 
 }
