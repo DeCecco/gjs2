@@ -9,31 +9,28 @@ import { WebserviceService } from './servicios/webservice.service';
 
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { LoginComponent } from './login/login.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
 
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
-const appRoutes: Routes = [
-  /*{
-    path: 'pagina1',
-    canActivate: [VerificarJWTService],
-    component: Pagina1Component
-  },
-  { path: 'pagina2', component: Pagina2Component, canActivate: [VerificarJWTService], },
-  { path: '**', component: LoginComponent },
-  { path: '',   redirectTo: '/pagina1', pathMatch: 'full' },*/
-  { path: 'login', component: LoginComponent }
+const appRoutes: Routes = [  
+  { path: 'login', component: LoginComponent },
+  { path: 'usuarios', component: UsuariosComponent }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    UsuariosComponent
   ],
   imports: [
     BsDropdownModule.forRoot(),
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    Ng2SmartTableModule,
   ],
   providers: [WebserviceService],
   bootstrap: [AppComponent]

@@ -21,7 +21,8 @@ class Persona
 	}
 	//OBTENCION DE TODOS LAS PERSONAS DE LA BASE DE DATOS
 	public static function TraerTodasLasPersonas(){
-		$sql = 'SELECT * FROM usuarios';
+		$sql = 'SELECT u.*,r.descripcion roles FROM usuarios u
+				left join roles r ON  u.idrol=r.idrol';
         $consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
 	    $consulta->execute();			
 		return $consulta->fetchAll(PDO::FETCH_ASSOC);	
