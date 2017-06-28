@@ -31,14 +31,15 @@ export class UsuariosComponent implements OnInit {
           edit: {
             confirmSave: true,
           },
-          /*actions: {
+          actions: {/*
             add: false,
             edit: false,
-            delete:false
-          },*/
+            delete:false*/
+          },
           columns: {
             idusuario: {
               title: 'ID',
+              editable: false,
                notShownField: false,
             },
             nombre: {
@@ -85,9 +86,10 @@ export class UsuariosComponent implements OnInit {
     if (window.confirm('¿Esta seguro que desea eliminar?')) {
       e.confirm.resolve();
       var array={id:e.data.idusuario}
-      this.WebserviceService.EliminarPersona(array)
+      this.WebserviceService.Eliminar(e.data.idusuario,'/persona/eliminar')
       .then(data => {
-        console.info(data)
+        if(data)
+        console.info('borrado correctamente')
       })
       .catch(error => {
         console.log(error);
@@ -99,6 +101,10 @@ export class UsuariosComponent implements OnInit {
     }
   }
   crear(e) {
+    var array = [{
+      "nombre": e.data.nombre, "apellido": e.data.apellido, "email": e.data.email, "password": e.data.password,
+      "rol": e.data.idrol, "dni": e.data.dni, "cuenta": e.data.cuenta
+    }];
     console.warn(e)
   }
 }

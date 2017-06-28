@@ -31,8 +31,9 @@ class Persona
 	//ELIMINACION DE UNA PERSONA DE LA BASE DE DATOS
 	public static function BorrarPersona($id){	
 		$sql = 'UPDATE usuarios set estado=0 WHERE idusuario = :id';
-		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
-		$consulta->bindValue(':id', $id);		
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);		
+		$consulta->bindValue(':id', $id['id'],PDO::PARAM_STR);		
 		$consulta->execute();
+		return true;	
 	} 
 }

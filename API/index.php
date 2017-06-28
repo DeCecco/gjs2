@@ -40,11 +40,9 @@ $app->post('/persona/modificar', function (Request $request, Response $response)
 	$id = $request->getParam('id');
 	return $response->withJson(Persona::ModificarPersona($email,$password,$rol,$nombre,$apellido,$dni,$legajo,$id));     
 });	*/
-$app->post('/persona/eliminar', function (Request $request, Response $response) {	
-	Persona::BorrarPersona($request->getParam('id'));
-    return $response;
+$app->post('/persona/eliminar', function (Request $request, Response $response) {		
+	return $response->withJson(Persona::BorrarPersona($request->getParsedBody()));
 });
- 
 
 $app->run();
 
