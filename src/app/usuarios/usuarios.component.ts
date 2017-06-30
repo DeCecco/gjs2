@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { WebserviceService } from '../servicios/webservice.service';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { ButtonRenderComponent } from '../button-render.component';
+import { ImageRenderComponent } from '../image-render.component';
 
 @Component({
   selector: 'app-usuarios',
@@ -31,16 +33,28 @@ export class UsuariosComponent implements OnInit {
           edit: {
             confirmSave: true,
           },
-          actions: {/*
+          actions: {
             add: false,
             edit: false,
-            delete:false*/
+            //custom: [{ name: 'routeToAPage', title: `<img src="/icon.png">` }],
+            delete: false,
+          },
+          Acciones: //or something
+          {
+            title: 'Detail',
+            type: 'html',
+            valuePrepareFunction: (cell, row) => {
+              return `<a title="See Detail Product "href="Your api key or something/${row.Id}"> <i class="ion-edit"></i></a>`
+            },
+            filter: false
           },
           columns: {
             idusuario: {
               title: 'ID',
               editable: false,
-               notShownField: false,
+              class: 'none',
+              sortDirection: 'asc',
+              notShownField: false,
             },
             nombre: {
               title: 'Nombre'
@@ -56,7 +70,8 @@ export class UsuariosComponent implements OnInit {
             },
             cuenta: {
               title: 'Cuenta',
-              editable: false
+              editable: false,
+              link: '<a href="http://www.google.com">Google</a>'
             },
             roles: {
               title: 'Rol',
@@ -70,6 +85,23 @@ export class UsuariosComponent implements OnInit {
                 },
               },
             },
+           /* dp: {
+              title: 'Display Picture',
+              filter: false,
+              type: 'custom',
+              renderComponent: ImageRenderComponent
+              //valuePrepareFunction: (dp) => { return `<img scr="dp" />`; }
+            },*/
+            button: {
+              title: 'Button',
+              filter: false,
+              type: 'custom',
+              renderComponent: ButtonRenderComponent,
+              //valueprepareFunction: (button) => { return `<button (click)="alert(sa)">Click me</button>`; }
+            }, /*
+            colu:{
+            title: 'Region', type: 'html', filter: false, valuePrepareFunction: (col,row) => { return '<a  (click)="editando()" class="btn btn-primary btn-xs">Editar</a>'; }
+            }*/
           }
         };
       })
@@ -82,20 +114,20 @@ export class UsuariosComponent implements OnInit {
     console.info(e)
   }
   delete(e) {
-    
+
     if (window.confirm('¿Esta seguro que desea eliminar?')) {
       e.confirm.resolve();
-      var array={id:e.data.idusuario}
-      this.WebserviceService.Eliminar(e.data.idusuario,'/persona/eliminar')
-      .then(data => {
-        if(data)
-        console.info('borrado correctamente')
-      })
-      .catch(error => {
-        console.log(error);
-      });
-      
-      
+      var array = { id: e.data.idusuario }
+      this.WebserviceService.Eliminar(e.data.idusuario, '/persona/eliminar')
+        .then(data => {
+          if (data)
+            console.info('borrado correctamente')
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
+
     } else {
       e.confirm.reject();
     }
@@ -106,5 +138,8 @@ export class UsuariosComponent implements OnInit {
       "rol": e.data.idrol, "dni": e.data.dni, "cuenta": e.data.cuenta
     }];
     console.warn(e)
+  }
+  editando(){
+    console.warn('entramo');
   }
 }

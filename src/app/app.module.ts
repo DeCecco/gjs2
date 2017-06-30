@@ -10,6 +10,9 @@ import { WebserviceService } from './servicios/webservice.service';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { LoginComponent } from './login/login.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import{ButtonRenderComponent} from './button-render.component';
+import {ImageRenderComponent} from './image-render.component';
+
 
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
@@ -22,7 +25,9 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     LoginComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    ButtonRenderComponent,
+    ImageRenderComponent
   ],
   imports: [
     BsDropdownModule.forRoot(),
@@ -30,7 +35,12 @@ const appRoutes: Routes = [
     FormsModule,
     HttpModule,
     RouterModule.forRoot(appRoutes),
-    Ng2SmartTableModule,
+    Ng2SmartTableModule
+
+  ],
+  entryComponents: [
+    ButtonRenderComponent, 
+    ImageRenderComponent
   ],
   providers: [WebserviceService],
   bootstrap: [AppComponent]
