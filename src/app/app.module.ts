@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import{ButtonRenderComponent} from './button-render.component';
 import {ImageRenderComponent} from './image-render.component';
+import {ModalModule} from "ng2-modal";
 
 
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -33,6 +34,7 @@ const appRoutes: Routes = [
     BsDropdownModule.forRoot(),
     BrowserModule,
     FormsModule,
+    ModalModule,
     HttpModule,
     RouterModule.forRoot(appRoutes),
     Ng2SmartTableModule

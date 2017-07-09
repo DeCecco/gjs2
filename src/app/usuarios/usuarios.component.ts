@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 
 import { WebserviceService } from '../servicios/webservice.service';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ButtonRenderComponent } from '../button-render.component';
 import { ImageRenderComponent } from '../image-render.component';
+import {ModalModule} from "ng2-modal";
+
+
 
 @Component({
   selector: 'app-usuarios',
@@ -13,8 +16,8 @@ import { ImageRenderComponent } from '../image-render.component';
 export class UsuariosComponent implements OnInit {
   settings: {};
   data: any;
-  constructor(private WebserviceService: WebserviceService) {
-
+  constructor(private WebserviceService: WebserviceService,private ModalModule:ModalModule) {
+    
   }
 
   ngOnInit() {
@@ -85,13 +88,13 @@ export class UsuariosComponent implements OnInit {
                 },
               },
             },
-           /* dp: {
-              title: 'Display Picture',
-              filter: false,
-              type: 'custom',
-              renderComponent: ImageRenderComponent
-              //valuePrepareFunction: (dp) => { return `<img scr="dp" />`; }
-            },*/
+            /* dp: {
+               title: 'Display Picture',
+               filter: false,
+               type: 'custom',
+               renderComponent: ImageRenderComponent
+               //valuePrepareFunction: (dp) => { return `<img scr="dp" />`; }
+             },*/
             button: {
               title: 'Button',
               filter: false,
@@ -139,7 +142,11 @@ export class UsuariosComponent implements OnInit {
     }];
     console.warn(e)
   }
-  editando(){
+  editando() {
     console.warn('entramo');
   }
+  modificando() {
+    console.warn('CLICK');
+  }
+
 }
