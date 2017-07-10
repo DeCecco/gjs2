@@ -1,17 +1,49 @@
+
+<button (click)="myModal.open()" class="btn-primary">Alta</button>
 <ng2-smart-table [settings]="settings" [source]="data" (editConfirm)="editar($event)" (deleteConfirm)="delete($event)" (createConfirm)="crear($event)">
 </ng2-smart-table>
+
 <div class="row col-md-12 col-sm-8 col-xs-12">
     <div class="">
-        <button (click)="myModal.open()" class="btn-primary">Modificar</button>
-        <modal #myModal>
+        
+        <modal #myModal modalClass="modal-lg">
             <modal-header>
                 <h3>Modificando el Usuario</h3>
             </modal-header>
             <modal-content>
-                Hello Modal!
+                <form class="col-sm-5">
+                    <div class="form-group col-sm-10">
+                        <label for="nombre">Nombre</label>
+                        <input [(ngModel)]="nombre" required minlength="4" maxlength="24" name="nombre" type="text" class="form-control" id="nombre"
+                            placeholder="Nombre">
+                    
+                    
+                        <label for="apellido">Apellido</label>
+                        <input type="text" [(ngModel)]="apellido" class="form-control" id="apellido" name="apellido" placeholder="Apellido">
+                    </div>
+                    <div class="form-group col-sm-10">
+                        <label for="email">Email</label>
+                        <input type="text" [(ngModel)]="email" class="form-control" id="email" name="email" placeholder="Email">
+                    
+                    
+                        <label for="dni">DNI</label>
+                        <input type="text" [(ngModel)]="dni" class="form-control" id="dni" name="dni" placeholder="DNI">
+                    </div>
+                    <div class="form-group col-sm-10">
+                    
+                        <label for="cuenta">Cuenta</label>
+                        <input type="text" [(ngModel)]="cuenta" class="form-control" id="cuenta" name="cuenta" placeholder="Cuenta">
+                    
+                    
+                        <label for="cuenta">S</label>
+                        <ng-select [multiple]="true" [options]="myOptions" [ngModelOptions]="{standalone: true}" [(ngModel)]="mySelectValue">
+                        </ng-select>
+                    </div>
+                </form>
             </modal-content>
-            <modal-footer>
-                <button class="btn btn-primary" (click)="myModal.close()">close</button>
+            <modal-footer  class="col-sm-5">
+                <button class="btn btn-primary" (click)="crear()">Aceptar</button>
+                <button class="btn " (click)="myModal.close()">Cancelar</button>
             </modal-footer>
         </modal>
     </div>

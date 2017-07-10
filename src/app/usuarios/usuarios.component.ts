@@ -6,6 +6,7 @@ import { ButtonRenderComponent } from '../button-render.component';
 import { ImageRenderComponent } from '../image-render.component';
 import {ModalModule} from "ng2-modal";
 
+import {FormControl, FormGroup} from '@angular/forms';
 
 
 @Component({
@@ -16,11 +17,20 @@ import {ModalModule} from "ng2-modal";
 export class UsuariosComponent implements OnInit {
   settings: {};
   data: any;
+   form: FormGroup;
+    myOptions = [];
   constructor(private WebserviceService: WebserviceService,private ModalModule:ModalModule) {
     
   }
 
   ngOnInit() {
+      this.myOptions = [
+            {value: 'a', label: 'Alpha'},
+            {value: 'b', label: 'Beta'},
+            {value: 'c', label: 'Gamma'},
+        ];
+        this.form = new FormGroup({});
+        this.form.addControl('mySelect', new FormControl(['b', 'c']));
     this.WebserviceService.TraerPersonas()
       .then(data => {
 
@@ -135,12 +145,15 @@ export class UsuariosComponent implements OnInit {
       e.confirm.reject();
     }
   }
-  crear(e) {
+  crear2(e) {
     var array = [{
       "nombre": e.data.nombre, "apellido": e.data.apellido, "email": e.data.email, "password": e.data.password,
       "rol": e.data.idrol, "dni": e.data.dni, "cuenta": e.data.cuenta
     }];
     console.warn(e)
+  }
+  crear(){
+    console.info()
   }
   editando() {
     console.warn('entramo');
