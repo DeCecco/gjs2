@@ -164,7 +164,11 @@ export class UsuariosComponent implements OnInit {
       "nombre": this.nombre, "apellido": this.apellido, "email": this.email,"rol": this.rol, "dni": this.dni, "cuenta": this.cuenta,}];
       console.info(array);
       this.WebserviceService.AgregarPersona(array).then(data=>{
-        console.log(data)
+        if(data.ok){
+          alert('ok')
+        }else{
+          alert('error')
+        }
       }).catch(error=>{
         console.warn(error)
       })
