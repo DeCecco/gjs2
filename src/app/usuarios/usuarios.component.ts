@@ -8,12 +8,21 @@ import { ModalModule } from "ng2-modal";
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+export interface login {
+  nombre:string;
+  apellido:string;
+  email:string;
+  dni:number;
+  cuenta:string;
+  rol:string;
+}
 
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
   styleUrls: ['./usuarios.component.css']
 })
+
 export class UsuariosComponent implements OnInit {
   settings: {};
   data: any;
@@ -25,8 +34,9 @@ export class UsuariosComponent implements OnInit {
   dni:number;
   cuenta:string;
   rol:string;
+  user:login;
   constructor(private WebserviceService: WebserviceService, private ModalModule: ModalModule) {
-
+    
   }
 
   ngOnInit() {
