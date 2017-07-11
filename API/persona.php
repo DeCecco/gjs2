@@ -36,4 +36,17 @@ class Persona
 		$consulta->execute();
 		return true;	
 	} 
+	public static function InsertarPersona($email,$rol,$nombre,$apellido,$dni,$cuenta){
+
+        $sql = 'INSERT INTO usuarios (nombre,apellido,mail,dni,cuenta,password,idrol,estado)
+		VALUES (:nombre, :apellido,:email,:dni,:cuenta,"123456",:rol,"1")';
+			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+			$consulta->bindValue(':rol', $rol, PDO::PARAM_INT);
+			$consulta->bindValue(':email', $email, PDO::PARAM_STR);						
+            $consulta->bindValue(':nombre', $nombre, PDO::PARAM_STR);
+            $consulta->bindValue(':apellido', $apellido, PDO::PARAM_STR);
+			$consulta->bindValue(':cuenta', $cuenta, PDO::PARAM_STR);
+			$consulta->bindValue(':dni', $dni, PDO::PARAM_STR);
+			$consulta->execute();
+	}
 }

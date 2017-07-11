@@ -18,8 +18,7 @@ export class WebserviceService {
   AgregarPersona(formData) {
     var body = {
       "email": formData[0].email,
-      "rol": formData[0].rol,
-      "password": formData[0].password,
+      "rol": formData[0].rol,      
       "nombre": formData[0].nombre,
       "apellido": formData[0].apellido,
       "dni": formData[0].dni,

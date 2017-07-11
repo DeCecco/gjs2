@@ -19,16 +19,15 @@ $app->add(function (Request $request, Response $response, $next) {
 $app->get('/persona/obtenerTodas', function (Request $request, Response $response){
     return $response->withJson(Persona::TraerTodasLasPersonas());
 });
-/* $app->post('/persona/agregar', function (Request $request, Response $response) {    
-	$email = $request->getParam('email');
-	$password = $request->getParam('password');
+$app->post('/persona/agregar', function (Request $request, Response $response) {    
+	$email = $request->getParam('email');	
 	$rol = $request->getParam('rol');
 	$nombre = $request->getParam('nombre');
 	$apellido = $request->getParam('apellido');
 	$dni = $request->getParam('dni');
-	$legajo = $request->getParam('legajo');
-	return $response->withJson(Persona::InsertarPersona($email,$password,$rol,$nombre,$apellido,$dni,$legajo));     
-});	
+	$cuenta = $request->getParam('cuenta');
+	return $response->withJson(Persona::InsertarPersona($email,$rol,$nombre,$apellido,$dni,$cuenta));     
+});	/*
 $app->post('/persona/modificar', function (Request $request, Response $response) {    
 	$email = $request->getParam('email');
 	$password = $request->getParam('password');

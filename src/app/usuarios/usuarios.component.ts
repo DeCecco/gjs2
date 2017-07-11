@@ -1,12 +1,12 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { WebserviceService } from '../servicios/webservice.service';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ButtonRenderComponent } from '../button-render.component';
 import { ImageRenderComponent } from '../image-render.component';
-import {ModalModule} from "ng2-modal";
+import { ModalModule } from "ng2-modal";
 
-import {FormControl, FormGroup} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -17,20 +17,27 @@ import {FormControl, FormGroup} from '@angular/forms';
 export class UsuariosComponent implements OnInit {
   settings: {};
   data: any;
-   form: FormGroup;
-    myOptions = [];
-  constructor(private WebserviceService: WebserviceService,private ModalModule:ModalModule) {
-    
+  formABMUsuarios: FormGroup;
+  myOptions = [];
+  nombre:string;
+  apellido:string;
+  email:string;
+  dni:number;
+  cuenta:string;
+  rol:string;
+  constructor(private WebserviceService: WebserviceService, private ModalModule: ModalModule) {
+
   }
 
   ngOnInit() {
-      this.myOptions = [
-            {value: 'a', label: 'Alpha'},
-            {value: 'b', label: 'Beta'},
-            {value: 'c', label: 'Gamma'},
-        ];
-        this.form = new FormGroup({});
-        this.form.addControl('mySelect', new FormControl(['b', 'c']));
+    this.myOptions = [
+      { value: '1', label: 'Administrador' },
+      { value: '2', label: 'Encargado' },
+      { value: '3', label: 'Empleado' },
+      { value: '4', label: 'Cliente' },
+    ];
+    this.formABMUsuarios = new FormGroup({});
+    this.formABMUsuarios.addControl('mySelect', new FormControl(['b', 'c']));
     this.WebserviceService.TraerPersonas()
       .then(data => {
 
@@ -152,7 +159,15 @@ export class UsuariosComponent implements OnInit {
     }];
     console.warn(e)
   }
-  crear(){
+  crear() {
+    var array = [{
+      "nombre": this.nombre, "apellido": this.apellido, "email": this.email,"rol": this.rol, "dni": this.dni, "cuenta": this.cuenta,}];
+      console.info(array);
+      this.WebserviceService.AgregarPersona(array).then(data=>{
+        console.log(data)
+      }).catch(error=>{
+        console.warn(error)
+      })
     console.info()
   }
   editando() {
