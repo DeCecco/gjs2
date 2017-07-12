@@ -10,16 +10,20 @@ import { WebserviceService } from './servicios/webservice.service';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { LoginComponent } from './login/login.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { ProductosComponent } from './productos/productos.component';
+
 import { ButtonRenderComponent } from './button-render.component';
-import { ImageRenderComponent } from './image-render.component';
+import { ImageRenderComponent } from './image-render.component'; 
 import { ModalModule } from "ng2-modal";
 import { SelectModule } from 'angular2-select';
 
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
+
 const appRoutes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'usuarios', component: UsuariosComponent }
+  { path: 'Login', component: LoginComponent },
+  { path: 'Usuarios', component: UsuariosComponent },
+  { path: 'Productos', component: ProductosComponent }
 ];
 
 @NgModule({
@@ -28,7 +32,8 @@ const appRoutes: Routes = [
     LoginComponent,
     UsuariosComponent,
     ButtonRenderComponent,
-    ImageRenderComponent
+    ImageRenderComponent,
+    ProductosComponent
   ],
   imports: [
     BsDropdownModule.forRoot(),

@@ -49,4 +49,13 @@ class Persona
 			$consulta->bindValue(':dni', $dni, PDO::PARAM_STR);
 			$consulta->execute();
 	}
+	/*--------------------------------------------------------------------------------------*/
+	public static function ListarProductos(){
+		$sql = "SELECT productos.*,precios.precio_venta FROM `productos` 
+				left JOIN `precios` on precios.idprod=productos.idprod
+				where productos.estado=1";
+        $consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+	    $consulta->execute();			
+		return $consulta->fetchAll();	
+	}
 }

@@ -19,6 +19,9 @@ $app->add(function (Request $request, Response $response, $next) {
 $app->get('/persona/obtenerTodas', function (Request $request, Response $response){
     return $response->withJson(Persona::TraerTodasLasPersonas());
 });
+$app->get('/productos/listar', function (Request $request, Response $response){
+    return $response->withJson(Persona::ListarProductos());
+});
 $app->post('/persona/agregar', function (Request $request, Response $response) {    
 	$email = $request->getParam('email');	
 	$rol = $request->getParam('rol');
