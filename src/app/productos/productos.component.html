@@ -1,22 +1,31 @@
-<div class="row col-md-12 col-sm-8 col-xs-12">
+<div class="row col-md-12 col-sm-8 col-xs-12 fondo">
   <div class="col-sm-3">
-  </div>  
+  </div>
   <div class="col-sm-6">
-    <div ngFor='let value of listadoProductos; trackBy: index;'>
-      {{value.descripcion_corta}}
-      </div>
-    <table style="height: 136px;" width="260">
-      <tbody >
+    <table style="height: 136px;" width="100%">
+      <tbody *ngFor='let value of listadoProductos let index = index' style="background-color: antiquewhite;">
         <tr>
-          <td rowspan="2"><img src="" alt="" > <br /><br /></td>
-          <td>a</td>
+          <td rowspan="2"><img src="assets/img/peppy.jpg" width="100%" alt=""> <br /><br /></td>
+          <td>{{value.descripcion_corta}} <i class="fa fa-plus" aria-hidden="true"></i></td>
+          <td style="width: 10%;">
+            <div>
+              <button
+                class="btn btn-default" (click)="agregar(value)">+</button>
+            </div>
+          </td>
         </tr>
         <tr>
-          <td>b</td>
+          <td style=" width: 80%;">{{value.descripcion_larga}}</td>
         </tr>
       </tbody>
-    </table>    
+    </table>
   </div>
   <div class="col-sm-3">
+    <h3>Pedido</h3>
+    <!--input type="number" [(ngModel)]="self['answer'+index]" class="form-control" name="cantidad" id="cantidad" style="width: 100%;"-->
+    <div *ngFor='let value of pedidos let index = index'>
+      {{value.descripcion_corta}}
+      <button class="btn btn-danger btn-xs" (click)="eliminar(value)">-</button>
+    </div>
   </div>
 </div>
