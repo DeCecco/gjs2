@@ -51,7 +51,7 @@ class Persona
 	}
 	/*--------------------------------------------------------------------------------------*/
 	public static function ListarProductos(){
-		$sql = "SELECT productos.*,precios.precio_venta FROM `productos` 
+		$sql = "SELECT productos.*,precios.precio_venta,0 cantidad FROM `productos` 
 				left JOIN `precios` on precios.idprod=productos.idprod
 				where productos.estado=1";
         $consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);

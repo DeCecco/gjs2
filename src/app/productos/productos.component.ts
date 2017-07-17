@@ -12,9 +12,11 @@ export class ProductosComponent implements OnInit {
   pedidos: any;
   lista: string[];
   cantidad: number;
+  existenP:boolean;
   constructor(private WebserviceService: WebserviceService) {
     this.lista = [];
     this.cantidad = 0;
+    this.existenP=false;
   }
 
   ngOnInit() {
@@ -30,23 +32,34 @@ export class ProductosComponent implements OnInit {
       this.lista.push(pizza);
     }
     this.pedidos = this.lista;
+    console.info(this.pedidos);
+    if(this.pedidos.length>0){
+      this.existenP=true;
+    }else{
+      this.existenP=false;
+    }
   }
   eliminar(pizza) {
     var BreakException = {};
     try {
-    this.pedidos.forEach(element => {
-      console.info(element.idprod)
-      if (element.idprod == pizza.idprod) {
-        console.warn('false')
+      var cont=0;
+    this.pedidos.forEach(element => {   
+        
+      if (element.idprod == pizza.idprod) {        
+        console.info(element)   
+        this.pedidos.splice(cont, 1);
         throw BreakException;
-
-      } else {
-        console.warn('true')
-
-      }
+      } 
+      cont++;
     });
      } catch (e) {
       if (e !== BreakException) throw e;
     }  
+    console.warn(this.pedidos);
+    if(this.pedidos.length>0){
+      this.existenP=true;
+    }else{
+      this.existenP=false;
+    }
   }
 }
