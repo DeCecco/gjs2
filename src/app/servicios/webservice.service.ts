@@ -7,7 +7,12 @@ export class WebserviceService {
 
   route: string = "http://localhost/UTN/GJS2/API/index.php/";
   constructor(private http: Http) { }
-
+  Login(array){             
+    var data={ 'cuenta':array[0].cuenta,
+              'password':array[0].password  
+          }        
+    return this.http.post(this.route + "persona/login",data).toPromise().then(data => data.json());
+  }
   TraerPersonas() {
     return this.http.get(this.route + "persona/obtenerTodas").toPromise().then(data => data.json());
   }

@@ -5,6 +5,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 require_once "persona.php";
 require 'vendor/autoload.php';
+//require 'AutentificadorJWT.php';
 
 $app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
 
@@ -22,6 +23,40 @@ $app->get('/persona/obtenerTodas', function (Request $request, Response $respons
 $app->get('/productos/listar', function (Request $request, Response $response){
     return $response->withJson(Persona::ListarProductos());
 });
+$app->post('/persona/login', function (Request $request, Response $response){
+	$cuenta = $request->getParam('cuenta');	
+	$password = $request->getParam('password');			
+    return $response->withJson(Persona::Login($cuenta,$password));
+});
+/*
+$app->get('/crearToken', function (Request $request, Response $response) {
+	
+	$email = $request->getParam('email');	
+	$rol = $request->getParam('rol');
+	$nombre = $request->getParam('nombre');
+	$apellido = $request->getParam('apellido');	
+	$idusuario = $request->getParam('idusuario');	
+	$cuenta = $request->getParam('cuenta');	
+	$dni = $request->getParam('dni');	
+    $datos = array('email' => $email,'rol' => $rol, 'nombre' => $nombre,'apellido' => $apellido,'idusuario'=>$idusuario,'cuenta'=>$cuenta,'dni'=>$dni);
+    $datos = array('usuario' => 'rogelio@agua.com','perfil' => 'profe', 'alias' => "PinkBoy");
+    
+    $token= AutentificadorJWT::CrearToken($datos); 
+	//$payload=AutentificadorJWT::ObtenerPayload($token);
+	/*
+	try 
+      {
+        AutentificadorJWT::verificarToken($token);
+        $esValido=true;      
+      }
+      catch (Exception $e) {      
+        //guardar en un log
+        echo $e;
+      }
+	
+    $newResponse = $response->withJson($token, 200); 
+    return $newResponse;
+  });*/
 $app->post('/persona/agregar', function (Request $request, Response $response) {    
 	$email = $request->getParam('email');	
 	$rol = $request->getParam('rol');

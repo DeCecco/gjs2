@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { WebserviceService } from '../servicios/webservice.service';
 
 @Component({
@@ -11,15 +11,27 @@ export class LoginComponent implements OnInit {
   cuenta='pdececco';
   password='72256';
   datosTraidos;
-  constructor(private WebserviceService : WebserviceService) { }
+  formLogin: FormGroup;
+  constructor(private WebserviceService : WebserviceService,public formBuilder: FormBuilder) { 
+    this.formLogin = formBuilder.group({
+      //VALIDACIONES
+      cuenta: [this.cuenta, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('^[a-zA-Z]+$')])],      
+      password: [this.password, Validators.compose([Validators.required, Validators.maxLength(30),Validators.minLength(6)])]      
+    });
+  }
 
   ngOnInit() {
   }
   TraerPersonas(){
     this.WebserviceService.TraerPersonas()
       .then(data => {        
-        console.info(data);
+        console.info(this.formLogin);
         this.datosTraidos = data;        
+        if(this.formLogin.valid){
+          console.warn('valido')
+        }else{
+          console.warn('invalido')
+        }
         if(this.cuenta==this.datosTraidos[0].cuenta && this.password==this.datosTraidos[0].password ){
           console.warn('ADENTRO')
         }else{
@@ -29,5 +41,15 @@ export class LoginComponent implements OnInit {
       .catch(error => {
         console.log(error);
       });
+  }
+  Login(){
+     var array = [{"cuenta": this.cuenta,"password": this.password}];
+    this.WebserviceService.Login(array).then(data=>{
+      console.info(data)
+      if(data>0){
+        console
+      }
+
+    })
   }
 }

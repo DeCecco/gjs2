@@ -18,7 +18,7 @@ import { ModalModule } from "ng2-modal";
 import { SelectModule } from 'angular2-select';
 
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-
+import { ReactiveFormsModule  } from '@angular/forms'
 
 const appRoutes: Routes = [
   { path: 'Login', component: LoginComponent },
@@ -39,7 +39,7 @@ const appRoutes: Routes = [
     BsDropdownModule.forRoot(),
     BrowserModule,
     FormsModule,
-  //  ReactiveFormsModule,
+    ReactiveFormsModule,
     ModalModule,
     SelectModule,
     HttpModule,

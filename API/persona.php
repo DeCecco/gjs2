@@ -19,6 +19,14 @@ class Persona
 		$this->sexo = $sexo;
 		$this->password = $password;
 	}
+	public static function Login($cuenta,$password){	
+		$sql = "SELECT nombre,apellido,mail,cuenta,idusuario,idrol,estado,dni FROM `usuarios` WHERE cuenta=:cuenta and password=:password";
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);		
+		$consulta->bindValue(':cuenta', $cuenta,PDO::PARAM_STR);		
+		$consulta->bindValue(':password', $password,PDO::PARAM_STR);		
+		$consulta->execute();
+		return $consulta->fetchAll();	
+	} 
 	//OBTENCION DE TODOS LAS PERSONAS DE LA BASE DE DATOS
 	public static function TraerTodasLasPersonas(){
 		$sql = "SELECT u.*,r.descripcion roles FROM usuarios u
