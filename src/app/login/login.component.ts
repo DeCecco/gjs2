@@ -31,7 +31,17 @@ export class LoginComponent implements OnInit {
              var array = [{"nombre": data[0].nombre,"apellido":data[0].apellido,"cuenta":data[0].cuenta,"mail":data[0].mail,"dni":data[0].dni,
              "idrol":data[0].idrol,"idusuario":data[0].idusuario }]; 
             this.WebserviceService.CrearToken(array).then(data=>{
-              console.info(data)
+              console.warn(data)
+              localStorage.setItem('Token', data);              
+              //set localStorage.setItem('Token', data);      
+              //get console.info(localStorage.getItem('Token'));
+              //remove localStorage.removeItem('Token');
+       
+              
+              
+              
+              
+              
             })
           }else{
             console.info('datos invalidos')
@@ -41,5 +51,17 @@ export class LoginComponent implements OnInit {
      }else{
         console.warn('invalido')
      }
+  }
+  tk(){
+            
+            var tk=localStorage.getItem('Token')
+            var array = [{"token":tk}];
+    this.WebserviceService.VerificarToken(array).then(data=>{                
+                if(data){
+                  console.info('puede Continuar')
+                }else{
+                  console.info('TOKEN vencido')
+                }
+              })
   }
 }

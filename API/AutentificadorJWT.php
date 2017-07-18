@@ -19,7 +19,7 @@ class AutentificadorJWT
         
         $payload = array(
         	'iat'=>$ahora,
-            'exp' => $ahora + 60000,
+            'exp' => $ahora + 60,
             'aud' => self::Aud(),
             'data' => $datos,
             'app'=> "TP-LABIV-PDC"

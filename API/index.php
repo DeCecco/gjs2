@@ -57,6 +57,23 @@ $app->post('/crearToken', function (Request $request, Response $response) {
     $newResponse = $response->withJson($token, 200); 
     return $newResponse;
   });
+ 
+$app->post('/verificarToken', function (Request $request, Response $response) {
+		
+	$token = $request->getParam('token');		            		
+	 $esValido=false;
+      try 
+      {
+        AutentificadorJWT::verificarToken($token);
+        $esValido=true;      
+      }
+      catch (Exception $e) {      
+        //guardar en un log
+        echo $e;
+      }  
+	  $esValido =$response->withJson($esValido, 200); 
+      return $esValido;
+  });  
 $app->post('/persona/agregar', function (Request $request, Response $response) {    
 	$email = $request->getParam('email');	
 	$rol = $request->getParam('rol');

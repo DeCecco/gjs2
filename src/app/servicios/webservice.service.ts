@@ -34,6 +34,13 @@ export class WebserviceService {
   }    
     return this.http.post(this.route +"crearToken", data).toPromise().then(data => data.json());
   }
+  VerificarToken(form){
+    var data ={
+      "token":form[0].token
+    }
+    
+    return this.http.post(this.route +"verificarToken", data).toPromise().then(data => data.json());
+  }
   AgregarPersona(formData) {
     var body = {
       "email": formData[0].email,
