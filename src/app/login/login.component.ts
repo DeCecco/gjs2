@@ -16,40 +16,30 @@ export class LoginComponent implements OnInit {
     this.formLogin = formBuilder.group({
       //VALIDACIONES
       cuenta: [this.cuenta, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('^[a-zA-Z]+$')])],      
-      password: [this.password, Validators.compose([Validators.required, Validators.maxLength(30),Validators.minLength(6)])]      
+      password: [this.password, Validators.compose([Validators.required, Validators.maxLength(30),Validators.minLength(5)])]      
     });
   }
 
   ngOnInit() {
   }
-  TraerPersonas(){
-    this.WebserviceService.TraerPersonas()
-      .then(data => {        
-        console.info(this.formLogin);
-        this.datosTraidos = data;        
-        if(this.formLogin.valid){
-          console.warn('valido')
-        }else{
-          console.warn('invalido')
-        }
-        if(this.cuenta==this.datosTraidos[0].cuenta && this.password==this.datosTraidos[0].password ){
-          console.warn('ADENTRO')
-        }else{
-          console.warn('ERROR')
-        }
-      }) 
-      .catch(error => {
-        console.log(error);
-      });
-  }
   Login(){
      var array = [{"cuenta": this.cuenta,"password": this.password}];
-    this.WebserviceService.Login(array).then(data=>{
-      console.info(data)
-      if(data>0){
-        console
-      }
+     if(this.formLogin.valid){
+         
+        this.WebserviceService.Login(array).then(data=>{          
+          if(data.length>0){                       
+             var array = [{"nombre": data[0].nombre,"apellido":data[0].apellido,"cuenta":data[0].cuenta,"mail":data[0].mail,"dni":data[0].dni,
+             "idrol":data[0].idrol,"idusuario":data[0].idusuario }]; 
+            this.WebserviceService.CrearToken(array).then(data=>{
+              console.info(data)
+            })
+          }else{
+            console.info('datos invalidos')
+          }
 
-    })
+        })
+     }else{
+        console.warn('invalido')
+     }
   }
 }

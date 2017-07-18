@@ -23,6 +23,17 @@ export class WebserviceService {
     var data = { "id": id }
     return this.http.post(this.route +clase, data).toPromise().then(data => data.json());
   }
+  CrearToken(form){
+    var data = { "nombre": form[0].nombre,
+    "apellido": form[0].apellido, 
+    "dni": form[0].dni, 
+    "cuenta": form[0].cuenta, 
+    "idusuario": form[0].idusuario, 
+    "mail": form[0].mail, 
+    "idrol": form[0].idrol 
+  }    
+    return this.http.post(this.route +"crearToken", data).toPromise().then(data => data.json());
+  }
   AgregarPersona(formData) {
     var body = {
       "email": formData[0].email,
