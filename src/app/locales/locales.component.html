@@ -1,3 +1,19 @@
-<p>
-  locales works!
-</p>
+  <div class="col-sm-3">
+    <button class="btn btn-primary btn-sm" (click)="alta()">Alta</button>
+  </div>
+<table>
+  <tr>
+    <th>Descripcion</th>
+    <th>Localidad</th>
+    <th>Calle</th>
+    <th>Numero</th>
+    <th>Accion</th>
+  </tr>
+  <tr *ngFor='let value of lista let index = index'>
+    <td>{{value.descripcion}}</td>    
+    <td>{{value.localidad}}</td>
+    <td>{{value.calle}}</td>
+    <td>{{value.numero}}</td>
+    <td><button class="btn  btn-info btn-xs" (click)="modificar(value)">Modificar</button></td>
+  </tr>
+</table>

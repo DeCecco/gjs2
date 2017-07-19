@@ -23,6 +23,9 @@ $app->get('/persona/obtenerTodas', function (Request $request, Response $respons
 $app->get('/productos/listar', function (Request $request, Response $response){
     return $response->withJson(Persona::ListarProductos());
 });
+$app->get('/locales/listar', function (Request $request, Response $response){
+    return $response->withJson(Persona::ListarLocales());
+});
 $app->post('/persona/login', function (Request $request, Response $response){
 	$cuenta = $request->getParam('cuenta');	
 	$password = $request->getParam('password');			

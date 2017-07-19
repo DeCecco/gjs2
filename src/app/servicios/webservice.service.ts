@@ -19,6 +19,9 @@ export class WebserviceService {
   ListarProductos() {
     return this.http.get(this.route + "productos/listar").toPromise().then(data => data.json());
   }
+  ListarLocales() {
+    return this.http.get(this.route + "locales/listar").toPromise().then(data => data.json());
+  }
   TraerLocal(form) {
     var data = { "local": form[0].local}
     return this.http.post(this.route+"persona/traerlocal", data).toPromise().then(data => data.json());
@@ -75,16 +78,5 @@ export class WebserviceService {
       "img": formData[0].img,
     }
     return this.http.post(this.route + "persona/modificar", body).toPromise();
-  }
-  AgregarLocal(formData) {
-    var body = {
-      "email": formData[0].email,
-      "rol": formData[0].rol,      
-      "nombre": formData[0].nombre,
-      "apellido": formData[0].apellido,
-      "dni": formData[0].dni,
-      "cuenta": formData[0].cuenta
-    }
-    return this.http.post(this.route + "persona/agregar", body).toPromise();
   }
 }
