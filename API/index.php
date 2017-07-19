@@ -69,7 +69,8 @@ $app->post('/verificarToken', function (Request $request, Response $response) {
       }
       catch (Exception $e) {      
         //guardar en un log
-        echo $e;
+				$esValido=false;
+        //echo $e;
       }  
 	  $esValido =$response->withJson($esValido, 200); 
       return $esValido;
