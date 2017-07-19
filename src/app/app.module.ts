@@ -18,12 +18,14 @@ import { ModalModule } from "ng2-modal";
 import { SelectModule } from 'angular2-select';
 
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { ReactiveFormsModule  } from '@angular/forms'
+import { ReactiveFormsModule  } from '@angular/forms';
+import { LocalesComponent } from './locales/locales.component'
 
 const appRoutes: Routes = [
   { path: 'Login', component: LoginComponent },
   { path: 'Usuarios', component: UsuariosComponent },
-  { path: 'Productos', component: ProductosComponent }
+  { path: 'Productos', component: ProductosComponent },
+  { path: 'Locales', component: LocalesComponent }
 ];
 
 @NgModule({
@@ -33,7 +35,8 @@ const appRoutes: Routes = [
     UsuariosComponent,
     ButtonRenderComponent,
     ImageRenderComponent,
-    ProductosComponent
+    ProductosComponent,
+    LocalesComponent
   ],
   imports: [
     BsDropdownModule.forRoot(),

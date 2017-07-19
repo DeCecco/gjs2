@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-07-2017 a las 06:24:00
+-- Tiempo de generación: 19-07-2017 a las 22:39:56
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -71,8 +71,18 @@ CREATE TABLE `locales` (
   `descripcion` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
   `localidad` varchar(80) COLLATE utf8_spanish_ci NOT NULL,
   `calle` varchar(80) COLLATE utf8_spanish_ci NOT NULL,
-  `numero` int(20) NOT NULL
+  `numero` int(20) NOT NULL,
+  `img` varchar(200) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `locales`
+--
+
+INSERT INTO `locales` (`idlocal`, `descripcion`, `localidad`, `calle`, `numero`, `img`) VALUES
+(1, 'Local 1', 'Palermo', 'Av sta Fe', 2580, 'assets\\img\\local1.jpg'),
+(2, 'Local 2', 'Belgrano', 'Av Cabildo', 356, 'assets\\img\\local2.jpg'),
+(3, 'Local 3', 'Recoleta', 'Av Libertador', 1100, 'assets\\img\\local3.jpg');
 
 -- --------------------------------------------------------
 
@@ -216,7 +226,10 @@ INSERT INTO `usuarios` (`idusuario`, `nombre`, `apellido`, `mail`, `dni`, `cuent
 (1, 'Pablo', 'De Cecco', 'pablo.dececco@hotmail.com', 36073086, 'pdececco', '72256', 1, 1),
 (3, 'Empleado', 'Empleado', 'empleado@empleado.com', 30302032, 'empleado', '123456', 3, 1),
 (5, 'Encargado', 'Encargado', 'Encargado@Encargado.com', 202056, 'Encargado', '123456', 2, 1),
-(6, 'Cliente', 'Cliente', 'Cliente@Cliente.com', 897845, 'Cliente', '123456', 4, 1);
+(6, 'Cliente', 'Cliente', 'Cliente@Cliente.com', 897845, 'Cliente', '123456', 4, 1),
+(7, 'Luciana', 'Arrua', 'luarr@gfsa.com', 12451245, 'Luciana', '123456', 2, 1),
+(8, 'nombre', 'apellido', 'email@asd.com', 123123, 'asdasas', '123456', 4, 1),
+(9, 'prueba', 'prueba', 'asda@ds.com', 123123123, 'asddsaasd', '123456', 4, 1);
 
 --
 -- Índices para tablas volcadas
@@ -274,7 +287,7 @@ ALTER TABLE `estados`
 -- AUTO_INCREMENT de la tabla `locales`
 --
 ALTER TABLE `locales`
-  MODIFY `idlocal` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idlocal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
@@ -289,7 +302,7 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

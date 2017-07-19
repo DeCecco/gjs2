@@ -76,4 +76,15 @@ export class WebserviceService {
     }
     return this.http.post(this.route + "persona/modificar", body).toPromise();
   }
+  AgregarLocal(formData) {
+    var body = {
+      "email": formData[0].email,
+      "rol": formData[0].rol,      
+      "nombre": formData[0].nombre,
+      "apellido": formData[0].apellido,
+      "dni": formData[0].dni,
+      "cuenta": formData[0].cuenta
+    }
+    return this.http.post(this.route + "persona/agregar", body).toPromise();
+  }
 }
