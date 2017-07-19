@@ -66,4 +66,13 @@ class Persona
 	    $consulta->execute();			
 		return $consulta->fetchAll();	
 	}
+	/**/
+		public static function TraerLocal($id){	
+		$sql = "SELECT * from locales where idlocal=:id";
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);		
+		$consulta->bindValue(':id', $id,PDO::PARAM_STR);		
+		$consulta->execute();
+		return $consulta->fetchAll();	
+	} 
+	/**/
 }

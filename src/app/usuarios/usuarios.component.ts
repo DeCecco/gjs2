@@ -6,15 +6,17 @@ import { ButtonRenderComponent } from '../button-render.component';
 import { ImageRenderComponent } from '../image-render.component';
 import { ModalModule } from "ng2-modal";
 
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 export interface login {
-  nombre:string;
-  apellido:string;
-  email:string;
-  dni:number;
-  cuenta:string;
-  rol:string;
+  nombre: string;
+  apellido: string;
+  email: string;
+  dni: number;
+  cuenta: string;
+  rol: string;
 }
 
 @Component({
@@ -28,15 +30,41 @@ export class UsuariosComponent implements OnInit {
   data: any;
   formABMUsuarios: FormGroup;
   myOptions = [];
-  nombre:string;
-  apellido:string;
-  email:string;
-  dni:number;
-  cuenta:string;
-  rol:string;
-  user:login;
-  constructor(private WebserviceService: WebserviceService, private ModalModule: ModalModule) {
-    
+  nombre: string;
+  apellido: string;
+  email: string;
+  dni: number;
+  cuenta: string;
+  rol: string;
+  user: login;
+  formUser: FormGroup;
+  constructor(private WebserviceService: WebserviceService, private ModalModule: ModalModule, private router: Router, public formBuilder: FormBuilder) {
+    var tk = localStorage.getItem('Token')
+    if (tk == null) {
+      alert('Por favor, para continuar logueese');
+      this.router.navigate(['Login']);
+    } else {
+      var array = [{ "token": tk }];
+      this.WebserviceService.VerificarToken(array).then(data => {
+        if (data) {
+          console.info('TokenActivo')
+        } else {
+          alert('Por favor, para continuar logueese');
+          this.router.navigate(['Login']);
+          console.info('TokenVencido')
+        }
+      })
+    }
+    this.rol='4';
+    this.formUser = formBuilder.group({
+      //VALIDACIONES      
+      nombre: [this.nombre, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('^[a-zA-Z]+$')])],         
+      apellido: [this.apellido, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],      
+      email: [this.email, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)])],
+      rol: [this.rol, Validators.compose([Validators.required])],
+      dni: [this.dni, Validators.compose([Validators.required])/*, Validators.minLength(8),Validators.pattern('^(([1-9]*)|(([1-9]*)\.([0-9]*)))$')*/],      
+      cuenta: [this.cuenta, Validators.compose([Validators.required, Validators.maxLength(30), Validators.minLength(5),Validators.pattern('^[a-zA-Z]+$')])]
+    });
   }
 
   ngOnInit() {
@@ -171,17 +199,19 @@ export class UsuariosComponent implements OnInit {
   }
   crear() {
     var array = [{
-      "nombre": this.nombre, "apellido": this.apellido, "email": this.email,"rol": this.rol, "dni": this.dni, "cuenta": this.cuenta,}];
-      console.info(array);
-      this.WebserviceService.AgregarPersona(array).then(data=>{
-        if(data.ok){
-          alert('ok')
-        }else{
-          alert('error')
-        }
-      }).catch(error=>{
-        console.warn(error)
-      })
+      "nombre": this.nombre, "apellido": this.apellido, "email": this.email, "rol": this.rol, "dni": this.dni, "cuenta": this.cuenta,
+    }];
+    console.info(array);
+    this.WebserviceService.AgregarPersona(array).then(data => {
+      if (data.ok) {
+        
+        window.location.reload();
+      } else {
+        alert('error')
+      }
+    }).catch(error => {
+      console.warn(error)
+    })
     console.info()
   }
   editando() {

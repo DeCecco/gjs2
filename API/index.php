@@ -43,20 +43,9 @@ $app->post('/crearToken', function (Request $request, Response $response) {
     
     $token= AutentificadorJWT::CrearToken($datos); 
 	//$payload=AutentificadorJWT::ObtenerPayload($token);
-	/*
-	try 
-      {
-        AutentificadorJWT::verificarToken($token);
-        $esValido=true;      
-      }
-      catch (Exception $e) {      
-        //guardar en un log
-        echo $e;
-      }
-	*/
     $newResponse = $response->withJson($token, 200); 
     return $newResponse;
-  });
+});
  
 $app->post('/verificarToken', function (Request $request, Response $response) {
 		
@@ -74,7 +63,19 @@ $app->post('/verificarToken', function (Request $request, Response $response) {
       }  
 	  $esValido =$response->withJson($esValido, 200); 
       return $esValido;
-  });  
+});  
+$app->post('/persona/traerlocal', function (Request $request, Response $response) {
+		
+	$local = $request->getParam('local');		            			 	
+    return $response->withJson(Persona::TraerLocal($local));     
+}); 
+$app->post('/payLoad', function (Request $request, Response $response) {
+	
+	$token = $request->getParam('token');		          
+	$payload=AutentificadorJWT::ObtenerPayload($token);
+  $newResponse = $response->withJson($payload, 200); 
+  return $newResponse;
+});
 $app->post('/persona/agregar', function (Request $request, Response $response) {    
 	$email = $request->getParam('email');	
 	$rol = $request->getParam('rol');

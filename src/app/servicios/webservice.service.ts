@@ -19,6 +19,10 @@ export class WebserviceService {
   ListarProductos() {
     return this.http.get(this.route + "productos/listar").toPromise().then(data => data.json());
   }
+  TraerLocal(form) {
+    var data = { "local": form[0].local}
+    return this.http.post(this.route+"persona/traerlocal", data).toPromise().then(data => data.json());
+  }
   Eliminar(id,clase) {
     var data = { "id": id }
     return this.http.post(this.route +clase, data).toPromise().then(data => data.json());
@@ -40,6 +44,12 @@ export class WebserviceService {
     }
     
     return this.http.post(this.route +"verificarToken", data).toPromise().then(data => data.json());
+  }
+  PayLoad(form){
+    var data ={
+      "token":form[0].token
+    }    
+    return this.http.post(this.route +"payLoad", data).toPromise().then(data => data.json());
   }
   AgregarPersona(formData) {
     var body = {
