@@ -103,6 +103,13 @@ $app->post('/persona/eliminar', function (Request $request, Response $response) 
 $app->get('/productos/listar', function (Request $request, Response $response){
     return $response->withJson(Persona::ListarProductos());
 });
+$app->post('/producto/agregar', function (Request $request, Response $response) {    
+	$descripcion_larga = $request->getParam('descripcion_larga');
+	$descripcion_corta = $request->getParam('descripcion_corta');
+	$precio_costo = $request->getParam('precio_costo');
+	$precio_venta = $request->getParam('precio_venta');	
+	return $response->withJson(Persona::AgregarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta));     
+});	
 /*----------------------------------FIN PRODUCTOS--------------------------------*/
 
 /*----------------------------------INICIO LOCALES--------------------------------*/
@@ -114,6 +121,13 @@ $app->post('/persona/traerlocal', function (Request $request, Response $response
 	$local = $request->getParam('local');		            			 	
     return $response->withJson(Persona::TraerLocal($local));     
 }); 
+$app->post('/local/agregar', function (Request $request, Response $response) {    
+	$descripcion = $request->getParam('descripcion');
+	$localidad = $request->getParam('localidad');
+	$calle = $request->getParam('calle');
+	$numero = $request->getParam('numero');	
+	return $response->withJson(Persona::AgregarLocalidad($descripcion,$localidad,$calle,$numero));     
+});	
 $app->post('/local/modificar', function (Request $request, Response $response) {    
 	$descripcion = $request->getParam('descripcion');
 	$localidad = $request->getParam('localidad');
@@ -121,6 +135,10 @@ $app->post('/local/modificar', function (Request $request, Response $response) {
 	$numero = $request->getParam('numero');
 	$idlocal = $request->getParam('idlocal');
 	return $response->withJson(Persona::ModificarLocalidad($descripcion,$localidad,$calle,$numero,$idlocal));     
+});	
+$app->post('/local/eliminar', function (Request $request, Response $response) {    	
+	$idlocal = $request->getParam('idlocal');
+	return $response->withJson(Persona::EliminarLocal($idlocal));     
 });	
 /*----------------------------------FIN LOCALES--------------------------------*/
 

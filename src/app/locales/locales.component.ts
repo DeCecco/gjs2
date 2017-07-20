@@ -15,9 +15,9 @@ export class LocalesComponent implements OnInit {
   numero: number;
   id: number;
   formLocales: FormGroup;
-  disa:boolean;
+  disa: boolean;
   constructor(private WebserviceService: WebserviceService, public formBuilder: FormBuilder) {
-    this.disa=false;
+    this.disa = false;
     this.formLocales = formBuilder.group({
       //VALIDACIONES
       descripcion: [this.descripcion, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('^[a-zA-Z 0-9]+$')])],
@@ -40,7 +40,7 @@ export class LocalesComponent implements OnInit {
     this.calle = x.calle;
     this.numero = x.numero;
     this.id = x.idlocal
-    this.disa=false;
+    this.disa = false;
   }
   update(x) {
     var array = [{
@@ -56,14 +56,34 @@ export class LocalesComponent implements OnInit {
         }
       })
     } else {
-
+      this.WebserviceService.AgregarLocal(array).then(data => {
+        if (data.ok) {
+          window.location.reload();
+        } else {
+          alert('error al grabar');
+        }
+      })
     }
   }
   alta() {
-    this.descripcion='';
-    this.localidad='';
-    this.calle='';
-    this.numero;    
-    this.disa=true;
+    this.descripcion = '';
+    this.localidad = '';
+    this.calle = '';
+    this.numero;
+    this.disa = true;
+  }
+  eliminar(x) {
+    var array = [{ "idlocal": x.idlocal }];
+    console.info(array);
+    this.WebserviceService.EliminarLocal(array).then(data => {
+      window.location.reload();
+      console.info(data)
+      /*if (data.ok) {
+        window.location.reload();
+      } else {
+        alert('error al grabar');
+      }*/
+    })
+
   }
 }

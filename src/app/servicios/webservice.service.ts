@@ -75,15 +75,15 @@ export class WebserviceService {
   ListarProductos() {
     return this.http.get(this.route + "productos/listar").toPromise().then(data => data.json());
   }
-  ModificarLocal(formData) {
+  AgregarProducto(formData) {
     var body = {
-      "descripcion": formData[0].descripcion,
-      "localidad": formData[0].localidad,
-      "calle": formData[0].calle,
-      "numero": formData[0].numero,
-      "idlocal": formData[0].idlocal
+      "descripcion_larga": formData[0].descripcion_larga,
+      "descripcion_corta": formData[0].descripcion_corta,
+      "precio_costo": formData[0].precio_costo,
+      "precio_venta": formData[0].precio_venta
     }
-    return this.http.post(this.route + "local/modificar", body).toPromise();
+    
+    return this.http.post(this.route + "producto/agregar", body).toPromise();
   }
   /*----------------------------------FIN PRODUCTOS--------------------------------*/
   /*----------------------------------INICIO LOCALES--------------------------------*/
@@ -94,6 +94,29 @@ export class WebserviceService {
     var data = { "local": form[0].local }
     return this.http.post(this.route + "persona/traerlocal", data).toPromise().then(data => data.json());
   }
+  AgregarLocal(formData) {
+    var body = {
+      "descripcion": formData[0].descripcion,
+      "localidad": formData[0].localidad,
+      "calle": formData[0].calle,
+      "numero": formData[0].numero
+    }
+    return this.http.post(this.route + "local/agregar", body).toPromise();
+  }
+  ModificarLocal(formData) {
+    var body = {
+      "descripcion": formData[0].descripcion,
+      "localidad": formData[0].localidad,
+      "calle": formData[0].calle,
+      "numero": formData[0].numero,
+      "idlocal": formData[0].idlocal
+    }
+    return this.http.post(this.route + "local/modificar", body).toPromise();
+  }
+  EliminarLocal(formData) {
+    var data = { "idlocal": formData[0].idlocal }
+    return this.http.post(this.route +"local/eliminar", data).toPromise().then(data => data.json());
+  }  
   /*----------------------------------FIN LOCALES--------------------------------*/
 
   Eliminar(id, clase) {

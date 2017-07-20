@@ -37,9 +37,11 @@ export class UsuariosComponent implements OnInit {
   cuenta: string;
   rol: string;
   user: login;
+  rolLogueado:any;
   formUser: FormGroup;
   constructor(private WebserviceService: WebserviceService, private ModalModule: ModalModule, private router: Router, public formBuilder: FormBuilder) {
     var tk = localStorage.getItem('Token')
+    this.rolLogueado= localStorage.getItem('Rol')
     if (tk == null) {
       alert('Por favor, para continuar logueese');
       this.router.navigate(['Login']);
@@ -68,12 +70,16 @@ export class UsuariosComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.myOptions = [
-      { value: '1', label: 'Administrador' },
-      { value: '2', label: 'Encargado' },
-      { value: '3', label: 'Empleado' },
-      { value: '4', label: 'Cliente' },
-    ];
+    console.info(this.rolLogueado)
+    switch(this.rolLogueado){
+      case "1":
+        this.myOptions = [{ value: '1', label: 'Administrador' },{ value: '2', label: 'Encargado' }, { value: '3', label: 'Empleado' }, { value: '4', label: 'Cliente' },];
+      break;
+      case "2":
+        this.myOptions = [{ value: '3', label: 'Empleado' }, { value: '4', label: 'Cliente' },];
+      break;
+    
+    }
     this.formABMUsuarios = new FormGroup({});
     this.formABMUsuarios.addControl('mySelect', new FormControl(['b', 'c']));
     this.WebserviceService.TraerPersonas()

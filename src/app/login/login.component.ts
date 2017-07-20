@@ -68,6 +68,7 @@ export class LoginComponent implements OnInit {
 
       this.WebserviceService.Login(array).then(data => {
         if (data.length > 0) {
+          var rol=data[0].idrol;
           var array = [{
             "nombre": data[0].nombre, "apellido": data[0].apellido, "cuenta": data[0].cuenta, "mail": data[0].mail, "dni": data[0].dni,
             "idrol": data[0].idrol, "idusuario": data[0].idusuario
@@ -75,6 +76,7 @@ export class LoginComponent implements OnInit {
           this.WebserviceService.CrearToken(array).then(data => {
 
             localStorage.setItem('Token', data);
+            localStorage.setItem('Rol',rol);
             window.location.reload();
             this.router.navigate(['Productos']);
             //this.router.navigate(['Productos']);

@@ -72,6 +72,26 @@ class Persona
 	    $consulta->execute();			
 		return $consulta->fetchAll();	
 	}
+	public static function AgregarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta){
+
+        $sql = " INSERT into productos (descripcion_corta,descripcion_larga) values (:descripcion_corta,:descripcion_larga)";
+			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+			$consulta->bindValue(':descripcion_larga', $descripcion_larga, PDO::PARAM_INT);
+			$consulta->bindValue(':descripcion_corta', $descripcion_corta, PDO::PARAM_STR);						
+		$consulta->execute();
+		$id=persona::UltimoIdProductoAdd();
+		$sql= "INSERT INTO PRECIOS (idprod,precio_costo,precio_venta) values (".$id.",:precio_costo,:precio_venta) ";			
+			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+            $consulta->bindValue(':precio_costo', $precio_costo, PDO::PARAM_STR);
+            $consulta->bindValue(':precio_venta', $precio_venta, PDO::PARAM_STR);			
+			$consulta->execute();
+	}	
+	public static function UltimoIdProductoAdd(){
+		$sql="SELECT  idprod FROM `productos` order by idprod desc LIMIT 1";
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+		$consulta->execute();
+		return $consulta->fetchColumn();	
+	}
 /*----------------------------------FIN PRODUCTOS--------------------------------*/	
 /*----------------------------------INICIO LOCALES--------------------------------*/	
 	public static function TraerLocal($id){	
@@ -87,6 +107,16 @@ class Persona
 		$consulta->execute();
 		return $consulta->fetchAll();	
 	} 
+	public static function AgregarLocalidad($descripcion,$localidad,$calle,$numero){
+
+        $sql = " INSERT into locales (descripcion,localidad,calle,numero) values (:descripcion,:localidad,:calle,:numero)";
+			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+			$consulta->bindValue(':descripcion', $descripcion, PDO::PARAM_INT);
+			$consulta->bindValue(':localidad', $localidad, PDO::PARAM_STR);						
+            $consulta->bindValue(':calle', $calle, PDO::PARAM_STR);
+            $consulta->bindValue(':numero', $numero, PDO::PARAM_STR);			
+			$consulta->execute();
+	}	
 	public static function ModificarLocalidad($descripcion,$localidad,$calle,$numero,$idlocal){
 
         $sql = " UPDATE locales 
@@ -97,6 +127,13 @@ class Persona
 			$consulta->bindValue(':localidad', $localidad, PDO::PARAM_STR);						
             $consulta->bindValue(':calle', $calle, PDO::PARAM_STR);
             $consulta->bindValue(':numero', $numero, PDO::PARAM_STR);
+			$consulta->bindValue(':idlocal', $idlocal, PDO::PARAM_STR);
+			$consulta->execute();
+	}	
+	public static function EliminarLocal($idlocal){
+
+        	$sql = " DELETE from locales where idlocal=:idlocal";
+			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);			
 			$consulta->bindValue(':idlocal', $idlocal, PDO::PARAM_STR);
 			$consulta->execute();
 	}	

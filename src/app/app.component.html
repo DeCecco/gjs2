@@ -30,7 +30,7 @@
         <ul class="nav navbar-nav">
           <li><a routerLink="/Usuarios" routerLinkActive="active">Pedidos</a></li>
           <li><a routerLink="/Productos" routerLinkActive="active">Productos</a></li>
-          <li><a routerLink="/Locales" routerLinkActive="active">Locales</a></li>
+          <li *ngIf="rol==1"><a routerLink="/Locales" routerLinkActive="active">Locales</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Estadisticas <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
@@ -45,7 +45,7 @@
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a routerLink="/Usuarios" routerLinkActive="active">Usuarios</a></li>
+          <li *ngIf="rol==1 || rol==2"><a routerLink="/Usuarios" routerLinkActive="active">Usuarios</a></li>
           <li><a href="#">Registrarse</a></li>
           <li><!--class="active"--><a routerLink="/Login" routerLinkActive="active">Login <span class="sr-only">(current)</span></a></li>
           <li><a href="#">{{usuario}}</a></li>

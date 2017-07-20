@@ -15,9 +15,11 @@ export class AppComponent {
   local: any;
   datosLocal: any;
   img:string;
+  rol:any;
   constructor(private WebserviceService: WebserviceService, private router: Router, private ModalModule: ModalModule) {
     this.verificarToken();
     this.local = '1';
+    this.rol=0;
     this.myOptions = [
       { value: '1', label: 'LOCAL 1' },
       { value: '2', label: 'LOCAL 2' },
@@ -45,7 +47,9 @@ export class AppComponent {
       this.WebserviceService.VerificarToken(array).then(data => {
         if (data) {
           this.WebserviceService.PayLoad(array).then(data => {
-            this.usuario = data.data.nombre;
+            this.usuario = data.data.nombre;            
+            this.rol=data.data.idrol;
+            
             //this.router.navigate(['Productos']);
           })
         } else {
