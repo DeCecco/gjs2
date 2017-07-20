@@ -19,6 +19,7 @@ class Persona
 		$this->sexo = $sexo;
 		$this->password = $password;
 	}
+/*----------------------------------INICIO COMUN A TODAS--------------------------------*/	
 	public static function Login($cuenta,$password){	
 		$sql = "SELECT nombre,apellido,mail,cuenta,idusuario,idrol,estado,dni FROM `usuarios` WHERE cuenta=:cuenta and password=:password";
 		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);		
@@ -27,6 +28,9 @@ class Persona
 		$consulta->execute();
 		return $consulta->fetchAll();	
 	} 
+/*----------------------------------FIN COMUN A TODAS--------------------------------*/		
+
+/*----------------------------------INICIO PERSONAS--------------------------------*/	
 	//OBTENCION DE TODOS LAS PERSONAS DE LA BASE DE DATOS
 	public static function TraerTodasLasPersonas(){
 		$sql = "SELECT u.*,r.descripcion roles FROM usuarios u
@@ -57,7 +61,9 @@ class Persona
 			$consulta->bindValue(':dni', $dni, PDO::PARAM_STR);
 			$consulta->execute();
 	}
-	/*--------------------------------------------------------------------------------------*/
+/*----------------------------------FIN PERSONAS--------------------------------*/		
+
+/*----------------------------------INICIO PRODUCTOS--------------------------------*/	
 	public static function ListarProductos(){
 		$sql = "SELECT productos.*,precios.precio_venta,0 cantidad FROM `productos` 
 				left JOIN `precios` on precios.idprod=productos.idprod
@@ -66,7 +72,8 @@ class Persona
 	    $consulta->execute();			
 		return $consulta->fetchAll();	
 	}
-	/*LOCALES*/
+/*----------------------------------FIN PRODUCTOS--------------------------------*/	
+/*----------------------------------INICIO LOCALES--------------------------------*/	
 	public static function TraerLocal($id){	
 		$sql = "SELECT * from locales where idlocal=:id";
 		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);		
@@ -80,5 +87,18 @@ class Persona
 		$consulta->execute();
 		return $consulta->fetchAll();	
 	} 
-	/**/
+	public static function ModificarLocalidad($descripcion,$localidad,$calle,$numero,$idlocal){
+
+        $sql = " UPDATE locales 
+		set descripcion=:descripcion, localidad=:localidad,calle=:calle,numero=:numero 
+		where idlocal=:idlocal ";
+			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+			$consulta->bindValue(':descripcion', $descripcion, PDO::PARAM_INT);
+			$consulta->bindValue(':localidad', $localidad, PDO::PARAM_STR);						
+            $consulta->bindValue(':calle', $calle, PDO::PARAM_STR);
+            $consulta->bindValue(':numero', $numero, PDO::PARAM_STR);
+			$consulta->bindValue(':idlocal', $idlocal, PDO::PARAM_STR);
+			$consulta->execute();
+	}	
+/*----------------------------------FIN LOCALES--------------------------------*/	
 }

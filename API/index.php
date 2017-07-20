@@ -16,16 +16,8 @@ $app->add(function (Request $request, Response $response, $next) {
             ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
             ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 });
+/*----------------------------------INICIO COMUN A TODAS--------------------------------*/
 
-$app->get('/persona/obtenerTodas', function (Request $request, Response $response){
-    return $response->withJson(Persona::TraerTodasLasPersonas());
-});
-$app->get('/productos/listar', function (Request $request, Response $response){
-    return $response->withJson(Persona::ListarProductos());
-});
-$app->get('/locales/listar', function (Request $request, Response $response){
-    return $response->withJson(Persona::ListarLocales());
-});
 $app->post('/persona/login', function (Request $request, Response $response){
 	$cuenta = $request->getParam('cuenta');	
 	$password = $request->getParam('password');			
@@ -67,11 +59,7 @@ $app->post('/verificarToken', function (Request $request, Response $response) {
 	  $esValido =$response->withJson($esValido, 200); 
       return $esValido;
 });  
-$app->post('/persona/traerlocal', function (Request $request, Response $response) {
-		
-	$local = $request->getParam('local');		            			 	
-    return $response->withJson(Persona::TraerLocal($local));     
-}); 
+
 $app->post('/payLoad', function (Request $request, Response $response) {
 	
 	$token = $request->getParam('token');		          
@@ -79,6 +67,13 @@ $app->post('/payLoad', function (Request $request, Response $response) {
   $newResponse = $response->withJson($payload, 200); 
   return $newResponse;
 });
+/*----------------------------------FIN COMUN A TODAS--------------------------------*/
+
+/*----------------------------------INICIO PERSONAS--------------------------------*/
+$app->get('/persona/obtenerTodas', function (Request $request, Response $response){
+    return $response->withJson(Persona::TraerTodasLasPersonas());
+});
+
 $app->post('/persona/agregar', function (Request $request, Response $response) {    
 	$email = $request->getParam('email');	
 	$rol = $request->getParam('rol');
@@ -102,6 +97,32 @@ $app->post('/persona/modificar', function (Request $request, Response $response)
 $app->post('/persona/eliminar', function (Request $request, Response $response) {		
 	return $response->withJson(Persona::BorrarPersona($request->getParsedBody()));
 });
+
+/*----------------------------------FIN PERSONAS--------------------------------*/
+/*----------------------------------INICIO PRODUCTOS--------------------------------*/
+$app->get('/productos/listar', function (Request $request, Response $response){
+    return $response->withJson(Persona::ListarProductos());
+});
+/*----------------------------------FIN PRODUCTOS--------------------------------*/
+
+/*----------------------------------INICIO LOCALES--------------------------------*/
+$app->get('/locales/listar', function (Request $request, Response $response){
+    return $response->withJson(Persona::ListarLocales());
+});
+$app->post('/persona/traerlocal', function (Request $request, Response $response) {
+		
+	$local = $request->getParam('local');		            			 	
+    return $response->withJson(Persona::TraerLocal($local));     
+}); 
+$app->post('/local/modificar', function (Request $request, Response $response) {    
+	$descripcion = $request->getParam('descripcion');
+	$localidad = $request->getParam('localidad');
+	$calle = $request->getParam('calle');
+	$numero = $request->getParam('numero');
+	$idlocal = $request->getParam('idlocal');
+	return $response->withJson(Persona::ModificarLocalidad($descripcion,$localidad,$calle,$numero,$idlocal));     
+});	
+/*----------------------------------FIN LOCALES--------------------------------*/
 
 $app->run();
 
