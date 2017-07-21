@@ -60,7 +60,11 @@ export class ProductosComponent implements OnInit {
     })
   }
   agregar(pizza) {
+
+
+    var contenido = 0;
     if (typeof this.pedidos != 'undefined') {
+      contenido = 1;
       this.lista.push(pizza);
     } else {
       this.lista.push(pizza);
@@ -128,7 +132,7 @@ export class ProductosComponent implements OnInit {
       "descripcion_corta": this.descripcion_corta, "descripcion_larga": this.descripcion_larga, "precio_costo": this.precio_costo,
       "precio_venta": this.precio_venta, "idprod": this.idprod
     }];
-    
+
     if (x == 1) {
       this.WebserviceService.ModificarProducto(array).then(data => {
         if (data.ok) {
@@ -148,8 +152,8 @@ export class ProductosComponent implements OnInit {
     }
   }
 
-  confirmar(){
-    console.info(this.pedidos)
+  confirmar() {
+    console.info(this.pedidos) 
     console.info(this.ptotal)
   }
 }

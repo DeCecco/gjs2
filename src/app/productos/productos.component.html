@@ -28,7 +28,7 @@
     <h3>Pedido</h3>
     <!--input type="number" [(ngModel)]="self['answer'+index]" class="form-control" name="cantidad" id="cantidad" style="width: 100%;"-->
     <div *ngFor='let value of pedidos let index = index'>      
-      <p><input type="number" id="cantidad+[index]" name="cantidad+[index]" width="100%" style="width: 13%;" [(ngModel)]="value.cantidad" >
+      <p><input type="text" id="cantidad+[index]" value="x1" readonly name="cantidad+[index]" width="100%" style="width: 8%;"   >
         <button class="btn btn-danger btn-xs" (click)="eliminar(value)">-</button>
       ${{value.precio_venta}} - {{value.descripcion_corta}}      
       <p>
