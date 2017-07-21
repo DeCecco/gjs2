@@ -23,22 +23,22 @@ export class ProductosComponent implements OnInit {
   idprod: number;
   disa: boolean;
   ptotal: number;
-  calle:string;
-  ciudad:string;
-  dpto:string;
-  entrecalles:string;
-  localidad:string;
-  cmbClientes=[];
-  cliente:string;
-  numero:number;
-  piso:string;  
+  calle: string;
+  ciudad: string;
+  dpto: string;
+  entrecalles: string;
+  localidad: string;
+  cmbClientes = [];
+  cliente: string;
+  numero: number;
+  piso: string;
   rolId;
   constructor(private WebserviceService: WebserviceService, private router: Router, public formBuilder: FormBuilder) {
     this.ptotal = 0;
     this.lista = [];
     this.cantidad = 0;
     this.disa = false;
-    this.existenP = false;   
+    this.existenP = false;
     this.rolId = localStorage.getItem('Rol')
 
     this.formProductos = formBuilder.group({
@@ -177,49 +177,52 @@ export class ProductosComponent implements OnInit {
   }
 
   confirmar() {
-    
-    
+
+
     if (this.rolId != '4') {
-       
+
       this.comboClientes();
     } else {
       var array = [{ "token": localStorage.getItem('Token') }];
-      this.WebserviceService.PayLoad(array).then(data => {        
-        
+      this.WebserviceService.PayLoad(array).then(data => {
+
         this.datosCliente(data.data.idusuario);
       })
-      
+
     }
 
     console.info(this.pedidos)
     console.info(this.ptotal)
   }
-  comboClientes(){
-    
-    var array=[];
-     this.WebserviceService.cmbClientes().then(data => {            
+  comboClientes() {
+
+    var array = [];
+    array.push({ 'value': 0, 'label': 'Nuevo Cliente' });
+    this.WebserviceService.cmbClientes().then(data => {
       data.forEach(element => {
-        
-        var array2={};
-        array2['value']=element['idusuario'];
-        array2['label']=element['nombre'];        
+
+        var array2 = {};
+        array2['value'] = element['idusuario'];
+        array2['label'] = element['nombre'];
         array.push(array2);
-      });     
-       this.cmbClientes = array;
-      })
+      });
+      console.info(array)
+      this.cmbClientes = array;
+    })
   }
   datosCliente(x) {
-    
-    var dt = [{ "idusuario":x }];
-      this.WebserviceService.datosCliente(dt).then(data => {        
-        this.calle=data[0].calle;
-        this.ciudad=data[0].ciudad;
-        this.dpto=data[0].dpto;
-        this.entrecalles=data[0].entrecalles;
-        this.localidad=data[0].localidad;
-        this.numero=data[0].numero;
-        this.piso=data[0].piso;
-        
+    if (x != 0) {
+      var dt = [{ "idusuario": x }];
+      this.WebserviceService.datosCliente(dt).then(data => {
+        this.calle = data[0].calle;
+        this.ciudad = data[0].ciudad;
+        this.dpto = data[0].dpto;
+        this.entrecalles = data[0].entrecalles;
+        this.localidad = data[0].localidad;
+        this.numero = data[0].numero;
+        this.piso = data[0].piso;
+
       })
+    }
   }
 }

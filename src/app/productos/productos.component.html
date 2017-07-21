@@ -35,7 +35,7 @@
     <div *ngIf="existenP" class="right">SubTotal: ${{ptotal}}</div>
     <div *ngIf="existenP" class="right">Delivery: $40</div>
     <div *ngIf="existenP" class="right">Total: ${{ptotal+40}}</div>
-    <div *ngIf="existenP"><button class="btn btn-primary btn-sm" (click)="confirmPedido.open();confirmar()">Confirmar</button> </div>
+    <div *ngIf="existenP"><button class="btn btn-primary btn-sm" (click)="confirmPedido.open();confirmar()">Continuar</button> </div>
   </div>
 </div>
 
@@ -127,11 +127,16 @@
         <input type="text" [(ngModel)]="comentarios" minlength="1" maxlength="200" formControlName="comentarios" class="form-control"
           id="comentarios" name="comentarios" placeholder="comentarios">
         <div class="alert alert-danger" *ngIf="!formPedido.controls.comentarios.valid">Error los valores ingresados para Comentarios no son validos</div>
-      </div>
+      </div>      
     </form>
+    <div class="form-group col-sm-10">
+        <label for="subtotal">subtotal</label>
+        <input [(ngModel)]="subtotal"  required minlength="4" maxlength="40" name="subtotal" type="text"
+          class="form-control" id="subtotal" placeholder="subtotal">
+      </div>
   </modal-content>
   <modal-footer class="col-sm-5">
-    <button class="btn btn-primary" *ngIf="!disa" [disabled]="!formPedido.valid" (click)="confirmarPedido()">Aceptar</button>
-    <button class="btn " (click)="confirmPedido.close()">Cancelar</button>
+    <button class="btn btn-primary" *ngIf="!disa" [disabled]="!formPedido.valid" (click)="confirmarPedido()">Confirmar</button>
+    <button class="btn " (click)="confirmPedido.close()">Modificar mi pedido</button>
   </modal-footer>
 </modal>
