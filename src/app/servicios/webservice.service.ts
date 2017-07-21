@@ -40,6 +40,13 @@ export class WebserviceService {
     }
     return this.http.post(this.route + "payLoad", data).toPromise().then(data => data.json());
   }
+  datosCliente(form) {
+    var data = {     "idusuario": form[0].idusuario    }    
+    return this.http.post(this.route + "datosclientes", data).toPromise().then(data => data.json());
+  }
+  cmbClientes() {
+    return this.http.get(this.route + "clientes/listar").toPromise().then(data => data.json());
+  }
   /*----------------------------------FIN  COMUN A TODOS--------------------------------*/
   /*----------------------------------INICIO PERSONAS--------------------------------*/
   TraerPersonas() {

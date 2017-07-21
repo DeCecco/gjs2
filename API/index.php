@@ -67,6 +67,16 @@ $app->post('/payLoad', function (Request $request, Response $response) {
   $newResponse = $response->withJson($payload, 200); 
   return $newResponse;
 });
+$app->post('/datosclientes', function (Request $request, Response $response) {
+	
+	$idusuario = $request->getParam('idusuario');		          
+	return $response->withJson(Persona::datosclientes($idusuario));   
+  return $newResponse;
+});
+$app->get('/clientes/listar', function (Request $request, Response $response){
+    return $response->withJson(Persona::ListarClientes());
+});
+
 /*----------------------------------FIN COMUN A TODAS--------------------------------*/
 
 /*----------------------------------INICIO PERSONAS--------------------------------*/

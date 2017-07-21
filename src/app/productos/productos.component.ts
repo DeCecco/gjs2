@@ -15,6 +15,7 @@ export class ProductosComponent implements OnInit {
   cantidad: number;
   existenP: boolean;
   formProductos: FormGroup;
+  formPedido: FormGroup;
   descripcion_corta: string;
   descripcion_larga: string;
   precio_costo: Float32Array;
@@ -22,18 +23,41 @@ export class ProductosComponent implements OnInit {
   idprod: number;
   disa: boolean;
   ptotal: number;
+  calle:string;
+  ciudad:string;
+  dpto:string;
+  entrecalles:string;
+  localidad:string;
+  cmbClientes=[];
+  cliente:string;
+  numero:number;
+  piso:string;  
+  rolId;
   constructor(private WebserviceService: WebserviceService, private router: Router, public formBuilder: FormBuilder) {
     this.ptotal = 0;
     this.lista = [];
     this.cantidad = 0;
     this.disa = false;
-    this.existenP = false;
+    this.existenP = false;   
+    this.rolId = localStorage.getItem('Rol')
+
     this.formProductos = formBuilder.group({
       //VALIDACIONES      
       descripcion_corta: [this.descripcion_corta, Validators.compose([Validators.required, Validators.maxLength(80), Validators.pattern('^[a-zA-Z,.´ ]+$')])],
       descripcion_larga: [this.descripcion_larga, Validators.compose([Validators.required, Validators.maxLength(200), Validators.pattern('^[a-zA-Z,. ]+$')])],
       precio_costo: [this.precio_costo, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
       precio_venta: [this.precio_venta, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
+
+    });
+    this.formPedido = formBuilder.group({
+
+      localidad: [Validators.compose([Validators.required, Validators.maxLength(40), Validators.pattern('^[a-zA-Z,.´ ]+$')])],
+      calle: [Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern('^[a-zA-Z,. ]+$')])],
+      numero: [Validators.compose([Validators.required, Validators.maxLength(5), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
+      piso: [Validators.compose([Validators.required, Validators.maxLength(4), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
+      dpto: [Validators.compose([Validators.required, Validators.maxLength(3), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
+      entrecalles: [Validators.compose([Validators.required, Validators.maxLength(80), Validators.pattern('^[a-zA-Z,.´ ]+$')])],
+      comentarios: [Validators.compose([Validators.required, Validators.maxLength(200), Validators.pattern('^[a-zA-Z,.´ ]+$')])],
 
     });
     var tk = localStorage.getItem('Token')
@@ -153,7 +177,49 @@ export class ProductosComponent implements OnInit {
   }
 
   confirmar() {
-    console.info(this.pedidos) 
+    
+    
+    if (this.rolId != '4') {
+       
+      this.comboClientes();
+    } else {
+      var array = [{ "token": localStorage.getItem('Token') }];
+      this.WebserviceService.PayLoad(array).then(data => {        
+        
+        this.datosCliente(data.data.idusuario);
+      })
+      
+    }
+
+    console.info(this.pedidos)
     console.info(this.ptotal)
+  }
+  comboClientes(){
+    
+    var array=[];
+     this.WebserviceService.cmbClientes().then(data => {            
+      data.forEach(element => {
+        
+        var array2={};
+        array2['value']=element['idusuario'];
+        array2['label']=element['nombre'];        
+        array.push(array2);
+      });     
+       this.cmbClientes = array;
+      })
+  }
+  datosCliente(x) {
+    
+    var dt = [{ "idusuario":x }];
+      this.WebserviceService.datosCliente(dt).then(data => {        
+        this.calle=data[0].calle;
+        this.ciudad=data[0].ciudad;
+        this.dpto=data[0].dpto;
+        this.entrecalles=data[0].entrecalles;
+        this.localidad=data[0].localidad;
+        this.numero=data[0].numero;
+        this.piso=data[0].piso;
+        
+      })
   }
 }

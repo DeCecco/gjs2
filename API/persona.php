@@ -28,6 +28,21 @@ class Persona
 		$consulta->execute();
 		return $consulta->fetchAll();	
 	} 
+	public static function datosclientes($idusuario){
+
+        	$sql = " select * from  `cliente-detalle` where idusuario=:idusuario";
+			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);			
+			$consulta->bindValue(':idusuario', $idusuario, PDO::PARAM_STR);
+			$consulta->execute();
+			return $consulta->fetchAll();	
+	}	
+	public static function ListarClientes(){
+
+        	$sql = " SELECT u.*,c.* FROM `usuarios` u left join `cliente-detalle` c on c.idusuario=u.idusuario WHERE u.idrol=4 ";
+			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);						
+			$consulta->execute();
+			return $consulta->fetchAll();	
+	}		
 /*----------------------------------FIN COMUN A TODAS--------------------------------*/		
 
 /*----------------------------------INICIO PERSONAS--------------------------------*/	

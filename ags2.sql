@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-07-2017 a las 22:39:56
+-- Tiempo de generación: 21-07-2017 a las 22:39:24
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -37,6 +37,13 @@ CREATE TABLE `cliente-detalle` (
   `tel` int(20) NOT NULL,
   `entrecalles` varchar(120) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `cliente-detalle`
+--
+
+INSERT INTO `cliente-detalle` (`idusuario`, `ciudad`, `localidad`, `calle`, `numero`, `piso`, `dpto`, `tel`, `entrecalles`) VALUES
+(6, 'Capital Federal', 'Palermo', 'Ancon', 5390, '4', 'D', 1140920705, 'Av Dorrego y Vias tren mitre');
 
 -- --------------------------------------------------------
 
@@ -82,7 +89,7 @@ CREATE TABLE `locales` (
 INSERT INTO `locales` (`idlocal`, `descripcion`, `localidad`, `calle`, `numero`, `img`) VALUES
 (1, 'Local 1', 'Palermo', 'Av sta Fe', 2580, 'assets\\img\\local1.jpg'),
 (2, 'Local 2', 'Belgrano', 'Av Cabildo', 356, 'assets\\img\\local2.jpg'),
-(3, 'Local 3', 'Recoleta', 'Av Libertador', 1100, 'assets\\img\\local3.jpg');
+(3, 'Local 3', 'Recoleta', 'Av Libertadorr', 1100, 'assets\\img\\local3.jpg');
 
 -- --------------------------------------------------------
 
@@ -100,6 +107,7 @@ CREATE TABLE `pedido-detalle` (
   `piso` int(11) NOT NULL,
   `dpto` varchar(5) COLLATE utf8_spanish_ci NOT NULL,
   `entrecalles` varchar(120) COLLATE utf8_spanish_ci NOT NULL,
+  `comentarios` varchar(500) COLLATE utf8_spanish_ci NOT NULL,
   `precio_venta` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -111,6 +119,7 @@ CREATE TABLE `pedido-detalle` (
 
 CREATE TABLE `pedidos` (
   `idpedido` int(11) NOT NULL,
+  `idusuarioC` int(11) NOT NULL,
   `idusuario` int(11) NOT NULL,
   `idestado` int(11) NOT NULL,
   `idlocal` int(11) NOT NULL,
@@ -160,7 +169,7 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`idprod`, `descripcion_corta`, `descripcion_larga`, `estado`) VALUES
-(1, 'Pizza mozzarella', 'Salsa de tomates frescos, mozzarella, orégano y aceitunas verdes.\r\n', 1),
+(1, 'Pizza mozzarella', 'Salsa de tomates frescos, mozzarella, oregano y aceitunas verdes.', 1),
 (2, 'Pizza mozzarella con anchoas', 'Salsa de tomates frescos, anchoas en aceite, orégano y aceitunas verdes.', 1),
 (3, 'Pizza con anchoas', '', 1),
 (4, 'Pizza napolitana', 'Salsa de tomates frescos, mozzarella, orégano y aceitunas verdes.\r\n', 1),
@@ -229,7 +238,8 @@ INSERT INTO `usuarios` (`idusuario`, `nombre`, `apellido`, `mail`, `dni`, `cuent
 (6, 'Cliente', 'Cliente', 'Cliente@Cliente.com', 897845, 'Cliente', '123456', 4, 1),
 (7, 'Luciana', 'Arrua', 'luarr@gfsa.com', 12451245, 'Luciana', '123456', 2, 1),
 (8, 'nombre', 'apellido', 'email@asd.com', 123123, 'asdasas', '123456', 4, 1),
-(9, 'prueba', 'prueba', 'asda@ds.com', 123123123, 'asddsaasd', '123456', 4, 1);
+(9, 'prueba', 'prueba', 'asda@ds.com', 123123123, 'asddsaasd', '123456', 4, 1),
+(10, 'aaaaaaaaaaaa', 'aaaaaaaaaaaaa', 'aaaaaaaaaa@asaaa.com', 0, 'aaaaaaaaaaaaaaaaa', '123456', 4, 1);
 
 --
 -- Índices para tablas volcadas
@@ -251,7 +261,7 @@ ALTER TABLE `locales`
 -- Indices de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  ADD PRIMARY KEY (`idpedido`,`idusuario`);
+  ADD PRIMARY KEY (`idpedido`,`idusuarioC`);
 
 --
 -- Indices de la tabla `productos`
@@ -287,7 +297,7 @@ ALTER TABLE `estados`
 -- AUTO_INCREMENT de la tabla `locales`
 --
 ALTER TABLE `locales`
-  MODIFY `idlocal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idlocal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
@@ -297,12 +307,12 @@ ALTER TABLE `pedidos`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `idprod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idprod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
