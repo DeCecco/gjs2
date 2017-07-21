@@ -85,6 +85,24 @@ export class WebserviceService {
     
     return this.http.post(this.route + "producto/agregar", body).toPromise();
   }
+  ModificarProducto(formData) {
+    var body = {
+      "descripcion_larga": formData[0].descripcion_larga,
+      "descripcion_corta": formData[0].descripcion_corta,
+      "precio_costo": formData[0].precio_costo,
+      "precio_venta": formData[0].precio_venta,
+      "idprod": formData[0].idprod
+    }
+    console.info(body)
+    return this.http.post(this.route + "producto/modificar", body).toPromise();
+  }
+  EliminarProducto(formData) {
+    var body = {
+      "idprod": formData[0].idprod
+    }
+    console.info(body)
+    return this.http.post(this.route + "producto/eliminar", body).toPromise();
+  }
   /*----------------------------------FIN PRODUCTOS--------------------------------*/
   /*----------------------------------INICIO LOCALES--------------------------------*/
   ListarLocales() {

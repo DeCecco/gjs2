@@ -110,6 +110,18 @@ $app->post('/producto/agregar', function (Request $request, Response $response) 
 	$precio_venta = $request->getParam('precio_venta');	
 	return $response->withJson(Persona::AgregarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta));     
 });	
+$app->post('/producto/modificar', function (Request $request, Response $response) {    
+	$descripcion_larga = $request->getParam('descripcion_larga');
+	$descripcion_corta = $request->getParam('descripcion_corta');
+	$precio_costo = $request->getParam('precio_costo');
+	$precio_venta = $request->getParam('precio_venta');	
+	$idprod = $request->getParam('idprod');	
+	return $response->withJson(Persona::ModificarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta,$idprod));     
+});
+$app->post('/producto/eliminar', function (Request $request, Response $response) {    
+	$idprod = $request->getParam('idprod');	
+	return $response->withJson(Persona::EliminarProducto($idprod));     
+});
 /*----------------------------------FIN PRODUCTOS--------------------------------*/
 
 /*----------------------------------INICIO LOCALES--------------------------------*/

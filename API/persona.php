@@ -65,7 +65,7 @@ class Persona
 
 /*----------------------------------INICIO PRODUCTOS--------------------------------*/	
 	public static function ListarProductos(){
-		$sql = "SELECT productos.*,precios.precio_venta,0 cantidad FROM `productos` 
+		$sql = "SELECT productos.*,precios.precio_venta,precios.precio_costo,0 cantidad,productos.idprod FROM `productos` 
 				left JOIN `precios` on precios.idprod=productos.idprod
 				where productos.estado=1";
         $consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
@@ -80,12 +80,44 @@ class Persona
 			$consulta->bindValue(':descripcion_corta', $descripcion_corta, PDO::PARAM_STR);						
 		$consulta->execute();
 		$id=persona::UltimoIdProductoAdd();
+
 		$sql= "INSERT INTO PRECIOS (idprod,precio_costo,precio_venta) values (".$id.",:precio_costo,:precio_venta) ";			
 			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
             $consulta->bindValue(':precio_costo', $precio_costo, PDO::PARAM_STR);
             $consulta->bindValue(':precio_venta', $precio_venta, PDO::PARAM_STR);			
 			$consulta->execute();
 	}	
+	public static function ModificarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta,$idprod){
+
+        $sql = " UPDATE productos set descripcion_corta=:descripcion_corta,
+			descripcion_larga=:descripcion_larga
+			where idprod=:idprod ";
+			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+			$consulta->bindValue(':descripcion_larga', $descripcion_larga, PDO::PARAM_INT);
+			$consulta->bindValue(':descripcion_corta', $descripcion_corta, PDO::PARAM_STR);						
+			$consulta->bindValue(':idprod', $idprod, PDO::PARAM_STR);
+		$consulta->execute();		
+
+		$sql= "UPDATE PRECIOS set precio_costo=:precio_costo,
+								precio_venta=:precio_venta
+								where idprod=:idprod";			
+			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+            $consulta->bindValue(':precio_costo', $precio_costo, PDO::PARAM_STR);
+            $consulta->bindValue(':precio_venta', $precio_venta, PDO::PARAM_STR);			
+			$consulta->bindValue(':idprod', $idprod, PDO::PARAM_STR);
+			$consulta->execute();
+	}		
+	public static function EliminarProducto($id){
+		$sql=" DELETE from productos where idprod=:id";
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+		$consulta->bindValue(':id', $id, PDO::PARAM_STR);
+		$consulta->execute();
+		$sql=" DELETE from precios where idprod=:id";
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+		$consulta->bindValue(':id', $id, PDO::PARAM_STR);
+		$consulta->execute();
+		return true;	
+	}
 	public static function UltimoIdProductoAdd(){
 		$sql="SELECT  idprod FROM `productos` order by idprod desc LIMIT 1";
 		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);

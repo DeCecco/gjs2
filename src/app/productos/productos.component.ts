@@ -19,17 +19,19 @@ export class ProductosComponent implements OnInit {
   descripcion_larga: string;
   precio_costo: Float32Array;
   precio_venta: Float32Array;
-  idprod:number;
+  idprod: number;
   disa: boolean;
+  ptotal: number;
   constructor(private WebserviceService: WebserviceService, private router: Router, public formBuilder: FormBuilder) {
+    this.ptotal = 0;
     this.lista = [];
     this.cantidad = 0;
     this.disa = false;
     this.existenP = false;
     this.formProductos = formBuilder.group({
       //VALIDACIONES      
-      descripcion_corta: [this.descripcion_corta, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
-      descripcion_larga: [this.descripcion_larga, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
+      descripcion_corta: [this.descripcion_corta, Validators.compose([Validators.required, Validators.maxLength(80), Validators.pattern('^[a-zA-Z,.´ ]+$')])],
+      descripcion_larga: [this.descripcion_larga, Validators.compose([Validators.required, Validators.maxLength(200), Validators.pattern('^[a-zA-Z,. ]+$')])],
       precio_costo: [this.precio_costo, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
       precio_venta: [this.precio_venta, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
 
@@ -58,14 +60,15 @@ export class ProductosComponent implements OnInit {
     })
   }
   agregar(pizza) {
-
     if (typeof this.pedidos != 'undefined') {
       this.lista.push(pizza);
     } else {
       this.lista.push(pizza);
     }
     this.pedidos = this.lista;
-    console.info(this.pedidos);
+
+    this.ptotal = this.ptotal + parseInt(pizza.precio_venta);
+
     if (this.pedidos.length > 0) {
       this.existenP = true;
     } else {
@@ -79,7 +82,7 @@ export class ProductosComponent implements OnInit {
       this.pedidos.forEach(element => {
 
         if (element.idprod == pizza.idprod) {
-          console.info(element)
+          this.ptotal = this.ptotal - pizza.precio_venta;
           this.pedidos.splice(cont, 1);
           throw BreakException;
         }
@@ -88,7 +91,6 @@ export class ProductosComponent implements OnInit {
     } catch (e) {
       if (e !== BreakException) throw e;
     }
-    console.warn(this.pedidos);
     if (this.pedidos.length > 0) {
       this.existenP = true;
     } else {
@@ -96,15 +98,27 @@ export class ProductosComponent implements OnInit {
     }
   }
   eliminarProducto(x) {
-    console.info(x)
+    this.idprod = x.idprod;
+    var array = [{ "idprod": this.idprod }];
+    this.WebserviceService.EliminarProducto(array).then(data => {
+      if (data.ok) {
+        window.location.reload();
+      } else {
+        alert('error al grabar');
+      }
+    })
   }
   modificarProducto(x) {
-    console.info(x)
+    this.descripcion_corta = x.descripcion_corta;
+    this.descripcion_larga = x.descripcion_larga;
+    this.precio_costo = x.precio_costo;
+    this.precio_venta = x.precio_venta;
+    this.idprod = x.idprod;
     this.disa = false;
   }
   alta() {
-    this.descripcion_corta ='';
-    this.descripcion_larga ='';
+    this.descripcion_corta = '';
+    this.descripcion_larga = '';
     this.precio_costo;
     this.precio_venta;
     this.disa = true;
@@ -114,14 +128,15 @@ export class ProductosComponent implements OnInit {
       "descripcion_corta": this.descripcion_corta, "descripcion_larga": this.descripcion_larga, "precio_costo": this.precio_costo,
       "precio_venta": this.precio_venta, "idprod": this.idprod
     }];
+    
     if (x == 1) {
-      /*this.WebserviceService.ModificarProducto(array).then(data => {
+      this.WebserviceService.ModificarProducto(array).then(data => {
         if (data.ok) {
           window.location.reload();
         } else {
           alert('error al grabar');
         }
-      })*/
+      })
     } else {
       this.WebserviceService.AgregarProducto(array).then(data => {
         if (data.ok) {
@@ -131,5 +146,10 @@ export class ProductosComponent implements OnInit {
         }
       })
     }
+  }
+
+  confirmar(){
+    console.info(this.pedidos)
+    console.info(this.ptotal)
   }
 }
