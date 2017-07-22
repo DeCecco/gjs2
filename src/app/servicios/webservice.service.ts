@@ -110,6 +110,23 @@ export class WebserviceService {
     console.info(body)
     return this.http.post(this.route + "producto/eliminar", body).toPromise();
   }
+  NuevoPedido(datoCliente,datoPedido) {
+    var body = {
+      "localidad": datoCliente[0].localidad,
+      "calle": datoCliente[0].calle,
+      "numero": datoCliente[0].numero,
+      "piso": datoCliente[0].piso,
+      "dpto": datoCliente[0].dpto,
+      "entrecalles": datoCliente[0].entrecalles,
+      "comentarios": datoCliente[0].comentarios,
+      "idusuarioC": datoCliente[0].idusuarioC,      
+      "local": datoCliente[0].local,
+      "idusuario": datoCliente[0].idusuario,
+      "pedidos":datoPedido
+    }
+    
+    return this.http.post(this.route + "pedido/nuevo", body).toPromise();
+  }
   /*----------------------------------FIN PRODUCTOS--------------------------------*/
   /*----------------------------------INICIO LOCALES--------------------------------*/
   ListarLocales() {

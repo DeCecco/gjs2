@@ -32,14 +32,23 @@ export class ProductosComponent implements OnInit {
   cliente: string;
   numero: number;
   piso: string;
+  comentarios: string;
   rolId;
+  idusuarioC: string;
+  usuario: string;
   constructor(private WebserviceService: WebserviceService, private router: Router, public formBuilder: FormBuilder) {
     this.ptotal = 0;
     this.lista = [];
     this.cantidad = 0;
     this.disa = false;
     this.existenP = false;
+    this.comentarios = '';
     this.rolId = localStorage.getItem('Rol')
+    var array = [{ "token": localStorage.getItem('Token') }];
+
+    this.WebserviceService.PayLoad(array).then(data => {      
+      this.usuario = data.data.idusuario;      
+    })
 
     this.formProductos = formBuilder.group({
       //VALIDACIONES      
@@ -60,6 +69,7 @@ export class ProductosComponent implements OnInit {
       comentarios: [Validators.compose([Validators.required, Validators.maxLength(200), Validators.pattern('^[a-zA-Z,.´ ]+$')])],
 
     });
+
     var tk = localStorage.getItem('Token')
     if (tk == null) {
       alert('Por favor, para continuar logueese');
@@ -211,6 +221,7 @@ export class ProductosComponent implements OnInit {
     })
   }
   datosCliente(x) {
+    this.idusuarioC = x;
     if (x != 0) {
       var dt = [{ "idusuario": x }];
       this.WebserviceService.datosCliente(dt).then(data => {
@@ -224,5 +235,23 @@ export class ProductosComponent implements OnInit {
 
       })
     }
+  }
+  confirmarPedido() {
+    var local = localStorage.getItem('Local');
+    
+    var data = [{
+      "localidad": this.localidad, "calle": this.calle, "numero": this.numero, "piso": this.piso,
+      "dpto": this.dpto, "entrecalles": this.entrecalles, "comentarios": this.comentarios, "idusuarioC": this.idusuarioC
+      , "local": local,"idusuario":this.usuario
+    }];
+
+    this.WebserviceService.NuevoPedido(data,this.pedidos).then(data=>{
+      if (data.ok) {
+          window.location.reload();
+        } else {
+          alert('error al grabar');
+        }
+    })
+
   }
 }

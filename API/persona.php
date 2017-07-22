@@ -79,11 +79,69 @@ class Persona
 /*----------------------------------FIN PERSONAS--------------------------------*/		
 
 /*----------------------------------INICIO PRODUCTOS--------------------------------*/	
+	public static function requisitoATodos($plan,$requisito,$materia)
+	{ 
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+
+
+		if($materia==999){
+			$consulta =$objetoAccesoDato->RetornarConsulta(" update alumnos.materia
+			set requisito=:requisito
+			where left(codigo_unificado,length(codigo_unificado)-3) =:plan
+				");		
+			$consulta->bindValue(':plan',$plan, PDO::PARAM_INT);			
+			$consulta->bindValue(':requisito',$requisito, PDO::PARAM_STR);
+			$consulta->execute();	 			
+		}else{			
+			foreach ($materia as $key => $value) {			
+			$consulta =$objetoAccesoDato->RetornarConsulta(" UPDATE alumnos.materia 
+				SET requisito=:requisito
+				where codigo_unificado=:materia
+				");		 				
+			$consulta->bindValue(':requisito',$requisito, PDO::PARAM_STR);
+			$consulta->bindValue(':materia',$value->codigo_unificado, PDO::PARAM_STR);
+			$consulta->execute();	 			
+			}
+		}		
+		return true;
+			
+	}
+	public static function NuevoPedido($localidad,$calle,$numero,$piso,$dpto,$entrecalles,$comentarios,$idusuarioC,
+	$local,$idusuario,$pedidos){
+
+		$sql = "INSERT INTO pedidos (idusuarioc,idusuario,idestado,idlocal,localidad,calle,numero,piso,dpto,entrecalles,comentarios)
+		values (:idusuarioc,:idusuario,1,:local,:localidad,:calle,:numero,:piso,:dpto,:entrecalles,:comentarios)";
+        $consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+		$consulta->bindValue(':localidad', $localidad, PDO::PARAM_STR);
+		$consulta->bindValue(':calle', $calle, PDO::PARAM_STR);
+		$consulta->bindValue(':numero', $numero, PDO::PARAM_STR);
+		$consulta->bindValue(':piso', $piso, PDO::PARAM_STR);
+		$consulta->bindValue(':dpto', $dpto, PDO::PARAM_STR);
+		$consulta->bindValue(':entrecalles', $entrecalles, PDO::PARAM_STR);
+		$consulta->bindValue(':comentarios', $comentarios, PDO::PARAM_STR);
+		$consulta->bindValue(':idusuarioc', $idusuarioC, PDO::PARAM_STR);
+		$consulta->bindValue(':local', $local, PDO::PARAM_STR);
+		$consulta->bindValue(':idusuario', $idusuario, PDO::PARAM_STR);
+	    $consulta->execute();		
+
+		$id=Persona::UltimoIdPedidoAdd();			
+		foreach($pedidos as $key => $value){			
+			$sql = "INSERT INTO `pedido-detalle` (idpedido,idproducto,cantidad,precio_venta)
+			values (".$id.",:idproducto,1,:precio_venta)";
+        	$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+			$consulta->bindValue(':idproducto', $value['idprod'], PDO::PARAM_STR);
+			//$consulta->bindValue(':cantidad', $value['cantidad'], PDO::PARAM_STR);
+			$consulta->bindValue(':precio_venta', $value['precio_venta'], PDO::PARAM_STR);
+			 $consulta->execute();	
+		}		
+		return true;	
+	}
 	public static function ListarProductos(){
 		$sql = "SELECT productos.*,precios.precio_venta,precios.precio_costo,0 cantidad,productos.idprod FROM `productos` 
 				left JOIN `precios` on precios.idprod=productos.idprod
 				where productos.estado=1";
         $consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+		
 	    $consulta->execute();			
 		return $consulta->fetchAll();	
 	}
@@ -135,6 +193,12 @@ class Persona
 	}
 	public static function UltimoIdProductoAdd(){
 		$sql="SELECT  idprod FROM `productos` order by idprod desc LIMIT 1";
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+		$consulta->execute();
+		return $consulta->fetchColumn();	
+	}
+	public static function UltimoIdPedidoAdd(){
+		$sql="SELECT  idpedido FROM `pedidos` order by idpedido desc LIMIT 1";
 		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
 		$consulta->execute();
 		return $consulta->fetchColumn();	

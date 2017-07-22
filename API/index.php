@@ -128,6 +128,20 @@ $app->post('/producto/modificar', function (Request $request, Response $response
 	$idprod = $request->getParam('idprod');	
 	return $response->withJson(Persona::ModificarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta,$idprod));     
 });
+$app->post('/pedido/nuevo', function (Request $request, Response $response) {   
+	$localidad = $request->getParam('localidad');
+	$calle = $request->getParam('calle');
+	$numero = $request->getParam('numero');
+	$piso = $request->getParam('piso');
+	$dpto = $request->getParam('dpto');
+	$entrecalles = $request->getParam('entrecalles');
+	$comentarios = $request->getParam('comentarios');
+	$idusuarioC = $request->getParam('idusuarioC');
+	$local = $request->getParam('local');
+	$idusuario = $request->getParam('idusuario');
+	$pedidos  = $request->getParam('pedidos');	
+	return $response->withJson(Persona::NuevoPedido($localidad,$calle,$numero,$piso,$dpto,$entrecalles,$comentarios,$idusuarioC,$local,$idusuario,$pedidos));     
+});
 $app->post('/producto/eliminar', function (Request $request, Response $response) {    
 	$idprod = $request->getParam('idprod');	
 	return $response->withJson(Persona::EliminarProducto($idprod));     

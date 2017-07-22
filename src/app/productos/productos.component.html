@@ -43,7 +43,7 @@
 <modal #myModal modalClass="modal-lg">
   <modal-header>
     <h3>Alta de Producto</h3>
-  </modal-header>   
+  </modal-header>
   <modal-content>
     <form class="col-sm-10" [formGroup]="formProductos">
       <div class="form-group col-sm-10">
@@ -51,13 +51,13 @@
         <input [(ngModel)]="descripcion_corta" formControlName="descripcion_corta" required minlength="4" maxlength="80" name="descripcion_corta"
           type="text" class="form-control" id="descripcion_corta" placeholder="descripcion_corta">
         <div class="alert alert-danger" *ngIf="!formProductos.controls.descripcion_corta.valid">Error los valores ingresados para Descripcion Corta no son validos</div>
-        
+
         <label for="descripcion_larga">Descripcion Larga</label>
         <input type="text" [(ngModel)]="descripcion_larga" formControlName="descripcion_larga" class="form-control" id="descripcion_larga"
           name="descripcion_larga" placeholder="descripcion_larga">
         <div class="alert alert-danger" *ngIf="!formProductos.controls.descripcion_larga.valid">Error los valores ingresados para Descripcion Larga no son validos</div>
       </div>
-      
+
       <div class="form-group col-sm-10">
         <label for="precio_costo">Precio Costo</label>
         <input type="text" [(ngModel)]="precio_costo" formControlName="precio_costo" class="form-control" id="precio_costo" name="precio_costo"
@@ -82,11 +82,12 @@
   <modal-header>
     <h3>Confirmacion de Pedido</h3>
   </modal-header>
-  
+
   <modal-content>
     <div *ngIf="rolId!=4">
       <label for="Cli">Seleccione un cliente</label>
-      <ng-select [multiple]="false" [options]="cmbClientes" [ngModelOptions]="{standalone: true}"  (selected)="datosCliente(cliente)" [(ngModel)]="cliente"></ng-select>
+      <ng-select [multiple]="false" [options]="cmbClientes" [ngModelOptions]="{standalone: true}" (selected)="datosCliente(cliente)"
+        [(ngModel)]="cliente"></ng-select>
     </div>
     <form class="col-sm-10" [formGroup]="formPedido">
       <div class="form-group col-sm-10">
@@ -124,16 +125,28 @@
       </div>
       <div class="form-group col-sm-10">
         <label for="comentarios">Comentarios</label>
-        <input type="text" [(ngModel)]="comentarios" minlength="1" maxlength="200" formControlName="comentarios" class="form-control"
-          id="comentarios" name="comentarios" placeholder="comentarios">
+        <textarea name="textarea" [(ngModel)]="comentarios" style="width:544px;height:150px;" formControlName="comentarios"></textarea>
+
+        <!--input type="text" [(ngModel)]="comentarios" minlength="1" maxlength="200" formControlName="comentarios" class="form-control"
+          id="comentarios" name="comentarios" placeholder="comentarios"-->
         <div class="alert alert-danger" *ngIf="!formPedido.controls.comentarios.valid">Error los valores ingresados para Comentarios no son validos</div>
-      </div>      
+      </div>
+      <div class="form-group col-sm-10">
+        <div *ngFor='let value of pedidos let index = index'>
+          <p><input type="text" id="cantidad+[index]" value="x1" readonly name="cantidad+[index]" width="100%" style="width: 8%;">
+            ${{value.precio_venta}} - {{value.descripcion_corta}}
+            <p>
+        </div>
+        <div class="right">SubTotal: ${{ptotal}}</div>
+        <div class="right">Delivery: $40</div>
+        <div class="right">Total: ${{ptotal+40}}</div>
+      </div>
     </form>
     <div class="form-group col-sm-10">
-        <label for="subtotal">subtotal</label>
-        <input [(ngModel)]="subtotal"  required minlength="4" maxlength="40" name="subtotal" type="text"
-          class="form-control" id="subtotal" placeholder="subtotal">
-      </div>
+      <label for="subtotal">subtotal</label>
+      <input [(ngModel)]="subtotal" required minlength="4" maxlength="40" name="subtotal" type="text" class="form-control" id="subtotal"
+        placeholder="subtotal">
+    </div>
   </modal-content>
   <modal-footer class="col-sm-5">
     <button class="btn btn-primary" *ngIf="!disa" [disabled]="!formPedido.valid" (click)="confirmarPedido()">Confirmar</button>
