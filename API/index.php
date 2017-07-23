@@ -118,15 +118,17 @@ $app->post('/producto/agregar', function (Request $request, Response $response) 
 	$descripcion_corta = $request->getParam('descripcion_corta');
 	$precio_costo = $request->getParam('precio_costo');
 	$precio_venta = $request->getParam('precio_venta');	
-	return $response->withJson(Persona::AgregarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta));     
+	$promocion = $request->getParam('promocion');	
+	return $response->withJson(Persona::AgregarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta,$promocion));     
 });	
 $app->post('/producto/modificar', function (Request $request, Response $response) {    
 	$descripcion_larga = $request->getParam('descripcion_larga');
 	$descripcion_corta = $request->getParam('descripcion_corta');
 	$precio_costo = $request->getParam('precio_costo');
 	$precio_venta = $request->getParam('precio_venta');	
+	$promocion = $request->getParam('promocion');	
 	$idprod = $request->getParam('idprod');	
-	return $response->withJson(Persona::ModificarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta,$idprod));     
+	return $response->withJson(Persona::ModificarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta,$idprod,$promocion));     
 });
 $app->post('/pedido/nuevo', function (Request $request, Response $response) {   
 	$localidad = $request->getParam('localidad');

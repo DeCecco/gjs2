@@ -36,12 +36,14 @@ export class ProductosComponent implements OnInit {
   rolId;
   idusuarioC: string;
   usuario: string;
+  promocion:boolean;
   constructor(private WebserviceService: WebserviceService, private router: Router, public formBuilder: FormBuilder) {
     this.ptotal = 0;
     this.lista = [];
     this.cantidad = 0;
     this.disa = false;
     this.existenP = false;
+    this.promocion=false;
     this.comentarios = '';
     this.rolId = localStorage.getItem('Rol')
     var array = [{ "token": localStorage.getItem('Token') }];
@@ -56,6 +58,7 @@ export class ProductosComponent implements OnInit {
       descripcion_larga: [this.descripcion_larga, Validators.compose([Validators.required, Validators.maxLength(200), Validators.pattern('^[a-zA-Z,. ]+$')])],
       precio_costo: [this.precio_costo, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
       precio_venta: [this.precio_venta, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
+      promocion:[this.promocion]
 
     });
     this.formPedido = formBuilder.group({
@@ -147,11 +150,13 @@ export class ProductosComponent implements OnInit {
     })
   }
   modificarProducto(x) {
+    console.info(x)
     this.descripcion_corta = x.descripcion_corta;
     this.descripcion_larga = x.descripcion_larga;
     this.precio_costo = x.precio_costo;
     this.precio_venta = x.precio_venta;
     this.idprod = x.idprod;
+    this.promocion = x.esoferta;
     this.disa = false;
   }
   alta() {
@@ -159,14 +164,15 @@ export class ProductosComponent implements OnInit {
     this.descripcion_larga = '';
     this.precio_costo;
     this.precio_venta;
+    this.promocion=false;
     this.disa = true;
   }
-  update(x) {
+  update(x) {    
     var array = [{
       "descripcion_corta": this.descripcion_corta, "descripcion_larga": this.descripcion_larga, "precio_costo": this.precio_costo,
-      "precio_venta": this.precio_venta, "idprod": this.idprod
+      "precio_venta": this.precio_venta, "idprod": this.idprod,"promocion":this.promocion
     }];
-
+    
     if (x == 1) {
       this.WebserviceService.ModificarProducto(array).then(data => {
         if (data.ok) {

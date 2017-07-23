@@ -145,12 +145,13 @@ class Persona
 	    $consulta->execute();			
 		return $consulta->fetchAll();	
 	}
-	public static function AgregarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta){
+	public static function AgregarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta,$promocion){
 
-        $sql = " INSERT into productos (descripcion_corta,descripcion_larga) values (:descripcion_corta,:descripcion_larga)";
+        $sql = " INSERT into productos (descripcion_corta,descripcion_larga,esoferta) values (:descripcion_corta,:descripcion_larga,:promocion)";
 			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
 			$consulta->bindValue(':descripcion_larga', $descripcion_larga, PDO::PARAM_INT);
 			$consulta->bindValue(':descripcion_corta', $descripcion_corta, PDO::PARAM_STR);						
+			$consulta->bindValue(':promocion', $promocion, PDO::PARAM_STR);						
 		$consulta->execute();
 		$id=persona::UltimoIdProductoAdd();
 
@@ -160,15 +161,17 @@ class Persona
             $consulta->bindValue(':precio_venta', $precio_venta, PDO::PARAM_STR);			
 			$consulta->execute();
 	}	
-	public static function ModificarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta,$idprod){
+	public static function ModificarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta,$idprod,$promocion){
 
         $sql = " UPDATE productos set descripcion_corta=:descripcion_corta,
-			descripcion_larga=:descripcion_larga
+			descripcion_larga=:descripcion_larga,
+			esoferta=:promocion
 			where idprod=:idprod ";
 			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
 			$consulta->bindValue(':descripcion_larga', $descripcion_larga, PDO::PARAM_INT);
 			$consulta->bindValue(':descripcion_corta', $descripcion_corta, PDO::PARAM_STR);						
 			$consulta->bindValue(':idprod', $idprod, PDO::PARAM_STR);
+			$consulta->bindValue(':promocion', $promocion, PDO::PARAM_STR);	
 		$consulta->execute();		
 
 		$sql= "UPDATE PRECIOS set precio_costo=:precio_costo,
