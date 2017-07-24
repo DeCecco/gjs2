@@ -59,8 +59,17 @@ export class WebserviceService {
       "nombre": formData[0].nombre,
       "apellido": formData[0].apellido,
       "dni": formData[0].dni,
-      "cuenta": formData[0].cuenta
+      "cuenta": formData[0].cuenta,
+      "ciudad": formData[0].ciudad,
+      "localidad": formData[0].localidad,
+      "calle": formData[0].calle,
+      "numero": formData[0].numero,
+      "piso": formData[0].piso,
+      "dpto": formData[0].dpto,
+      "tel": formData[0].tel,
+      "entrecalles": formData[0].entrecalles,
     }
+    console.info(body)
     return this.http.post(this.route + "persona/agregar", body).toPromise();
   }
   ModificarPersona(formData) {

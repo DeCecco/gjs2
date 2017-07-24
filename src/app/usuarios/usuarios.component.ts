@@ -37,11 +37,20 @@ export class UsuariosComponent implements OnInit {
   cuenta: string;
   rol: string;
   user: login;
-  rolLogueado:any;
+  rolLogueado: any;
   formUser: FormGroup;
+  ciudad: string;
+  localidad: string;
+  calle: string;
+  numero: number;
+  piso: string;
+  dpto: string;
+  tel: string;
+  entrecalles: string;
+  disa:number;
   constructor(private WebserviceService: WebserviceService, private ModalModule: ModalModule, private router: Router, public formBuilder: FormBuilder) {
     var tk = localStorage.getItem('Token')
-    this.rolLogueado= localStorage.getItem('Rol')
+    this.rolLogueado = localStorage.getItem('Rol')
     if (tk == null) {
       alert('Por favor, para continuar logueese');
       this.router.navigate(['Login']);
@@ -57,34 +66,42 @@ export class UsuariosComponent implements OnInit {
         }
       })
     }
-    this.rol='4';
+    //this.rol = '4';
     this.formUser = formBuilder.group({
       //VALIDACIONES      
-      nombre: [this.nombre, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('^[a-zA-Z]+$')])],         
-      apellido: [this.apellido, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],      
+      nombre: [this.nombre, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('^[a-zA-Z]+$')])],
+      apellido: [this.apellido, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
       email: [this.email, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)])],
       rol: [this.rol, Validators.compose([Validators.required])],
-      dni: [this.dni, Validators.compose([Validators.required])/*, Validators.minLength(8),Validators.pattern('^(([1-9]*)|(([1-9]*)\.([0-9]*)))$')*/],      
-      cuenta: [this.cuenta, Validators.compose([Validators.required, Validators.maxLength(30), Validators.minLength(5),Validators.pattern('^[a-zA-Z]+$')])]
+      dni: [this.dni, Validators.compose([Validators.required])/*, Validators.minLength(8),Validators.pattern('^(([1-9]*)|(([1-9]*)\.([0-9]*)))$')*/],
+      cuenta: [this.cuenta, Validators.compose([Validators.required, Validators.maxLength(30), Validators.minLength(5), Validators.pattern('^[a-zA-Z]+$')])],
+      ciudad: [this.ciudad, Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
+      localidad: [this.localidad, Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
+      calle: [this.calle, Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
+      numero: [this.numero, Validators.compose([Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
+      piso: [this.piso, Validators.compose([Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
+      dpto: [this.dpto, Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z]$')])],
+      tel: [this.tel, Validators.compose([Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
+      entrecalles: [this.entrecalles, Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
     });
   }
 
   ngOnInit() {
-    console.info(this.rolLogueado)
-    switch(this.rolLogueado){
+
+    switch (this.rolLogueado) {
       case "1":
-        this.myOptions = [{ value: '1', label: 'Administrador' },{ value: '2', label: 'Encargado' }, { value: '3', label: 'Empleado' }, { value: '4', label: 'Cliente' },];
-      break;
+        this.myOptions = [{ value: '1', label: 'Administrador' }, { value: '2', label: 'Encargado' }, { value: '3', label: 'Empleado' }, { value: '4', label: 'Cliente' },];
+        break;
       case "2":
         this.myOptions = [{ value: '3', label: 'Empleado' }, { value: '4', label: 'Cliente' },];
-      break;
-    
+        break;
+
     }
     this.formABMUsuarios = new FormGroup({});
     this.formABMUsuarios.addControl('mySelect', new FormControl(['b', 'c']));
     this.WebserviceService.TraerPersonas()
       .then(data => {
-
+        console.info(data)
         this.data = data;
 
         this.settings = {
@@ -203,14 +220,50 @@ export class UsuariosComponent implements OnInit {
     }];
     console.warn(e)
   }
-  crear() {
+  modificar(x) {
+    this.disa=0;
+    this.nombre = x.nombre;
+    this.apellido = x.apellido;
+    this.email = x.mail;
+    this.rol = ""+x.idrol+"";
+    this.dni = x.dni;
+    this.cuenta = x.cuenta;
+    this.ciudad = x.ciudad;
+    this.localidad = x.localidad;
+    this.calle = x.calle;
+    this.numero = x.numero;
+    this.piso = x.piso;
+    this.dpto = x.dpto;
+    this.tel = x.tel;
+    this.entrecalles = x.entrecalles;
+  }
+  alta(x) {
+    this.disa=1;
+    this.nombre ='';
+    this.apellido ='';
+    this.email ='';
+    this.rol ='4';
+    this.dni =null;
+    this.cuenta ='';
+    this.ciudad ='';
+    this.localidad ='';
+    this.calle ='';
+    this.numero =null;
+    this.piso ='';
+    this.dpto ='';
+    this.tel ='';
+    this.entrecalles ='';
+  }
+  crear(x) {
     var array = [{
       "nombre": this.nombre, "apellido": this.apellido, "email": this.email, "rol": this.rol, "dni": this.dni, "cuenta": this.cuenta,
+      "ciudad": this.ciudad, "localidad": this.localidad, "calle": this.calle, "numero": this.numero, "piso": this.piso, "dpto": this.dpto,
+      "tel": this.tel, "entrecalles": this.entrecalles,
     }];
-    console.info(array);
+    console.info(x);
     this.WebserviceService.AgregarPersona(array).then(data => {
       if (data.ok) {
-        
+
         window.location.reload();
       } else {
         alert('error')

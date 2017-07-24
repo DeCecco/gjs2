@@ -48,9 +48,11 @@ class Persona
 /*----------------------------------INICIO PERSONAS--------------------------------*/	
 	//OBTENCION DE TODOS LAS PERSONAS DE LA BASE DE DATOS
 	public static function TraerTodasLasPersonas(){
-		$sql = "SELECT u.*,r.descripcion roles FROM usuarios u
-				left join roles r ON  u.idrol=r.idrol
-				WHERE u.estado=1";
+		$sql = "SELECT u.*,r.descripcion roles,c.* FROM usuarios u 
+				left join roles r ON u.idrol=r.idrol 
+				left join `cliente-detalle` c on c.idusuario=u.idusuario
+				WHERE u.estado=1
+		";
         $consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
 	    $consulta->execute();			
 		return $consulta->fetchAll(PDO::FETCH_ASSOC);	
@@ -63,7 +65,7 @@ class Persona
 		$consulta->execute();
 		return true;	
 	} 
-	public static function InsertarPersona($email,$rol,$nombre,$apellido,$dni,$cuenta){
+	public static function InsertarPersona($email,$rol,$nombre,$apellido,$dni,$cuenta,$ciudad,$localidad,$calle,$numero,$piso,$dpto,$tel,$entrecalles){
 
         $sql = 'INSERT INTO usuarios (nombre,apellido,mail,dni,cuenta,password,idrol,estado)
 		VALUES (:nombre, :apellido,:email,:dni,:cuenta,"123456",:rol,"1")';
@@ -75,6 +77,27 @@ class Persona
 			$consulta->bindValue(':cuenta', $cuenta, PDO::PARAM_STR);
 			$consulta->bindValue(':dni', $dni, PDO::PARAM_STR);
 			$consulta->execute();
+		if($rol==4){
+			$id=persona::UltimoIdusuario();
+			 $sql = "INSERT INTO `cliente-detalle` (idusuario,ciudad,localidad,calle,numero,piso,dpto,tel,entrecalles)
+		VALUES (".$id.", :ciudad,:localidad,:calle,:numero,:piso,:dpto,:tel,:entrecalles)";
+			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+			$consulta->bindValue(':ciudad', $ciudad, PDO::PARAM_INT);
+			$consulta->bindValue(':localidad', $localidad, PDO::PARAM_STR);						
+            $consulta->bindValue(':calle', $calle, PDO::PARAM_STR);
+            $consulta->bindValue(':numero', $numero, PDO::PARAM_STR);
+			$consulta->bindValue(':piso', $piso, PDO::PARAM_STR);
+			$consulta->bindValue(':dpto', $dpto, PDO::PARAM_STR);
+			$consulta->bindValue(':tel', $tel, PDO::PARAM_STR);
+			$consulta->bindValue(':entrecalles', $entrecalles, PDO::PARAM_STR);
+			$consulta->execute();
+		}
+	}
+	public static function UltimoIdusuario(){
+		$sql="SELECT  idusuario FROM `usuarios` order by idusuario desc LIMIT 1";
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+		$consulta->execute();
+		return $consulta->fetchColumn();	
 	}
 /*----------------------------------FIN PERSONAS--------------------------------*/		
 
@@ -266,6 +289,16 @@ class Persona
 				left join `usuarios` u on (p.idusuario=u.idusuario)
 				where p.idestado=1 and u.idrol=3
 				GROUP by p.idlocal,p.idusuario";
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
+		$consulta->execute();
+		return $consulta->fetchAll();	
+	} 
+	public static function VentasPorClientes(){	
+		$sql = "SELECT count(p.idpedido) total,p.idusuario,u.nombre
+				FROM `pedidos`  p 
+				left join `usuarios` u on (p.idusuario=u.idusuario)
+				where p.idestado=1 and u.idrol=4
+				GROUP by p.idusuario";
 		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
 		$consulta->execute();
 		return $consulta->fetchAll();	

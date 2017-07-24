@@ -91,7 +91,15 @@ $app->post('/persona/agregar', function (Request $request, Response $response) {
 	$apellido = $request->getParam('apellido');
 	$dni = $request->getParam('dni');
 	$cuenta = $request->getParam('cuenta');
-	return $response->withJson(Persona::InsertarPersona($email,$rol,$nombre,$apellido,$dni,$cuenta));     
+	$ciudad = $request->getParam('ciudad');
+    $localidad =$request->getParam('localidad');
+    $calle=$request->getParam('calle');
+    $numero=$request->getParam('numero');
+    $piso=$request->getParam('piso');
+    $dpto=$request->getParam('dpto');
+    $tel=$request->getParam('tel');
+    $entrecalles=$request->getParam('entrecalles');
+	return $response->withJson(Persona::InsertarPersona($email,$rol,$nombre,$apellido,$dni,$cuenta,$ciudad,$localidad,$calle,$numero,$piso,$dpto,$tel,$entrecalles));     
 });	/*
 $app->post('/persona/modificar', function (Request $request, Response $response) {    
 	$email = $request->getParam('email');
