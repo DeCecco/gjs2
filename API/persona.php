@@ -259,6 +259,17 @@ class Persona
 		$consulta->execute();
 		return $consulta->fetchAll();	
 	} 
+	
+	public static function VentasPorLocalyEmpleado(){	
+		$sql = "SELECT count(p.idpedido) total,p.idlocal,p.idusuario,u.nombre
+				FROM `pedidos`  p 
+				left join `usuarios` u on (p.idusuario=u.idusuario)
+				where p.idestado=1 and u.idrol=3
+				GROUP by p.idlocal,p.idusuario";
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
+		$consulta->execute();
+		return $consulta->fetchAll();	
+	} 
 /*----------------------------------FIN ESTADISTICAS--------------------------------*/
 
 }
