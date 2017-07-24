@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-07-2017 a las 22:39:24
+-- Tiempo de generación: 24-07-2017 a las 02:11:04
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -53,8 +53,17 @@ INSERT INTO `cliente-detalle` (`idusuario`, `ciudad`, `localidad`, `calle`, `num
 
 CREATE TABLE `estados` (
   `idestado` int(11) NOT NULL,
-  `descripcion` int(11) NOT NULL
+  `descripcion` varchar(30) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `estados`
+--
+
+INSERT INTO `estados` (`idestado`, `descripcion`) VALUES
+(1, 'Pendiente'),
+(2, 'Cancelado'),
+(3, 'Finalizado');
 
 -- --------------------------------------------------------
 
@@ -101,15 +110,23 @@ CREATE TABLE `pedido-detalle` (
   `idpedido` int(11) NOT NULL,
   `idproducto` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
-  `localidad` varchar(60) COLLATE utf8_spanish_ci NOT NULL,
-  `calle` varchar(60) COLLATE utf8_spanish_ci NOT NULL,
-  `numero` int(11) NOT NULL,
-  `piso` int(11) NOT NULL,
-  `dpto` varchar(5) COLLATE utf8_spanish_ci NOT NULL,
-  `entrecalles` varchar(120) COLLATE utf8_spanish_ci NOT NULL,
-  `comentarios` varchar(500) COLLATE utf8_spanish_ci NOT NULL,
   `precio_venta` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `pedido-detalle`
+--
+
+INSERT INTO `pedido-detalle` (`idpedido`, `idproducto`, `cantidad`, `precio_venta`) VALUES
+(4, 1, 1, '164'),
+(4, 2, 1, '172'),
+(4, 3, 1, '146'),
+(5, 1, 1, '164'),
+(5, 2, 1, '172'),
+(5, 3, 1, '146'),
+(6, 1, 1, '164'),
+(6, 2, 1, '172'),
+(6, 4, 1, '181');
 
 -- --------------------------------------------------------
 
@@ -123,8 +140,24 @@ CREATE TABLE `pedidos` (
   `idusuario` int(11) NOT NULL,
   `idestado` int(11) NOT NULL,
   `idlocal` int(11) NOT NULL,
-  `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `localidad` varchar(60) COLLATE utf8_spanish_ci NOT NULL,
+  `calle` varchar(60) COLLATE utf8_spanish_ci NOT NULL,
+  `numero` int(11) NOT NULL,
+  `piso` int(11) NOT NULL,
+  `dpto` varchar(5) COLLATE utf8_spanish_ci NOT NULL,
+  `entrecalles` varchar(120) COLLATE utf8_spanish_ci NOT NULL,
+  `comentarios` varchar(500) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `pedidos`
+--
+
+INSERT INTO `pedidos` (`idpedido`, `idusuarioC`, `idusuario`, `idestado`, `idlocal`, `fecha`, `localidad`, `calle`, `numero`, `piso`, `dpto`, `entrecalles`, `comentarios`) VALUES
+(4, 6, 5, 1, 1, '2017-07-22 16:51:57', 'Palermo', 'Ancon', 5390, 4, 'D', 'Av Dorrego y Vias tren mitre', ''),
+(5, 6, 5, 1, 1, '2017-07-22 16:52:29', 'Palermo', 'Ancon', 5390, 4, 'D', 'Av Dorrego y Vias tren mitre', ''),
+(6, 6, 6, 1, 1, '2017-07-22 16:56:18', 'Palermo', 'Ancon', 5390, 4, 'D', 'Av Dorrego y Vias tren mitre', 'la quiero ya negro!');
 
 -- --------------------------------------------------------
 
@@ -161,6 +194,7 @@ CREATE TABLE `productos` (
   `idprod` int(11) NOT NULL,
   `descripcion_corta` varchar(80) COLLATE utf8_spanish_ci NOT NULL,
   `descripcion_larga` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
+  `esoferta` tinyint(1) NOT NULL DEFAULT '0',
   `estado` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -168,25 +202,13 @@ CREATE TABLE `productos` (
 -- Volcado de datos para la tabla `productos`
 --
 
-INSERT INTO `productos` (`idprod`, `descripcion_corta`, `descripcion_larga`, `estado`) VALUES
-(1, 'Pizza mozzarella', 'Salsa de tomates frescos, mozzarella, oregano y aceitunas verdes.', 1),
-(2, 'Pizza mozzarella con anchoas', 'Salsa de tomates frescos, anchoas en aceite, orégano y aceitunas verdes.', 1),
-(3, 'Pizza con anchoas', '', 1),
-(4, 'Pizza napolitana', 'Salsa de tomates frescos, mozzarella, orégano y aceitunas verdes.\r\n', 1),
-(5, 'Pizza de jamón de cerdo natural', 'Salsa de tomates frescos, mozzarella, jamón.', 1),
-(6, 'Pizza de jamón de cerdo natural y morrones\r\n', 'Salsa de tomates frescos, mozzarella, jamón y morrones asados.\r\n', 1);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `prom-prod`
---
-
-CREATE TABLE `prom-prod` (
-  `idprom` int(11) NOT NULL,
-  `idprod` int(11) NOT NULL,
-  `precio_venta` decimal(10,0) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+INSERT INTO `productos` (`idprod`, `descripcion_corta`, `descripcion_larga`, `esoferta`, `estado`) VALUES
+(1, 'Pizza mozzarella', 'Salsa de tomates frescos, mozzarella, oregano y aceitunas verdes.', 1, 1),
+(2, 'Pizza mozzarella con anchoas', 'Salsa de tomates frescos, anchoas en aceite, oregano y aceitunas verdes.', 0, 1),
+(3, 'Pizza con anchoas', '', 0, 1),
+(4, 'Pizza napolitana', 'Salsa de tomates frescos, mozzarella, orégano y aceitunas verdes.\r\n', 0, 1),
+(5, 'Pizza de jamón de cerdo natural', 'Salsa de tomates frescos, mozzarella, jamón.', 0, 1),
+(6, 'Pizza de jamón de cerdo natural y morrones\r\n', 'Salsa de tomates frescos, mozzarella, jamón y morrones asados.\r\n', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -270,12 +292,6 @@ ALTER TABLE `productos`
   ADD PRIMARY KEY (`idprod`);
 
 --
--- Indices de la tabla `prom-prod`
---
-ALTER TABLE `prom-prod`
-  ADD PRIMARY KEY (`idprod`,`idprom`);
-
---
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -292,22 +308,22 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `estados`
 --
 ALTER TABLE `estados`
-  MODIFY `idestado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idestado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `locales`
 --
 ALTER TABLE `locales`
-  MODIFY `idlocal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idlocal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `idpedido` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idpedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `idprod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idprod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --

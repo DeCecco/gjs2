@@ -167,6 +167,12 @@ export class WebserviceService {
     var data = { "id": id }
     return this.http.post(this.route + clase, data).toPromise().then(data => data.json());
   }
+  /*----------------------------------INICIO LOCALES--------------------------------*/
+  VentasPorLocal() {
+    return this.http.get(this.route + "/estadisticas/ventasporlocal").toPromise().then(data => data.json());
+  }
+    
+  /*----------------------------------FIN LOCALES--------------------------------*/
 
 
 }

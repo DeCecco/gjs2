@@ -179,7 +179,11 @@ $app->post('/local/eliminar', function (Request $request, Response $response) {
 	return $response->withJson(Persona::EliminarLocal($idlocal));     
 });	
 /*----------------------------------FIN LOCALES--------------------------------*/
-
+/*----------------------------------INICIO ESTADISTICAS--------------------------------*/
+$app->get('/estadisticas/ventasporlocal', function (Request $request, Response $response){
+    return $response->withJson(Persona::VentasPorLocal());
+});
+/*----------------------------------FIN ESTADISTICAS--------------------------------*/
 $app->run();
 
 

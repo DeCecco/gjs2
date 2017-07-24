@@ -18,7 +18,12 @@ export class AppComponent {
   rol:any;
   constructor(private WebserviceService: WebserviceService, private router: Router, private ModalModule: ModalModule) {
     this.verificarToken();
+    var x=localStorage.getItem('Local');
+    if(x==null){
     this.local = '1';
+    }else{
+      this.local=x;
+    }
     this.rol=0;
     this.myOptions = [
       { value: '1', label: 'LOCAL 1' },
@@ -36,7 +41,7 @@ export class AppComponent {
     this.WebserviceService.TraerLocal(data).then(data => {      
       this.datosLocal = data;
       this.img=data[0].img;
-      console.info(data)
+      //console.info(data)
     })
   }
   verificarToken() {

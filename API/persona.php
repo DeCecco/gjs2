@@ -252,4 +252,13 @@ class Persona
 			$consulta->execute();
 	}	
 /*----------------------------------FIN LOCALES--------------------------------*/	
+/*----------------------------------INICIO ESTADISTICAS --------------------------------*/
+	public static function VentasPorLocal(){	
+		$sql = "SELECT count(idpedido) total,idlocal FROM `pedidos` WHERE idestado=1 GROUP by idlocal";
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
+		$consulta->execute();
+		return $consulta->fetchAll();	
+	} 
+/*----------------------------------FIN ESTADISTICAS--------------------------------*/
+
 }

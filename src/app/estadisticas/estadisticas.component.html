@@ -1,7 +1,5 @@
-<p>
-  estadisticas works!
-</p>
-<div>
+
+<div style="width:50%">
   <div style="display: block">
     <canvas baseChart
             [datasets]="barChartData"
@@ -13,4 +11,9 @@
             (chartClick)="chartClicked($event)"></canvas>
   </div>
   <button (click)="randomize()">Update</button>
+  <button (click)="circulo()">Circulo</button>
+  <button (click)="barras()">barras</button>
+  <button (click)="lineas()">lineas</button>
+  <button (click)="radar()">radar</button>
+  <button (click)="polarArea()">polarArea</button>
 </div>
