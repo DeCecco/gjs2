@@ -47,7 +47,8 @@ export class UsuariosComponent implements OnInit {
   dpto: string;
   tel: string;
   entrecalles: string;
-  disa:number;
+  idusuario: string;
+  disa: number;
   constructor(private WebserviceService: WebserviceService, private ModalModule: ModalModule, private router: Router, public formBuilder: FormBuilder) {
     var tk = localStorage.getItem('Token')
     this.rolLogueado = localStorage.getItem('Rol')
@@ -72,7 +73,7 @@ export class UsuariosComponent implements OnInit {
       nombre: [this.nombre, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('^[a-zA-Z]+$')])],
       apellido: [this.apellido, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
       email: [this.email, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)])],
-      rol: [this.rol, Validators.compose([Validators.required])],
+      rol: [this.rol],
       dni: [this.dni, Validators.compose([Validators.required])/*, Validators.minLength(8),Validators.pattern('^(([1-9]*)|(([1-9]*)\.([0-9]*)))$')*/],
       cuenta: [this.cuenta, Validators.compose([Validators.required, Validators.maxLength(30), Validators.minLength(5), Validators.pattern('^[a-zA-Z]+$')])],
       ciudad: [this.ciudad, Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
@@ -97,6 +98,7 @@ export class UsuariosComponent implements OnInit {
         break;
 
     }
+
     this.formABMUsuarios = new FormGroup({});
     this.formABMUsuarios.addControl('mySelect', new FormControl(['b', 'c']));
     this.WebserviceService.TraerPersonas()
@@ -191,17 +193,24 @@ export class UsuariosComponent implements OnInit {
       });
   }
 
-  editar(e) {
-    console.info(e)
+  cargarListado() {
+    this.WebserviceService.TraerPersonas()
+      .then(data => {
+        this.data=data;
+      })
+      .catch(error => {
+          console.log(error);
+        });
   }
   delete(e) {
 
     if (window.confirm('¿Esta seguro que desea eliminar?')) {
-      e.confirm.resolve();
-      var array = { id: e.data.idusuario }
-      this.WebserviceService.Eliminar(e.data.idusuario, '/persona/eliminar')
+      //e.confirm.resolve();
+      var array = { id: e.idusuario }
+      this.WebserviceService.Eliminar(e.idusuario, '/persona/eliminar')
         .then(data => {
           if (data)
+            this.cargarListado();
             console.info('borrado correctamente')
         })
         .catch(error => {
@@ -213,19 +222,13 @@ export class UsuariosComponent implements OnInit {
       e.confirm.reject();
     }
   }
-  crear2(e) {
-    var array = [{
-      "nombre": e.data.nombre, "apellido": e.data.apellido, "email": e.data.email, "password": e.data.password,
-      "rol": e.data.idrol, "dni": e.data.dni, "cuenta": e.data.cuenta
-    }];
-    console.warn(e)
-  }
+
   modificar(x) {
-    this.disa=0;
+    this.disa = 0;
     this.nombre = x.nombre;
     this.apellido = x.apellido;
     this.email = x.mail;
-    this.rol = ""+x.idrol+"";
+    this.rol = "" + x.idrol + "";
     this.dni = x.dni;
     this.cuenta = x.cuenta;
     this.ciudad = x.ciudad;
@@ -236,42 +239,56 @@ export class UsuariosComponent implements OnInit {
     this.dpto = x.dpto;
     this.tel = x.tel;
     this.entrecalles = x.entrecalles;
+    this.idusuario = x.idusuario;
   }
   alta(x) {
-    this.disa=1;
-    this.nombre ='';
-    this.apellido ='';
-    this.email ='';
-    this.rol ='4';
-    this.dni =null;
-    this.cuenta ='';
-    this.ciudad ='';
-    this.localidad ='';
-    this.calle ='';
-    this.numero =null;
-    this.piso ='';
-    this.dpto ='';
-    this.tel ='';
-    this.entrecalles ='';
+    this.disa = 1;
+    this.nombre = '';
+    this.apellido = '';
+    this.email = '';
+    this.rol = '4';
+    this.dni = null;
+    this.cuenta = '';
+    this.ciudad = '';
+    this.localidad = '';
+    this.calle = '';
+    this.numero = null;
+    this.piso = '';
+    this.dpto = '';
+    this.tel = '';
+    this.entrecalles = '';
   }
   crear(x) {
     var array = [{
       "nombre": this.nombre, "apellido": this.apellido, "email": this.email, "rol": this.rol, "dni": this.dni, "cuenta": this.cuenta,
       "ciudad": this.ciudad, "localidad": this.localidad, "calle": this.calle, "numero": this.numero, "piso": this.piso, "dpto": this.dpto,
-      "tel": this.tel, "entrecalles": this.entrecalles,
+      "tel": this.tel, "entrecalles": this.entrecalles, "idusuario": this.idusuario
     }];
     console.info(x);
-    this.WebserviceService.AgregarPersona(array).then(data => {
-      if (data.ok) {
+    if (x == 1) {
+      this.WebserviceService.AgregarPersona(array).then(data => {
+        if (data.ok) {
 
-        window.location.reload();
-      } else {
-        alert('error')
-      }
-    }).catch(error => {
-      console.warn(error)
-    })
-    console.info()
+          window.location.reload();
+        } else {
+          alert('error')
+        }
+      }).catch(error => {
+        console.warn(error)
+      })
+      console.info()
+    } else {
+      this.WebserviceService.ModificarPersona(array).then(data => {
+        if (data.ok) {
+
+          window.location.reload();
+        } else {
+          alert('error')
+        }
+      }).catch(error => {
+        console.warn(error)
+      })
+    }
   }
   editando() {
     console.warn('entramo');

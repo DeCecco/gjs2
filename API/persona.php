@@ -48,7 +48,8 @@ class Persona
 /*----------------------------------INICIO PERSONAS--------------------------------*/	
 	//OBTENCION DE TODOS LAS PERSONAS DE LA BASE DE DATOS
 	public static function TraerTodasLasPersonas(){
-		$sql = "SELECT u.*,r.descripcion roles,c.* FROM usuarios u 
+		$sql = "SELECT u.idusuario,u.nombre,u.apellido,u.mail,u.dni,u.cuenta,u.idrol,u.estado,r.descripcion roles,c.ciudad,
+		c.localidad,c.calle,c.numero,c.piso,c.dpto,c.tel,c.entrecalles FROM usuarios u 
 				left join roles r ON u.idrol=r.idrol 
 				left join `cliente-detalle` c on c.idusuario=u.idusuario
 				WHERE u.estado=1
@@ -93,6 +94,36 @@ class Persona
 			$consulta->execute();
 		}
 	}
+	public static function ModificarPersona($email,$rol,$nombre,$apellido,$dni,$cuenta,$ciudad,$localidad,$calle,$numero,$piso,$dpto,$tel,$entrecalles,$idusuario){
+
+        $sql = "UPDATE usuarios set nombre=:nombre,apellido=:apellido,mail=:email,dni=:dni,cuenta=:cuenta,idrol=:rol
+		where idusuario=:idusuario";
+			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+			$consulta->bindValue(':rol', $rol, PDO::PARAM_INT);
+			$consulta->bindValue(':email', $email, PDO::PARAM_STR);						
+            $consulta->bindValue(':nombre', $nombre, PDO::PARAM_STR);
+            $consulta->bindValue(':apellido', $apellido, PDO::PARAM_STR);
+			$consulta->bindValue(':cuenta', $cuenta, PDO::PARAM_STR);
+			$consulta->bindValue(':dni', $dni, PDO::PARAM_STR);
+			$consulta->bindValue(':idusuario', $idusuario, PDO::PARAM_STR);
+			$consulta->execute();
+		if($rol==4){			
+			 $sql = "UPDATE  `cliente-detalle` set ciudad=:ciudad,localidad=:localidad,calle=:calle,numero=:numero,
+			 piso=:piso,dpto=:dpto,tel=:tel,entrecalles=:entrecalles
+		 where idusuario=:idusuario";
+			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+			$consulta->bindValue(':ciudad', $ciudad, PDO::PARAM_INT);
+			$consulta->bindValue(':localidad', $localidad, PDO::PARAM_STR);						
+            $consulta->bindValue(':calle', $calle, PDO::PARAM_STR);
+            $consulta->bindValue(':numero', $numero, PDO::PARAM_STR);
+			$consulta->bindValue(':piso', $piso, PDO::PARAM_STR);
+			$consulta->bindValue(':dpto', $dpto, PDO::PARAM_STR);
+			$consulta->bindValue(':tel', $tel, PDO::PARAM_STR);
+			$consulta->bindValue(':entrecalles', $entrecalles, PDO::PARAM_STR);
+			$consulta->bindValue(':idusuario', $idusuario, PDO::PARAM_STR);
+			$consulta->execute();
+		}
+	}	
 	public static function UltimoIdusuario(){
 		$sql="SELECT  idusuario FROM `usuarios` order by idusuario desc LIMIT 1";
 		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);

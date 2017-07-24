@@ -100,18 +100,25 @@ $app->post('/persona/agregar', function (Request $request, Response $response) {
     $tel=$request->getParam('tel');
     $entrecalles=$request->getParam('entrecalles');
 	return $response->withJson(Persona::InsertarPersona($email,$rol,$nombre,$apellido,$dni,$cuenta,$ciudad,$localidad,$calle,$numero,$piso,$dpto,$tel,$entrecalles));     
-});	/*
+});	
 $app->post('/persona/modificar', function (Request $request, Response $response) {    
-	$email = $request->getParam('email');
-	$password = $request->getParam('password');
+	$email = $request->getParam('email');	
 	$rol = $request->getParam('rol');
 	$nombre = $request->getParam('nombre');
 	$apellido = $request->getParam('apellido');
 	$dni = $request->getParam('dni');
-	$legajo = $request->getParam('legajo');
-	$id = $request->getParam('id');
-	return $response->withJson(Persona::ModificarPersona($email,$password,$rol,$nombre,$apellido,$dni,$legajo,$id));     
-});	*/
+	$cuenta = $request->getParam('cuenta');
+	$ciudad = $request->getParam('ciudad');
+    $localidad =$request->getParam('localidad');
+    $calle=$request->getParam('calle');
+    $numero=$request->getParam('numero');
+    $piso=$request->getParam('piso');
+    $dpto=$request->getParam('dpto');
+    $tel=$request->getParam('tel');
+    $entrecalles=$request->getParam('entrecalles');
+	$idusuario=$request->getParam('idusuario');
+	return $response->withJson(Persona::ModificarPersona($email,$rol,$nombre,$apellido,$dni,$cuenta,$ciudad,$localidad,$calle,$numero,$piso,$dpto,$tel,$entrecalles,$idusuario));     
+});	
 $app->post('/persona/eliminar', function (Request $request, Response $response) {		
 	return $response->withJson(Persona::BorrarPersona($request->getParsedBody()));
 });

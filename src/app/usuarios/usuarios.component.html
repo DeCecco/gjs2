@@ -62,7 +62,7 @@
                             <div class="alert alert-danger" *ngIf="!formUser.controls.rol.valid">Error los valores ingresados para Rol no son validos</div>
                         </ng-select>
                     </div>
-                    <div class="form-group col-sm-4" *ngIf="rol==4">
+                    <div class="form-group col-sm-12" *ngIf="rol==4">
                         <label for="ciudad">ciudad</label>
                         <input type="text" [(ngModel)]="ciudad" formControlName="ciudad" class="form-control" id="ciudad" name="ciudad" placeholder="ciudad">
                         <div class="alert alert-danger" *ngIf="!formUser.controls.ciudad.valid">Error los valores ingresados para ciudad no son validos</div>
