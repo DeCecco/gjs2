@@ -74,7 +74,7 @@ export class UsuariosComponent implements OnInit {
       apellido: [this.apellido, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
       email: [this.email, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)])],
       rol: [this.rol],
-      dni: [this.dni, Validators.compose([Validators.required])/*, Validators.minLength(8),Validators.pattern('^(([1-9]*)|(([1-9]*)\.([0-9]*)))$')*/],
+      dni: [this.dni, Validators.compose([Validators.maxLength(10), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
       cuenta: [this.cuenta, Validators.compose([Validators.required, Validators.maxLength(30), Validators.minLength(5), Validators.pattern('^[a-zA-Z]+$')])],
       ciudad: [this.ciudad, Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
       localidad: [this.localidad, Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
@@ -98,10 +98,10 @@ export class UsuariosComponent implements OnInit {
         break;
 
     }
-
+    this.cargarListado();
     this.formABMUsuarios = new FormGroup({});
     this.formABMUsuarios.addControl('mySelect', new FormControl(['b', 'c']));
-    this.WebserviceService.TraerPersonas()
+   /* this.WebserviceService.TraerPersonas()
       .then(data => {
         console.info(data)
         this.data = data;
@@ -174,7 +174,7 @@ export class UsuariosComponent implements OnInit {
                type: 'custom',
                renderComponent: ImageRenderComponent
                //valuePrepareFunction: (dp) => { return `<img scr="dp" />`; }
-             },*/
+             },*
             button: {
               title: 'Button',
               filter: false,
@@ -184,24 +184,45 @@ export class UsuariosComponent implements OnInit {
             }, /*
             colu:{
             title: 'Region', type: 'html', filter: false, valuePrepareFunction: (col,row) => { return '<a  (click)="editando()" class="btn btn-primary btn-xs">Editar</a>'; }
-            }*/
+            }*
           }
         };
       })
       .catch(error => {
         console.log(error);
-      });
+      });*/
   }
 
-  cargarListado() {
-    this.WebserviceService.TraerPersonas()
+  cargarListado() {    
+      var array = [{ idrol: localStorage.getItem('Rol')    }];
+    
+    this.WebserviceService.TraerPersonas(array)
       .then(data => {
         this.data=data;
       })
       .catch(error => {
           console.log(error);
         });
-  }
+  }/*
+  verificacion(x){
+    var rol = localStorage.getItem('Rol');
+    if(rol=="1"){
+
+    }else
+    switch(rol){
+      case "1":
+        
+      break;
+      case "2":
+
+      break;
+      case "3":
+      break;
+      case "4":
+      break;
+
+    }
+  }*/
   delete(e) {
 
     if (window.confirm('¿Esta seguro que desea eliminar?')) {
@@ -259,29 +280,31 @@ export class UsuariosComponent implements OnInit {
     this.entrecalles = '';
   }
   crear(x) {
+    
     var array = [{
       "nombre": this.nombre, "apellido": this.apellido, "email": this.email, "rol": this.rol, "dni": this.dni, "cuenta": this.cuenta,
       "ciudad": this.ciudad, "localidad": this.localidad, "calle": this.calle, "numero": this.numero, "piso": this.piso, "dpto": this.dpto,
       "tel": this.tel, "entrecalles": this.entrecalles, "idusuario": this.idusuario
     }];
-    console.info(x);
+    
     if (x == 1) {
       this.WebserviceService.AgregarPersona(array).then(data => {
         if (data.ok) {
-
-          window.location.reload();
+          this.cargarListado();
+          //window.location.reload();
         } else {
           alert('error')
         }
       }).catch(error => {
         console.warn(error)
       })
-      console.info()
+      
     } else {
+      
       this.WebserviceService.ModificarPersona(array).then(data => {
         if (data.ok) {
-
-          window.location.reload();
+        this.cargarListado();
+         // window.location.reload();
         } else {
           alert('error')
         }

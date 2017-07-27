@@ -1,8 +1,8 @@
 <div class="row col-md-12 col-sm-8 col-xs-12 fondo">
-  <div class="col-sm-3">
+  <div class="col-sm-1">
     <button class="btn btn-primary btn-sm" (click)="myModal.open();alta()">Alta</button>
   </div>
-  <div class="col-sm-6">
+  <div class="col-sm-8">
     <table style="height: 136px;" width="100%">
       <tbody *ngFor='let value of listadoProductos let index = index'>
         <tr>
@@ -11,8 +11,9 @@
         <tr>
           <td rowspan="2"><img src="assets/img/peppy.jpg" width="100%" alt=""> <br /><button class="btn btn-danger btn-xs" (click)="eliminarProducto(value)">Eliminar</button><br
             /></td>
-          <td style="background-color: antiquewhite;"><div style="background-color: red;" *ngIf="value.esoferta">PROMO</div>{{value.descripcion_corta}} <i class="fa fa-plus" aria-hidden="true"></i></td>
+          <td style="background-color: antiquewhite;">{{value.descripcion_corta}} <i class="fa fa-plus" aria-hidden="true"></i></td>
           <td style="width: 10%;">
+            <div *ngIf="value.esoferta"><img src="assets/img/promo.png" width="100%" alt=""></div>
             <div>${{value.precio_venta}}
               <button class="btn btn-success btn-xs" (click)="agregar(value)">+</button>
             </div>
@@ -40,7 +41,7 @@
 </div>
 
 
-<modal #myModal modalClass="modal-lg">
+<modal #myModal modalClass="modal-sm modal-lg  ">
   <modal-header>
     <h3>Alta de Producto</h3>
   </modal-header>
@@ -82,19 +83,19 @@
   </modal-footer>
 </modal>
 
-<modal #confirmPedido modalClass="modal-lg">
+<modal #confirmPedido modalClass="modal-sm modal-lg ">
   <modal-header>
     <h3>Confirmacion de Pedido</h3>
   </modal-header>
 
   <modal-content>
-    <div *ngIf="rolId!=4">
+    <div *ngIf="rolId!=4" class="col-sm-4">
       <label for="Cli">Seleccione un cliente</label>
-      <ng-select [multiple]="false" [options]="cmbClientes" [ngModelOptions]="{standalone: true}" (selected)="datosCliente(cliente)"
+      <ng-select  [multiple]="false" [options]="cmbClientes" [ngModelOptions]="{standalone: true}" (selected)="datosCliente(cliente)"
         [(ngModel)]="cliente"></ng-select>
     </div>
     <form class="col-sm-10" [formGroup]="formPedido">
-      <div class="form-group col-sm-10">
+      <div class="form-group col-sm-5">
         <label for="localidad">Localidad</label>
         <input [(ngModel)]="localidad" formControlName="localidad" required minlength="4" maxlength="40" name="localidad" type="text"
           class="form-control" id="localidad" placeholder="localidad">
@@ -105,7 +106,7 @@
           id="calle" name="calle" placeholder="calle">
         <div class="alert alert-danger" *ngIf="!formPedido.controls.calle.valid">Error los valores ingresados para Calle no son validos</div>
       </div>
-      <div class="form-group col-sm-10">
+      <div class="form-group col-sm-5">
         <label for="numero">Numero</label>
         <input type="text" [(ngModel)]="numero" required minlength="2" maxlength="5" formControlName="numero" class="form-control"
           id="numero" name="numero" placeholder="numero">
@@ -116,7 +117,7 @@
           placeholder="piso">
         <div class="alert alert-danger" *ngIf="!formPedido.controls.piso.valid">Error los valores ingresados para Piso no son validos</div>
       </div>
-      <div class="form-group col-sm-10">
+      <div class="form-group col-sm-5">
         <label for="dpto">Dpto</label>
         <input type="text" [(ngModel)]="dpto" minlength="1" maxlength="3" formControlName="dpto" class="form-control" id="dpto" name="dpto"
           placeholder="dpto">
@@ -127,9 +128,9 @@
           id="entrecalles" name="entrecalles" placeholder="entrecalles">
         <div class="alert alert-danger" *ngIf="!formPedido.controls.entrecalles.valid">Error los valores ingresados para Entre Calles no son validos</div>
       </div>
-      <div class="form-group col-sm-10">
+      <div class="form-group col-sm-5">
         <label for="comentarios">Comentarios</label>
-        <textarea name="textarea" [(ngModel)]="comentarios" style="width:544px;height:150px;" formControlName="comentarios"></textarea>
+        <textarea name="textarea" [(ngModel)]="comentarios" style="width:256px;height:150px;" formControlName="comentarios"></textarea>
 
         <!--input type="text" [(ngModel)]="comentarios" minlength="1" maxlength="200" formControlName="comentarios" class="form-control"
           id="comentarios" name="comentarios" placeholder="comentarios"-->
@@ -137,20 +138,15 @@
       </div>
       <div class="form-group col-sm-10">
         <div *ngFor='let value of pedidos let index = index'>
-          <p><input type="text" id="cantidad+[index]" value="x1" readonly name="cantidad+[index]" width="100%" style="width: 8%;">
+          <p><input type="text" id="cantidad+[index]" value="x1" readonly name="cantidad+[index]" width="50%" style="width: 8%;">
             ${{value.precio_venta}} - {{value.descripcion_corta}}
             <p>
         </div>
-        <div class="right">SubTotal: ${{ptotal}}</div>
-        <div class="right">Delivery: $40</div>
-        <div class="right">Total: ${{ptotal+40}}</div>
+        <div class="center">SubTotal: ${{ptotal}}</div>
+        <div class="center">Delivery: $40</div>
+        <div class="center">Total: ${{ptotal+40}}</div>
       </div>
-    </form>
-    <div class="form-group col-sm-10">
-      <label for="subtotal">subtotal</label>
-      <input [(ngModel)]="subtotal" required minlength="4" maxlength="40" name="subtotal" type="text" class="form-control" id="subtotal"
-        placeholder="subtotal">
-    </div>
+    </form>    
   </modal-content>
   <modal-footer class="col-sm-5">
     <button class="btn btn-primary" *ngIf="!disa" [disabled]="!formPedido.valid" (click)="confirmarPedido()">Confirmar</button>

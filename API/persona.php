@@ -42,21 +42,73 @@ class Persona
 			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);						
 			$consulta->execute();
 			return $consulta->fetchAll();	
-	}		
+	}	
+	public static function ListadoPedidos($idusuario,$idrol){	
+		if($idrol<4){
+		$sql = " SELECT p.idpedido,p.idusuarioc,uu.nombre nombrec,uu.apellido apellidoc,p.idusuario,u.nombre,u.apellido,p.idestado,e.descripcion descripcione
+			,p.idlocal,l.descripcion descripcionl,p.fecha,p.localidad,p.calle,p.numero,p.piso,p.dpto,p.entrecalles,p.comentarios
+			from pedidos p
+			left join usuarios u on u.idusuario=p.idusuario
+			left join usuarios uu on uu.idusuario=p.idusuarioc
+			left join estados e on e.idestado=p.idestado
+			left join locales l on l.idlocal=p.idlocal ";
+			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);		
+		}else{
+			$sql = " SELECT p.idpedido,p.idusuarioc,uu.nombre nombrec,uu.apellido apellidoc,p.idusuario,u.nombre,u.apellido,p.idestado,e.descripcion descripcione
+			,p.idlocal,l.descripcion descripcionl,p.fecha,p.localidad,p.calle,p.numero,p.piso,p.dpto,p.entrecalles,p.comentarios
+			from pedidos p
+			left join usuarios u on u.idusuario=p.idusuario
+			left join usuarios uu on uu.idusuario=p.idusuarioc
+			left join estados e on e.idestado=p.idestado
+			left join locales l on l.idlocal=p.idlocal
+			where p.idusuarioC=:idusuario ";
+			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);		
+			$consulta->bindValue(':idusuario', $idusuario,PDO::PARAM_STR);				
+		}		
+		$consulta->execute();
+		return $consulta->fetchAll();	
+	} 	
+	public static function CambiarEstadoPedido($idpedido,$estado){	
+		$sql = "UPDATE pedidos set idestado=:estado where idpedido=:idpedido";
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);		
+		$consulta->bindValue(':idpedido', $idpedido,PDO::PARAM_STR);		
+		$consulta->bindValue(':estado', $estado,PDO::PARAM_STR);		
+		$consulta->execute();
+		return $consulta->fetchAll();	
+	} 	
 /*----------------------------------FIN COMUN A TODAS--------------------------------*/		
 
 /*----------------------------------INICIO PERSONAS--------------------------------*/	
 	//OBTENCION DE TODOS LAS PERSONAS DE LA BASE DE DATOS
-	public static function TraerTodasLasPersonas(){
+	public static function TraerTodasLasPersonas($rol){
+		/*if($rol==2){
+			$filtro=" and u.idrol>2 ";
+		}
+		switch($rol){
+			case 1:
+			$filtro="";
+			break;
+			case 2:
+			$filtro=" and u.idrol>1 ";
+			break;
+			case 3:
+			$filtro=" and u.idrol>2 ";
+			break;
+			case 4:
+			$filtro=" and u.idrol=99 ";
+			break;
+		}		*/
 		$sql = "SELECT u.idusuario,u.nombre,u.apellido,u.mail,u.dni,u.cuenta,u.idrol,u.estado,r.descripcion roles,c.ciudad,
-		c.localidad,c.calle,c.numero,c.piso,c.dpto,c.tel,c.entrecalles FROM usuarios u 
-				left join roles r ON u.idrol=r.idrol 
-				left join `cliente-detalle` c on c.idusuario=u.idusuario
-				WHERE u.estado=1
-		";
+					c.localidad,c.calle,c.numero,c.piso,c.dpto,c.tel,c.entrecalles FROM usuarios u 
+					left join roles r ON u.idrol=r.idrol 
+					left join `cliente-detalle` c on c.idusuario=u.idusuario
+					WHERE u.estado=1 ";//. $filtro ;	
+					
         $consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+		$consulta->bindValue(':rol', $rol, PDO::PARAM_STR);
 	    $consulta->execute();			
 		return $consulta->fetchAll(PDO::FETCH_ASSOC);	
+		
 	}
 	//ELIMINACION DE UNA PERSONA DE LA BASE DE DATOS
 	public static function BorrarPersona($id){	
@@ -133,33 +185,7 @@ class Persona
 /*----------------------------------FIN PERSONAS--------------------------------*/		
 
 /*----------------------------------INICIO PRODUCTOS--------------------------------*/	
-	public static function requisitoATodos($plan,$requisito,$materia)
-	{ 
-		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-
-
-		if($materia==999){
-			$consulta =$objetoAccesoDato->RetornarConsulta(" update alumnos.materia
-			set requisito=:requisito
-			where left(codigo_unificado,length(codigo_unificado)-3) =:plan
-				");		
-			$consulta->bindValue(':plan',$plan, PDO::PARAM_INT);			
-			$consulta->bindValue(':requisito',$requisito, PDO::PARAM_STR);
-			$consulta->execute();	 			
-		}else{			
-			foreach ($materia as $key => $value) {			
-			$consulta =$objetoAccesoDato->RetornarConsulta(" UPDATE alumnos.materia 
-				SET requisito=:requisito
-				where codigo_unificado=:materia
-				");		 				
-			$consulta->bindValue(':requisito',$requisito, PDO::PARAM_STR);
-			$consulta->bindValue(':materia',$value->codigo_unificado, PDO::PARAM_STR);
-			$consulta->execute();	 			
-			}
-		}		
-		return true;
-			
-	}
+	
 	public static function NuevoPedido($localidad,$calle,$numero,$piso,$dpto,$entrecalles,$comentarios,$idusuarioC,
 	$local,$idusuario,$pedidos){
 
@@ -193,7 +219,8 @@ class Persona
 	public static function ListarProductos(){
 		$sql = "SELECT productos.*,precios.precio_venta,precios.precio_costo,0 cantidad,productos.idprod FROM `productos` 
 				left JOIN `precios` on precios.idprod=productos.idprod
-				where productos.estado=1";
+				where productos.estado=1
+				order by esoferta desc";
         $consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
 		
 	    $consulta->execute();			
@@ -308,7 +335,7 @@ class Persona
 /*----------------------------------FIN LOCALES--------------------------------*/	
 /*----------------------------------INICIO ESTADISTICAS --------------------------------*/
 	public static function VentasPorLocal(){	
-		$sql = "SELECT count(idpedido) total,idlocal FROM `pedidos` WHERE idestado=1 GROUP by idlocal";
+		$sql = "SELECT count(idpedido) total,idlocal FROM `pedidos` WHERE idestado=3 GROUP by idlocal";
 		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
 		$consulta->execute();
 		return $consulta->fetchAll();	
@@ -318,7 +345,7 @@ class Persona
 		$sql = "SELECT count(p.idpedido) total,p.idlocal,p.idusuario,u.nombre
 				FROM `pedidos`  p 
 				left join `usuarios` u on (p.idusuario=u.idusuario)
-				where p.idestado=1 and u.idrol=3
+				where p.idestado=3 and u.idrol=3
 				GROUP by p.idlocal,p.idusuario";
 		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
 		$consulta->execute();
@@ -328,7 +355,7 @@ class Persona
 		$sql = "SELECT count(p.idpedido) total,p.idusuario,u.nombre
 				FROM `pedidos`  p 
 				left join `usuarios` u on (p.idusuario=u.idusuario)
-				where p.idestado=1 and u.idrol=4
+				where p.idestado=3 and u.idrol=4
 				GROUP by p.idusuario";
 		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
 		$consulta->execute();

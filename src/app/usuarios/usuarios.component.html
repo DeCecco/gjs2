@@ -105,7 +105,7 @@
                 </form>
             </modal-content>
             <modal-footer class="col-sm-3">
-                <button class="btn btn-primary" [disabled]="!formUser.valid" (click)="crear(disa)">Aceptar</button>
+                <button class="btn btn-primary" [disabled]="!formUser.valid" (click)="crear(disa);myModal.close()">Aceptar</button>
                 <button class="btn " (click)="myModal.close()">Cancelar</button>
             </modal-footer>
         </modal>

@@ -5,7 +5,7 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class WebserviceService {
 
-  route: string = "http://localhost/UTN/GJS2/API/index.php/";
+  route: string = "http://localhost/UTN/finallab/GJS2/API/index.php/";
   constructor(private http: Http) { }
   /*----------------------------------INICIO  COMUN A TODOS--------------------------------*/
   Login(array) {
@@ -47,10 +47,28 @@ export class WebserviceService {
   cmbClientes() {
     return this.http.get(this.route + "clientes/listar").toPromise().then(data => data.json());
   }
+  ListadoPedidos(form) {
+    var data = {
+      "idusuario": form[0].idusuario,
+      "idrol": form[0].idrol
+    }
+    return this.http.post(this.route + "pedidos", data).toPromise().then(data => data.json());
+  }
+  CambiarEstadoPedido(form) {
+    var data = {
+      "idpedido": form[0].idpedido,
+      "estado": form[0].estado
+    }
+    return this.http.post(this.route + "pedidos/estado", data).toPromise().then(data => data.json());
+  }  
   /*----------------------------------FIN  COMUN A TODOS--------------------------------*/
   /*----------------------------------INICIO PERSONAS--------------------------------*/
-  TraerPersonas() {
-    return this.http.get(this.route + "persona/obtenerTodas").toPromise().then(data => data.json());
+  TraerPersonas(form) {
+    var body = {
+      "idrol": form[0].idrol
+    }
+    
+    return this.http.get(this.route + "persona/obtenerTodas",body).toPromise().then(data => data.json());
   }
   AgregarPersona(formData) {
     var body = {
@@ -88,7 +106,8 @@ export class WebserviceService {
       "dpto": formData[0].dpto,
       "tel": formData[0].tel,
       "entrecalles": formData[0].entrecalles,
-    }
+      "idusuario": formData[0].idusuario,
+    }    
     return this.http.post(this.route + "persona/modificar", body).toPromise();
   }
   /*----------------------------------FIN PERSONAS--------------------------------*/

@@ -25,6 +25,7 @@ import { ProductosComponent } from './productos/productos.component';
 import { ButtonRenderComponent } from './button-render.component';
 import { LocalesComponent } from './locales/locales.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component'
+import { PedidosComponent } from './pedidos/pedidos.component'
 
 
 const appRoutes: Routes = [
@@ -32,7 +33,8 @@ const appRoutes: Routes = [
   { path: 'Usuarios', component: UsuariosComponent },
   { path: 'Productos', component: ProductosComponent },
   { path: 'Locales', component: LocalesComponent },
-  { path: 'Estadisticas', component: EstadisticasComponent }
+  { path: 'Estadisticas', component: EstadisticasComponent },
+  { path: 'Pedidos', component: PedidosComponent }
 ];
 
 @NgModule({
@@ -44,7 +46,8 @@ const appRoutes: Routes = [
     ImageRenderComponent,
     ProductosComponent,
     LocalesComponent,
-    EstadisticasComponent
+    EstadisticasComponent,
+    PedidosComponent
   ],
   imports: [
     BsDropdownModule.forRoot(),

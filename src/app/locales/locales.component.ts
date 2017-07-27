@@ -16,8 +16,10 @@ export class LocalesComponent implements OnInit {
   id: number;
   formLocales: FormGroup;
   disa: boolean;
+  rol:string;
   constructor(private WebserviceService: WebserviceService, public formBuilder: FormBuilder) {
     this.disa = false;
+    //this.rol= localStorage.getItem('Rol')
     this.formLocales = formBuilder.group({
       //VALIDACIONES
       descripcion: [this.descripcion, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('^[a-zA-Z 0-9]+$')])],
@@ -28,8 +30,11 @@ export class LocalesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.listado();
+  }
+  listado(){
     this.WebserviceService.ListarLocales().then(data => {
-      console.info(data)
+      
       this.lista = data;
 
     })
@@ -50,7 +55,8 @@ export class LocalesComponent implements OnInit {
     if (x == 1) {
       this.WebserviceService.ModificarLocal(array).then(data => {
         if (data.ok) {
-          window.location.reload();
+          this.listado();
+          //window.location.reload();
         } else {
           alert('error al grabar');
         }
@@ -58,7 +64,8 @@ export class LocalesComponent implements OnInit {
     } else {
       this.WebserviceService.AgregarLocal(array).then(data => {
         if (data.ok) {
-          window.location.reload();
+          this.listado();
+          //window.location.reload();
         } else {
           alert('error al grabar');
         }
@@ -74,9 +81,10 @@ export class LocalesComponent implements OnInit {
   }
   eliminar(x) {
     var array = [{ "idlocal": x.idlocal }];
-    console.info(array);
+    
     this.WebserviceService.EliminarLocal(array).then(data => {
-      window.location.reload();
+      this.listado();
+      //window.location.reload();
       console.info(data)
       /*if (data.ok) {
         window.location.reload();

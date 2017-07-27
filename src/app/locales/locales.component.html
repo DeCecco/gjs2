@@ -1,5 +1,5 @@
 <div class="col-sm-3">
-    <button class="btn btn-primary btn-sm" (click)="myModal.open();alta()">Alta</button>
+    <button class="btn btn-primary btn-sm" *ngIf="rol<2" (click)="myModal.open();alta()">Alta</button>
 </div>
 <table>
     <tr>
@@ -15,7 +15,7 @@
         <td>{{value.calle}}</td>
         <td>{{value.numero}}</td>
         <td>
-            <div><a class="btn  btn-info btn-xs" (click)="myModal.open();modificar(value)">Modificar</a><a class="btn  btn-danger btn-xs"
+            <div><a class="btn  btn-info btn-xs" (click)="myModal.open();modificar(value)">Modificar</a><a *ngIf="rol<2" class="btn  btn-danger btn-xs"
                     (click)="eliminar(value)">X</a></div>
         </td>
     </tr>
@@ -29,7 +29,7 @@
     </modal-header>
     <modal-content>
         <form class="col-sm-10" [formGroup]="formLocales">
-            <div class="form-group col-sm-10">
+            <div class="form-group col-sm-5">
                 <label for="descripcion">descripcion</label>
                 <input [(ngModel)]="descripcion" formControlName="descripcion" required minlength="4" maxlength="24" name="descripcion" type="text"
                     class="form-control" id="descripcion" placeholder="descripcion">
@@ -39,7 +39,7 @@
                     placeholder="localidad">
                 <div class="alert alert-danger" *ngIf="!formLocales.controls.localidad.valid">Error los valores ingresados para localidad no son validos</div>
             </div>
-            <div class="form-group col-sm-10">
+            <div class="form-group col-sm-5">
                 <label for="calle">calle</label>
                 <input type="text" [(ngModel)]="calle" formControlName="calle" class="form-control" id="calle" name="calle" placeholder="calle">
                 <div class="alert alert-danger" *ngIf="!formLocales.controls.calle.valid">Error los valores ingresados para calle no son validos</div>
@@ -51,8 +51,8 @@
         </form>
     </modal-content>
     <modal-footer class="col-sm-5">
-        <button class="btn btn-primary" *ngIf="!disa" [disabled]="!formLocales.valid" (click)="update(1)">Aceptar</button>
-        <button class="btn btn-primary" *ngIf="disa" [disabled]="!formLocales.valid" (click)="update(2)">Aceptar</button>
+        <button class="btn btn-primary" *ngIf="!disa" [disabled]="!formLocales.valid" (click)="update(1);myModal.close();">Aceptar</button>
+        <button class="btn btn-primary" *ngIf="disa" [disabled]="!formLocales.valid" (click)="update(2);myModal.close();">Aceptar</button>
         <button class="btn " (click)="myModal.close()">Cancelar</button>
     </modal-footer>
 </modal>

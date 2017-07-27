@@ -77,11 +77,22 @@ $app->get('/clientes/listar', function (Request $request, Response $response){
     return $response->withJson(Persona::ListarClientes());
 });
 
+$app->post('/pedidos', function (Request $request, Response $response){
+	$idusuario = $request->getParam('idusuario');
+	$idrol = $request->getParam('idrol');
+    return $response->withJson(Persona::ListadoPedidos($idusuario,$idrol));
+});
+$app->post('/pedidos/estado', function (Request $request, Response $response){
+	$idpedido = $request->getParam('idpedido');
+	$estado = $request->getParam('estado');
+    return $response->withJson(Persona::CambiarEstadoPedido($idpedido,$estado));
+});
 /*----------------------------------FIN COMUN A TODAS--------------------------------*/
 
 /*----------------------------------INICIO PERSONAS--------------------------------*/
 $app->get('/persona/obtenerTodas', function (Request $request, Response $response){
-    return $response->withJson(Persona::TraerTodasLasPersonas());
+	$idrol = $request->getParam('idrol');
+    return $response->withJson(Persona::TraerTodasLasPersonas($idrol));
 });
 
 $app->post('/persona/agregar', function (Request $request, Response $response) {    
