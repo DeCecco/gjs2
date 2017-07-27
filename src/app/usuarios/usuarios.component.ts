@@ -9,7 +9,7 @@ import { ModalModule } from "ng2-modal";
 import { Router } from '@angular/router';
 
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
-
+declare let alasql;
 export interface login {
   nombre: string;
   apellido: string;
@@ -198,6 +198,7 @@ export class UsuariosComponent implements OnInit {
     
     this.WebserviceService.TraerPersonas(array)
       .then(data => {
+        console.info(data)
         this.data=data;
       })
       .catch(error => {
@@ -223,6 +224,42 @@ export class UsuariosComponent implements OnInit {
 
     }
   }*/
+
+  excel(){
+    
+        var mystyle = {
+        sheetid: 'Usuarios',
+        headers: true,
+        caption: {
+          title:'Usuarios',
+          style:'font-size: 50px; color:blue;' // Sorry, styles do not works
+        },
+        style:'background:#f1f7f1',
+        column: {
+          style:'font-size:20px'
+        },
+        columns: [
+            {columnid:'nombre',title:'Nombre'},
+            {columnid:'apellido',title:'Apellido',color:'#800000'},          
+            {columnid:'mail',title:'Mail'},
+            {columnid:'roles',title:'Rol'},
+            {columnid:'dni',title:'DNI'},
+            {columnid:'tel',title:'Telefono'},
+            {columnid:'estado',title:'Estado'} 
+        ],
+        row: {
+          style: function(sheet,row,rowidx){
+            return 'background:'+(rowidx%2?'#ffffff':'#d5dad5');            
+          }
+        },
+        rows: {
+          4:{cell:{style:'background:#d5dad5'}}
+        },       
+    };
+ 
+        alasql('SELECT * INTO XLS("Usuarios.xls",?) FROM ?',[mystyle,this.data]);
+   
+}
   delete(e) {
 
     if (window.confirm('¿Esta seguro que desea eliminar?')) {
