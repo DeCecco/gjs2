@@ -1,4 +1,9 @@
-
+<div class="col-sm-4">
+  <ng-select class="cabecera" [multiple]="false" [options]="informes" [ngModelOptions]="{standalone: true}"  (selected)="informechange()" [(ngModel)]="informe">                     
+      </ng-select>
+  <ng-select class="cabecera" [multiple]="false" [options]="tipos" [ngModelOptions]="{standalone: true}"  (selected)="tipochange()" [(ngModel)]="tipo">                     
+      </ng-select>      
+</div>      
 <div style="width:50%">
   <div style="display: block">
     <canvas baseChart
@@ -10,10 +15,4 @@
             (chartHover)="chartHovered($event)"
             (chartClick)="chartClicked($event)"></canvas>
   </div>
-  <button (click)="randomize()">Update</button>
-  <button (click)="circulo()">Circulo</button>
-  <button (click)="barras()">barras</button>
-  <button (click)="lineas()">lineas</button>
-  <button (click)="radar()">radar</button>
-  <button (click)="polarArea()">polarArea</button>
 </div>

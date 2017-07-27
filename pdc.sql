@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-07-2017 a las 19:57:59
+-- Tiempo de generación: 27-07-2017 a las 20:29:12
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -153,7 +153,7 @@ CREATE TABLE `pedidos` (
   `idusuario` int(11) NOT NULL,
   `idestado` int(11) NOT NULL,
   `idlocal` int(11) NOT NULL,
-  `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha` datetime NOT NULL,
   `localidad` varchar(60) COLLATE utf8_spanish_ci NOT NULL,
   `calle` varchar(60) COLLATE utf8_spanish_ci NOT NULL,
   `numero` int(11) NOT NULL,
@@ -187,7 +187,7 @@ CREATE TABLE `precios` (
   `idprod` int(11) NOT NULL,
   `precio_costo` decimal(10,0) NOT NULL,
   `precio_venta` decimal(10,0) NOT NULL,
-  `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `fecha` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --

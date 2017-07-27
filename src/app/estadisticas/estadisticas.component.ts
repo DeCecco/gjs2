@@ -9,16 +9,38 @@ import { WebserviceService } from '../servicios/webservice.service';
 })
 export class EstadisticasComponent implements OnInit {
   listado: any;
-  constructor(private WebserviceService: WebserviceService) { }
-
+  informes = [];
+  informe:any;
+  tipos = [];
+  tipo:any;
+  constructor(private WebserviceService: WebserviceService) {    
+    this.informes = [
+      { value: '1', label: 'Ventas Por Local' },
+      { value: '2', label: 'Ventas Por Local y Empleado' },
+      { value: '3', label: 'Clientes y Sus Compras' },
+      { value: '4', label: 'Importes por dia de trabajo' },
+      { value: '5', label: 'Producto mas Vendido' },
+      { value: '6', label: 'Logueos' },
+      { value: '7', label: 'Encuestas' }
+    ];
+    this.tipos = [
+      { value: '1', label: 'Circulo' },
+      { value: '2', label: 'Barras' },
+      { value: '3', label: 'Lineas' },
+      { value: '4', label: 'Radar' },
+      { value: '5', label: 'PolarArea' }      
+    ];    
+    this.informe="1";
+    this.tipo="1";
+  }
   ngOnInit() {
-    this.VentasPorLocal();
+    //this.VentasPorLocal();
 
   }
   VentasPorLocal() {
     this.WebserviceService.VentasPorLocal().then(data => {
       this.listado = data;
-      var ultimo=this.listado.length      
+      var ultimo = this.listado.length
       var xr = [];
       var myObj = {
         data: [],
@@ -27,7 +49,7 @@ export class EstadisticasComponent implements OnInit {
       this.listado.forEach(element => {
 
         myObj.data.push(element.total);
-        if (element.idlocal ==ultimo) {
+        if (element.idlocal == ultimo) {
 
           xr.push(myObj)
         }
@@ -55,20 +77,48 @@ export class EstadisticasComponent implements OnInit {
   public chartHovered(e: any): void {
     console.log(e);
   }
-  circulo() {
-    this.barChartType = 'doughnut';
+
+  informechange(){
+    switch(this.informe){
+      case "1":
+        this.VentasPorLocal();
+      break;
+      case "2":
+        
+      break;
+      case "3":
+        
+      break;
+      case "4":
+        
+      break;
+      case "5":
+        
+      break;
+      case "6":
+      break;
+       case "7":
+      break;
+    }
   }
-  barras() {
-    this.barChartType = 'bar';
-  }
-  lineas() {
-    this.barChartType = 'line';
-  }
-  radar() {
-    this.barChartType = 'radar';
-  }
-  polarArea() {
-    this.barChartType = 'polarArea';
+  tipochange(){
+    switch(this.tipo){
+      case "1":
+        this.barChartType = 'doughnut';
+      break;
+      case "2":
+        this.barChartType = 'bar';
+      break;
+      case "3":
+        this.barChartType = 'line';
+      break;
+      case "4":
+        this.barChartType = 'radar';
+      break;
+      case "5":
+        this.barChartType = 'polarArea';
+      break;
+    }
   }
   public randomize(): void {
     // Only Change 3 values

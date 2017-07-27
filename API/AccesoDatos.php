@@ -13,10 +13,10 @@ class AccesoDatos
             $password = 'garbarino';
 */
             //CREACIÓN DE LA CONEXIÓN CON EL SERVIDOR LOCAL
-            $servername = 'localhost';
-            $dbname = 'ags2';
-            $username = 'root';
-            $password = '';
+            $servername = 'buenaaccion.com.ar';
+            $dbname = 'buenaacc_utn';
+            $username = 'buenaacc_pablo';
+            $password = 'dNOXtp9KVLFZ';
 
             $this->objetoPDO = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password, 
                     array(PDO::ATTR_EMULATE_PREPARES => false,PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));

@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
     var tk = localStorage.getItem('Token')
     if (tk == null) {
-      alert('Por favor, para continuar logueese');
+     alert('Por favor, para continuar logueese');
       this.router.navigate(['Login']);
     } else {
       var array = [{ "token": tk }];
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
         if (data) {
           // this.router.navigate(['Productos']);
         } else {
-          alert('Por favor, para continuar logueese');
+         // alert('Por favor, para continuar logueese');
           this.router.navigate(['Login']);
           console.info('TokenVencido')
         }

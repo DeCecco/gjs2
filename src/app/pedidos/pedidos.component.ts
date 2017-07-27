@@ -8,6 +8,7 @@ import { WebserviceService } from '../servicios/webservice.service';
 })
 export class PedidosComponent implements OnInit {
   lista: any;
+  rol:any;
   constructor(private WebserviceService: WebserviceService) { }
 
   ngOnInit() {
@@ -15,6 +16,7 @@ export class PedidosComponent implements OnInit {
   }
 
   listado() {
+    this.rol=localStorage.getItem('Rol');
     var array = [{
       "idusuario": localStorage.getItem('idusuario'), "idrol":localStorage.getItem('Rol')
     }];

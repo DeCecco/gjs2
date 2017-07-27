@@ -1,6 +1,6 @@
 <?php
 
-require_once"accesoDatos.php";
+require_once"AccesoDatos.php";
 
 class Persona
 {
@@ -236,7 +236,7 @@ class Persona
 		$consulta->execute();
 		$id=persona::UltimoIdProductoAdd();
 
-		$sql= "INSERT INTO PRECIOS (idprod,precio_costo,precio_venta) values (".$id.",:precio_costo,:precio_venta) ";			
+		$sql= "INSERT INTO precios (idprod,precio_costo,precio_venta) values (".$id.",:precio_costo,:precio_venta) ";			
 			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
             $consulta->bindValue(':precio_costo', $precio_costo, PDO::PARAM_STR);
             $consulta->bindValue(':precio_venta', $precio_venta, PDO::PARAM_STR);			
@@ -255,7 +255,7 @@ class Persona
 			$consulta->bindValue(':promocion', $promocion, PDO::PARAM_STR);	
 		$consulta->execute();		
 
-		$sql= "UPDATE PRECIOS set precio_costo=:precio_costo,
+		$sql= "UPDATE precios set precio_costo=:precio_costo,
 								precio_venta=:precio_venta
 								where idprod=:idprod";			
 			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);

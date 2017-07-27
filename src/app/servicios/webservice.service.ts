@@ -5,7 +5,7 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class WebserviceService {
 
-  route: string = "http://localhost/UTN/finallab/GJS2/API/index.php/";
+  route: string = "http://buenaaccion.com.ar/UTN/finallab/GJS2/API/index.php/";
   constructor(private http: Http) { }
   /*----------------------------------INICIO  COMUN A TODOS--------------------------------*/
   Login(array) {
