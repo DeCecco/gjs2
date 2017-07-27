@@ -19,7 +19,7 @@ export class LocalesComponent implements OnInit {
   rol:string;
   constructor(private WebserviceService: WebserviceService, public formBuilder: FormBuilder) {
     this.disa = false;
-    //this.rol= localStorage.getItem('Rol')
+    this.rol= localStorage.getItem('Rol')
     this.formLocales = formBuilder.group({
       //VALIDACIONES
       descripcion: [this.descripcion, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('^[a-zA-Z 0-9]+$')])],
