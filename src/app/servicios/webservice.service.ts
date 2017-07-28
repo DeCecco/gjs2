@@ -4,8 +4,9 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class WebserviceService {
+  //route: string = "http://buenaaccion.com.ar/UTN/finallab/GJS2/API/index.php/";
+  route: string = "http://localhost/UTN/finallab/GJS2/API/index.php/";
 
-  route: string = "http://buenaaccion.com.ar/UTN/finallab/GJS2/API/index.php/";
   constructor(private http: Http) { }
   /*----------------------------------INICIO  COMUN A TODOS--------------------------------*/
   Login(array) {
@@ -204,7 +205,12 @@ export class WebserviceService {
   VentasPorLocal() {
     return this.http.get(this.route + "/estadisticas/ventasporlocal").toPromise().then(data => data.json());
   }
-    
+  VentasPorCliente() {
+    return this.http.get(this.route + "/estadisticas/ventasporcliente").toPromise().then(data => data.json());
+  }    
+  MayorProductoVendido() {
+    return this.http.get(this.route + "/estadisticas/mayorproductovendido").toPromise().then(data => data.json());
+  }        
   /*----------------------------------FIN LOCALES--------------------------------*/
 
 

@@ -209,6 +209,12 @@ $app->post('/local/eliminar', function (Request $request, Response $response) {
 $app->get('/estadisticas/ventasporlocal', function (Request $request, Response $response){
     return $response->withJson(Persona::VentasPorLocal());
 });
+$app->get('/estadisticas/ventasporcliente', function (Request $request, Response $response){
+    return $response->withJson(Persona::VentasPorClientes());
+});
+$app->get('/estadisticas/mayorproductovendido', function (Request $request, Response $response){
+    return $response->withJson(Persona::MayorProductoVendido());
+});
 /*----------------------------------FIN ESTADISTICAS--------------------------------*/
 $app->run();
 

@@ -10,10 +10,10 @@ import { WebserviceService } from '../servicios/webservice.service';
 export class EstadisticasComponent implements OnInit {
   listado: any;
   informes = [];
-  informe:any;
+  informe: any;
   tipos = [];
-  tipo:any;
-  constructor(private WebserviceService: WebserviceService) {    
+  tipo: any;
+  constructor(private WebserviceService: WebserviceService) {
     this.informes = [
       { value: '1', label: 'Ventas Por Local' },
       { value: '2', label: 'Ventas Por Local y Empleado' },
@@ -28,10 +28,10 @@ export class EstadisticasComponent implements OnInit {
       { value: '2', label: 'Barras' },
       { value: '3', label: 'Lineas' },
       { value: '4', label: 'Radar' },
-      { value: '5', label: 'PolarArea' }      
-    ];    
-    this.informe="1";
-    this.tipo="1";
+      { value: '5', label: 'PolarArea' }
+    ];
+    this.informe = "1";
+    this.tipo = "1";
   }
   ngOnInit() {
     //this.VentasPorLocal();
@@ -62,7 +62,13 @@ export class EstadisticasComponent implements OnInit {
   public barChartLabels: string[] = ['Local 1', 'Local 2', 'Local 3'];
   public barChartType: string = 'doughnut';
   public barChartLegend: boolean = true;
-
+  /*public chartColors: any[] = [{
+    backgroundColor:'rgba(255,10,24,0.2)'},
+                    {'rgba(255,10,24,0.2)',
+                    'rgba(255,10,24,0.2)',
+                    'rgba(255,10,24,0.2)',
+                    'rgba(255,10,24,0.2)',
+  }];*/
   public barChartData: any[] = [
     { data: [65, 59, 80], label: 'Ventas por Local' },
     //{data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
@@ -78,66 +84,99 @@ export class EstadisticasComponent implements OnInit {
     console.log(e);
   }
 
-  informechange(){
-    switch(this.informe){
+  informechange() {
+    switch (this.informe) {
       case "1":
         this.VentasPorLocal();
-      break;
+        break;
       case "2":
-        
-      break;
+
+        break;
       case "3":
-        
-      break;
+        this.ClientesYSusCompras();
+        break;
       case "4":
-        
-      break;
+
+        break;
       case "5":
-        
-      break;
+      this.MayorProductoVendido();
+        break;
       case "6":
-      break;
-       case "7":
-      break;
+        break;
+      case "7":
+        break;
     }
   }
-  tipochange(){
-    switch(this.tipo){
+  MayorProductoVendido() {
+    this.barChartLabels=[];
+    this.WebserviceService.MayorProductoVendido().then(data => {
+      
+      this.listado = data;
+      var ultimo = this.listado.length
+      var xr = [];
+      var myObj = {
+        data: [],
+        datasets:[{
+        backgroundColor:['rgba(255,99,132,0.2)',
+                        'rgba(255,99,132,0.2)',
+                        'rgba(255,99,132,0.2)',
+                        'rgba(255,99,132,0.2)',
+                        'rgba(255,99,132,0.2)',
+        ],
+        }],
+        label: 'Mayor Producto Vendido'
+      };
+      this.listado.forEach(element => {
+        
+        myObj.data.push(element.cantidadvendidas);   
+        this.barChartLabels.push(element.producto)     
+        
+      });
+      xr.push(myObj)
+      this.barChartData = xr
+
+    })
+  }  
+  ClientesYSusCompras() {
+    this.barChartLabels=[];
+    this.WebserviceService.VentasPorCliente().then(data => {
+      
+      this.listado = data;
+      var ultimo = this.listado.length
+      var xr = [];
+      var myObj = {
+        data: [],        
+        label: 'Ventas Por Cliente'
+      };
+      this.listado.forEach(element => {
+        
+        myObj.data.push(element.total);   
+        this.barChartLabels.push(element.nombre)     
+        
+      });
+      xr.push(myObj)
+      this.barChartData = xr
+
+    })
+  }
+  tipochange() {
+    switch (this.tipo) {
       case "1":
         this.barChartType = 'doughnut';
-      break;
+        break;
       case "2":
         this.barChartType = 'bar';
-      break;
+        break;
       case "3":
         this.barChartType = 'line';
-      break;
+        break;
       case "4":
         this.barChartType = 'radar';
-      break;
+        break;
       case "5":
         this.barChartType = 'polarArea';
-      break;
+        break;
     }
   }
-  public randomize(): void {
-    // Only Change 3 values
-    let data = [
-      Math.round(Math.random() * 100),
-      59,
-      80,
-      (Math.random() * 100),
-      56,
-      (Math.random() * 100),
-      40];
-    let clone = JSON.parse(JSON.stringify(this.barChartData));
-    clone[0].data = data;
-    this.barChartData = clone;
-    /**
-     * (My guess), for Angular to recognize the change in the dataset
-     * it has to change the dataset variable directly,
-     * so one way around it, is to clone the data, change it and then
-     * assign it;
-     */
-  }
+
 }

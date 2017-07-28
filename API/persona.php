@@ -352,15 +352,26 @@ class Persona
 		return $consulta->fetchAll();	
 	} 
 	public static function VentasPorClientes(){	
-		$sql = "SELECT count(p.idpedido) total,p.idusuario,u.nombre
+		$sql = "SELECT count(p.idpedido) total,p.idusuarioc,u.nombre,u.apellido
 				FROM `pedidos`  p 
-				left join `usuarios` u on (p.idusuario=u.idusuario)
+				left join `usuarios` u on (p.idusuarioc=u.idusuario)
 				where p.idestado=3 and u.idrol=4
-				GROUP by p.idusuario";
+				GROUP by p.idusuarioc";
 		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
 		$consulta->execute();
 		return $consulta->fetchAll();	
 	} 
+	public static function MayorProductoVendido(){	
+		$sql = "SELECT count(p.idproducto) cantidadvendidas,pr.descripcion_corta producto
+			from `pedido-detalle` p
+			left join productos pr on pr.idprod=p.idproducto
+			group by p.idproducto
+			order by cantidadvendidas desc
+		";		
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
+		$consulta->execute();
+		return $consulta->fetchAll();	
+	}	
 /*----------------------------------FIN ESTADISTICAS--------------------------------*/
 
 }
