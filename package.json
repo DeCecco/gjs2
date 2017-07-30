@@ -20,6 +20,8 @@
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
+    "@ngui/map": "^0.18.4",
+    "@types/googlemaps": "^3.26.17",
     "alasql": "^0.4.1",
     "angular2-modal": "^3.0.1",
     "angular2-select": "^1.0.0-beta.3",

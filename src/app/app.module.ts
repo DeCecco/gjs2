@@ -17,6 +17,7 @@ import { ModalModule } from "ng2-modal";
 import { SelectModule } from 'angular2-select';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ReactiveFormsModule  } from '@angular/forms';
+import { NguiMapModule} from '@ngui/map';
 
 //Componentes
 import { LoginComponent } from './login/login.component';
@@ -24,8 +25,9 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ProductosComponent } from './productos/productos.component';
 import { ButtonRenderComponent } from './button-render.component';
 import { LocalesComponent } from './locales/locales.component';
-import { EstadisticasComponent } from './estadisticas/estadisticas.component'
-import { PedidosComponent } from './pedidos/pedidos.component'
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
+import { PedidosComponent } from './pedidos/pedidos.component';
+import { AcercadeComponent } from './acercade/acercade.component';
 
 
 const appRoutes: Routes = [
@@ -34,7 +36,8 @@ const appRoutes: Routes = [
   { path: 'Productos', component: ProductosComponent },
   { path: 'Locales', component: LocalesComponent },
   { path: 'Estadisticas', component: EstadisticasComponent },
-  { path: 'Pedidos', component: PedidosComponent }
+  { path: 'Pedidos', component: PedidosComponent },
+  { path: 'AcercaDe', component: AcercadeComponent },
 ];
 
 @NgModule({
@@ -47,7 +50,8 @@ const appRoutes: Routes = [
     ProductosComponent,
     LocalesComponent,
     EstadisticasComponent,
-    PedidosComponent
+    PedidosComponent,
+    AcercadeComponent
   ],
   imports: [
     BsDropdownModule.forRoot(),
@@ -59,7 +63,8 @@ const appRoutes: Routes = [
     HttpModule,
     ChartsModule,
     RouterModule.forRoot(appRoutes),
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
+     NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyBZPpjpLrJRPNwPimYSEBRErThcxu9oEZs'})
 
   ],
   entryComponents: [

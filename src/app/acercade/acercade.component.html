@@ -1,6 +1,12 @@
-<p>
-  acercade works!
-</p>
-<!--agm-map [latitude]="lat" [longitude]="lng">
-  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-</agm-map-->
+<div style="width:60%">
+<ngui-map center={{position}}>
+   <marker  position={{position}}
+     [icon]="{
+       url: 'assets/img/icono.png', 
+       anchor: [16,16],
+       size: [32,32],
+       scaledSize: [32,32]
+     }">
+    </marker>
+</ngui-map>
+</div>

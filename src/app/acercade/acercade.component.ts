@@ -5,11 +5,13 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './acercade.component.html',
   styleUrls: ['./acercade.component.css']
 })
-export class AcercadeComponent implements OnInit {
-  title: string = 'My first AGM project';
-  lat: number = 51.678418;
-  lng: number = 7.809007;
-  constructor() { }
+export class AcercadeComponent implements OnInit {  
+  position:string;
+  constructor() { 
+    this.position='Av. del Libertador 1100 C1112 CABA';
+    this.position='Av. Santa Fe 2580 C1425BGN CABA';
+    this.position='Av. Cabildo 356 C1426AAQ CABA';
+  }
 
   ngOnInit() {
   }
