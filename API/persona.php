@@ -46,7 +46,7 @@ class Persona
 	public static function ListadoPedidos($idusuario,$idrol){	
 		if($idrol<4){
 		$sql = " SELECT p.idpedido,p.idusuarioc,uu.nombre nombrec,uu.apellido apellidoc,p.idusuario,u.nombre,u.apellido,p.idestado,e.descripcion descripcione
-			,p.idlocal,l.descripcion descripcionl,p.fecha,p.localidad,p.calle,p.numero,p.piso,p.dpto,p.entrecalles,p.comentarios
+			,p.idlocal,l.descripcion descripcionl,date(p.fecha) fecha,p.localidad,p.calle,p.numero,p.piso,p.dpto,p.entrecalles,p.comentarios
 			from pedidos p
 			left join usuarios u on u.idusuario=p.idusuario
 			left join usuarios uu on uu.idusuario=p.idusuarioc
