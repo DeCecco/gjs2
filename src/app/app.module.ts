@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { RouterModule, Routes} from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 
 //Servicios
@@ -12,12 +12,13 @@ import { WebserviceService } from './servicios/webservice.service';
 //Proveedores
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ChartsModule } from 'ng2-charts';
-import { ImageRenderComponent } from './image-render.component'; 
+import { ImageRenderComponent } from './image-render.component';
 import { ModalModule } from "ng2-modal";
 import { SelectModule } from 'angular2-select';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { ReactiveFormsModule  } from '@angular/forms';
-import { NguiMapModule} from '@ngui/map';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NguiMapModule } from '@ngui/map';
+import { Ng2UploaderModule } from 'ng2-uploader';
 
 //Componentes
 import { LoginComponent } from './login/login.component';
@@ -61,10 +62,11 @@ const appRoutes: Routes = [
     ModalModule,
     SelectModule,
     HttpModule,
+    Ng2UploaderModule,
     ChartsModule,
     RouterModule.forRoot(appRoutes),
     Ng2SmartTableModule,
-     NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyBZPpjpLrJRPNwPimYSEBRErThcxu9oEZs'})
+    NguiMapModule.forRoot({ apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyBZPpjpLrJRPNwPimYSEBRErThcxu9oEZs' })
 
   ],
   entryComponents: [

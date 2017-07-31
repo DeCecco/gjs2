@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { WebserviceService } from '../servicios/webservice.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'; 
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-productos',
@@ -36,20 +36,46 @@ export class ProductosComponent implements OnInit {
   rolId;
   idusuarioC: string;
   usuario: string;
-  promocion:boolean;
+  promocion: boolean;
+  uploadFile: any;
+  hasBaseDropZoneOver: boolean = false;
+  options: Object = {
+    url: 'http://localhost/UTN/gjs2/API/file.php'
+  };
+  sizeLimit = 2000000;
+
+  handleUpload(data): void {
+    if (data && data.response) {
+      data = JSON.parse(data.response);
+      this.uploadFile = data;
+      console.info("http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/"+this.uploadFile.originalName)
+      alert('Archivo subido con exito')
+    }
+  }
+
+  fileOverBase(e: any): void {
+    this.hasBaseDropZoneOver = e;
+  }
+
+  beforeUpload(uploadingFile): void {
+    if (uploadingFile.size > this.sizeLimit) {
+      uploadingFile.setAbort();
+      alert('File is too large');
+    }
+  }
   constructor(private WebserviceService: WebserviceService, private router: Router, public formBuilder: FormBuilder) {
     this.ptotal = 0;
     this.lista = [];
     this.cantidad = 0;
     this.disa = false;
     this.existenP = false;
-    this.promocion=false;
+    this.promocion = false;
     this.comentarios = '';
     this.rolId = localStorage.getItem('Rol')
     var array = [{ "token": localStorage.getItem('Token') }];
 
-    this.WebserviceService.PayLoad(array).then(data => {      
-      this.usuario = data.data.idusuario;      
+    this.WebserviceService.PayLoad(array).then(data => {
+      this.usuario = data.data.idusuario;
     })
 
     this.formProductos = formBuilder.group({
@@ -58,7 +84,7 @@ export class ProductosComponent implements OnInit {
       descripcion_larga: [this.descripcion_larga, Validators.compose([Validators.required, Validators.maxLength(200), Validators.pattern('^[a-zA-Z,. ]+$')])],
       precio_costo: [this.precio_costo, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
       precio_venta: [this.precio_venta, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
-      promocion:[this.promocion]
+      promocion: [this.promocion]
 
     });
     this.formPedido = formBuilder.group({
@@ -95,7 +121,9 @@ export class ProductosComponent implements OnInit {
     this.WebserviceService.ListarProductos().then(data => {
       this.listadoProductos = data;
     })
+
   }
+
   agregar(pizza) {
 
 
@@ -164,15 +192,15 @@ export class ProductosComponent implements OnInit {
     this.descripcion_larga = '';
     this.precio_costo;
     this.precio_venta;
-    this.promocion=false;
+    this.promocion = false;
     this.disa = true;
   }
-  update(x) {    
+  update(x) {
     var array = [{
       "descripcion_corta": this.descripcion_corta, "descripcion_larga": this.descripcion_larga, "precio_costo": this.precio_costo,
-      "precio_venta": this.precio_venta, "idprod": this.idprod,"promocion":this.promocion
+      "precio_venta": this.precio_venta, "idprod": this.idprod, "promocion": this.promocion
     }];
-    
+
     if (x == 1) {
       this.WebserviceService.ModificarProducto(array).then(data => {
         if (data.ok) {
@@ -244,19 +272,19 @@ export class ProductosComponent implements OnInit {
   }
   confirmarPedido() {
     var local = localStorage.getItem('Local');
-    
+
     var data = [{
       "localidad": this.localidad, "calle": this.calle, "numero": this.numero, "piso": this.piso,
       "dpto": this.dpto, "entrecalles": this.entrecalles, "comentarios": this.comentarios, "idusuarioC": this.idusuarioC
-      , "local": local,"idusuario":this.usuario
+      , "local": local, "idusuario": this.usuario
     }];
 
-    this.WebserviceService.NuevoPedido(data,this.pedidos).then(data=>{
+    this.WebserviceService.NuevoPedido(data, this.pedidos).then(data => {
       if (data.ok) {
-          window.location.reload();
-        } else {
-          alert('error al grabar');
-        }
+        window.location.reload();
+      } else {
+        alert('error al grabar');
+      }
     })
 
   }
