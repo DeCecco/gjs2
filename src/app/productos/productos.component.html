@@ -5,16 +5,16 @@
 
 <div class="row col-md-12 col-sm-8 col-xs-12 fondo">
   <div class="col-sm-1">
-    <button class="btn btn-primary btn-sm" (click)="myModal.open();alta()">Alta</button>
+    <button *ngIf="rolId!=1 && rolId!=4" class="btn btn-primary btn-sm" (click)="myModal.open();alta()">Alta</button>
   </div>
   <div class="col-sm-8">
     <table style="height: 136px;" width="100%">
       <tbody *ngFor='let value of listadoProductos let index = index'>
         <tr>
-          <td><button class="btn btn-xs" (click)="myModal.open();modificarProducto(value)">Modificar</button></td>
+          <td><button *ngIf="rolId!=1 && rolId!=4" class="btn btn-xs" (click)="myModal.open();modificarProducto(value)">Modificar</button></td>
         </tr>
         <tr>
-          <td rowspan="2"><img src="{{value.imagen}}" width="100%" alt=""> <br /><button class="btn btn-danger btn-xs" (click)="eliminarProducto(value)">Eliminar</button><br
+          <td rowspan="2"><img src="{{value.imagen}}" width="100%" alt=""> <br /><button class="btn btn-danger btn-xs" *ngIf="rolId!=1 && rolId!=4" (click)="eliminarProducto(value)">Eliminar</button><br
             /></td>
           <td style="background-color: antiquewhite;">{{value.descripcion_corta}} <i class="fa fa-plus" aria-hidden="true"></i></td>
           <td style="width: 10%;">
