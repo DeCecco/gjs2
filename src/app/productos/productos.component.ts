@@ -40,14 +40,16 @@ export class ProductosComponent implements OnInit {
   uploadFile: any;
   hasBaseDropZoneOver: boolean = false;
   options: Object = {
-    url: 'http://localhost/UTN/gjs2/API/file.php'
+    //url: 'http://localhost/UTN/gjs2/API/file.php' //laburo
+    //url: 'http://localhost/UTN/finallab/GJS2/API/file.php' //casa
+    url: 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/file.php' //server
   };
   sizeLimit = 2000000;
 
   handleUpload(data): void {
     if (data && data.response) {
       data = JSON.parse(data.response);
-      this.uploadFile = data;
+      this.uploadFile = data;      
       console.info("http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/"+this.uploadFile.originalName)
       alert('Archivo subido con exito')
     }
@@ -60,7 +62,7 @@ export class ProductosComponent implements OnInit {
   beforeUpload(uploadingFile): void {
     if (uploadingFile.size > this.sizeLimit) {
       uploadingFile.setAbort();
-      alert('File is too large');
+      alert('El archivo es muy pesado!');
     }
   }
   constructor(private WebserviceService: WebserviceService, private router: Router, public formBuilder: FormBuilder) {
@@ -119,7 +121,7 @@ export class ProductosComponent implements OnInit {
 
   ngOnInit() {
     this.WebserviceService.ListarProductos().then(data => {
-      this.listadoProductos = data;
+      this.listadoProductos = data;      
     })
 
   }
@@ -196,9 +198,10 @@ export class ProductosComponent implements OnInit {
     this.disa = true;
   }
   update(x) {
+    var imagenF="http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/"+this.uploadFile.originalName;
     var array = [{
       "descripcion_corta": this.descripcion_corta, "descripcion_larga": this.descripcion_larga, "precio_costo": this.precio_costo,
-      "precio_venta": this.precio_venta, "idprod": this.idprod, "promocion": this.promocion
+      "precio_venta": this.precio_venta, "idprod": this.idprod, "promocion": this.promocion,"imagen":imagenF
     }];
 
     if (x == 1) {

@@ -1,10 +1,6 @@
 
 
-    <input type="file"
-       ngFileSelect
-       [options]="options"
-       (onUpload)="handleUpload($event)"
-       (beforeUpload)="beforeUpload($event)">
+
 
 
 <div class="row col-md-12 col-sm-8 col-xs-12 fondo">
@@ -18,7 +14,7 @@
           <td><button class="btn btn-xs" (click)="myModal.open();modificarProducto(value)">Modificar</button></td>
         </tr>
         <tr>
-          <td rowspan="2"><img src="assets/img/peppy.jpg" width="100%" alt=""> <br /><button class="btn btn-danger btn-xs" (click)="eliminarProducto(value)">Eliminar</button><br
+          <td rowspan="2"><img src="{{value.imagen}}" width="100%" alt=""> <br /><button class="btn btn-danger btn-xs" (click)="eliminarProducto(value)">Eliminar</button><br
             /></td>
           <td style="background-color: antiquewhite;">{{value.descripcion_corta}} <i class="fa fa-plus" aria-hidden="true"></i></td>
           <td style="width: 10%;">
@@ -60,7 +56,7 @@
         <label for="promocion">Promocion</label>
         <input [(ngModel)]="promocion" formControlName="promocion" name="promocion" type="checkbox" id="promocion" placeholder="promocion">{{promocion == 0 ? 'NO' : 'SI'}}
       </div> 
-      <div class="form-group col-sm-10">        
+      <div class="form-group col-sm-5">        
         <label for="descripcion_corta">Descripcion Corta</label>
         <input [(ngModel)]="descripcion_corta" formControlName="descripcion_corta" required minlength="4" maxlength="80" name="descripcion_corta"
           type="text" class="form-control" id="descripcion_corta" placeholder="descripcion_corta">
@@ -70,9 +66,15 @@
         <input type="text" [(ngModel)]="descripcion_larga" formControlName="descripcion_larga" class="form-control" id="descripcion_larga"
           name="descripcion_larga" placeholder="descripcion_larga">
         <div class="alert alert-danger" *ngIf="!formProductos.controls.descripcion_larga.valid">Error los valores ingresados para Descripcion Larga no son validos</div>
-      </div>
-
-      <div class="form-group col-sm-10">
+     
+       <label for="imagen">Imagen</label>
+          <input type="file"
+       ngFileSelect
+       [options]="options"
+       (onUpload)="handleUpload($event)"
+       (beforeUpload)="beforeUpload($event)">
+        </div>
+      <div class="form-group col-sm-5">
         <label for="precio_costo">Precio Costo</label>
         <input type="text" [(ngModel)]="precio_costo" formControlName="precio_costo" class="form-control" id="precio_costo" name="precio_costo"
           placeholder="precio_costo">

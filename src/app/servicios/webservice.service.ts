@@ -4,9 +4,9 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class WebserviceService {
-  //route: string = "http://buenaaccion.com.ar/UTN/finallab/GJS2/API/index.php/"; //server
+  route: string = "http://buenaaccion.com.ar/UTN/finallab/GJS2/API/index.php/"; //server
   //route: string = "http://localhost/UTN/finallab/GJS2/API/index.php/"; //casa
-  route: string = "http://localhost/UTN/GJS2/API/index.php/"; //laburo
+  //route: string = "http://localhost/UTN/GJS2/API/index.php/"; //laburo
 
   constructor(private http: Http) { }
   /*----------------------------------INICIO  COMUN A TODOS--------------------------------*/
@@ -123,7 +123,8 @@ export class WebserviceService {
       "descripcion_corta": formData[0].descripcion_corta,
       "precio_costo": formData[0].precio_costo,
       "precio_venta": formData[0].precio_venta,
-      "promocion": formData[0].promocion
+      "promocion": formData[0].promocion,
+      "imagen": formData[0].imagen
     }
     
     return this.http.post(this.route + "producto/agregar", body).toPromise();
@@ -135,7 +136,8 @@ export class WebserviceService {
       "precio_costo": formData[0].precio_costo,
       "precio_venta": formData[0].precio_venta,
       "promocion": formData[0].promocion,
-      "idprod": formData[0].idprod
+      "idprod": formData[0].idprod,
+      "imagen": formData[0].imagen
     }
     console.info(body)
     return this.http.post(this.route + "producto/modificar", body).toPromise();
