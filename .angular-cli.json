@@ -25,7 +25,9 @@
       ],
       "scripts": [
         "../node_modules/bootstrap/jquery-1.10.2.min.js",
-         "../node_modules/bootstrap/dist/js/bootstrap.min.js"         
+         "../node_modules/bootstrap/dist/js/bootstrap.min.js", 
+        "../node_modules/jspdf/dist/jspdf.min.js" 
+        
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
