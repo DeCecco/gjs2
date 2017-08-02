@@ -96,6 +96,9 @@ export class UsuariosComponent implements OnInit {
       case "2":
         this.myOptions = [{ value: '3', label: 'Empleado' }, { value: '4', label: 'Cliente' },];
         break;
+      case "3":
+        this.myOptions = [{ value: '4', label: 'Cliente' },];
+        break;        
 
     }
     this.cargarListado();
@@ -356,5 +359,20 @@ export class UsuariosComponent implements OnInit {
   modificando() {
     console.warn('CLICK');
   }
-
+  changeEstado(x,id){
+    console.info(id)
+     var array = [{      "estado": x,"idusuario":id    }];
+    
+    
+      this.WebserviceService.ModificarEstadoUsuario(array).then(data => {
+        if (data.ok) {
+          this.cargarListado();
+          //window.location.reload();
+        } else {
+          alert('error')
+        }
+      }).catch(error => {
+        console.warn(error)
+      })
+  }
 }

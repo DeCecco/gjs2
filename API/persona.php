@@ -21,7 +21,7 @@ class Persona
 	}
 /*----------------------------------INICIO COMUN A TODAS--------------------------------*/	
 	public static function Login($cuenta,$password){	
-		$sql = "SELECT nombre,apellido,mail,cuenta,idusuario,idrol,estado,dni FROM `usuarios` WHERE cuenta=:cuenta and password=:password";
+		$sql = "SELECT nombre,apellido,mail,cuenta,idusuario,idrol,estado,dni FROM `usuarios` WHERE cuenta=:cuenta and password=:password and estado=1";
 		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);		
 		$consulta->bindValue(':cuenta', $cuenta,PDO::PARAM_STR);		
 		$consulta->bindValue(':password', $password,PDO::PARAM_STR);		
@@ -102,7 +102,7 @@ class Persona
 					c.localidad,c.calle,c.numero,c.piso,c.dpto,c.tel,c.entrecalles FROM usuarios u 
 					left join roles r ON u.idrol=r.idrol 
 					left join `cliente-detalle` c on c.idusuario=u.idusuario
-					WHERE u.estado=1 ";//. $filtro ;	
+					order by u.estado desc,u.nombre,u.apellido";//. $filtro ;	
 					
         $consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
 		$consulta->bindValue(':rol', $rol, PDO::PARAM_STR);
@@ -175,6 +175,15 @@ class Persona
 			$consulta->bindValue(':idusuario', $idusuario, PDO::PARAM_STR);
 			$consulta->execute();
 		}
+	}	
+	public static function ModificarPersonaEstado($estado,$idusuario){
+		$sql="update usuarios set estado=:estado
+		where idusuario=:idusuario";
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
+		$consulta->bindValue(':estado', $estado, PDO::PARAM_STR);
+		$consulta->bindValue(':idusuario', $idusuario, PDO::PARAM_STR);
+		$consulta->execute();
+		return $consulta->fetchColumn();	
 	}	
 	public static function UltimoIdusuario(){
 		$sql="SELECT  idusuario FROM `usuarios` order by idusuario desc LIMIT 1";

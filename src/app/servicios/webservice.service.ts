@@ -4,8 +4,8 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class WebserviceService {
-  route: string = "http://buenaaccion.com.ar/UTN/finallab/GJS2/API/index.php/"; //server
-  //route: string = "http://localhost/UTN/finallab/GJS2/API/index.php/"; //casa
+  //route: string = "http://buenaaccion.com.ar/UTN/finallab/GJS2/API/index.php/"; //server
+  route: string = "http://localhost/UTN/finallab/GJS2/API/index.php/"; //casa
   //route: string = "http://localhost/UTN/GJS2/API/index.php/"; //laburo
 
   constructor(private http: Http) { }
@@ -88,8 +88,7 @@ export class WebserviceService {
       "dpto": formData[0].dpto,
       "tel": formData[0].tel,
       "entrecalles": formData[0].entrecalles,
-    }
-    console.info(body)
+    }    
     return this.http.post(this.route + "persona/agregar", body).toPromise();
   }
   ModificarPersona(formData) {
@@ -112,6 +111,13 @@ export class WebserviceService {
     }    
     return this.http.post(this.route + "persona/modificar", body).toPromise();
   }
+  ModificarEstadoUsuario(formData) {
+    var body = {
+      "idusuario": formData[0].idusuario,
+      "estado": formData[0].estado,
+    }    
+    return this.http.post(this.route + "persona/modificarEstado", body).toPromise();
+  }  
   /*----------------------------------FIN PERSONAS--------------------------------*/
   /*----------------------------------INICIO PRODUCTOS--------------------------------*/
   ListarProductos() {

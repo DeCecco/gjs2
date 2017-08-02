@@ -18,8 +18,98 @@
       <button type="button" (click)="ingreso(4)" class="btn btn-secondary btn-xs">Cliente</button>
     </div>
     <div class=" form-group col-sm-6">
-      <button type="button" (click)="Login()" class="btn btn-default">Ingresar</button>
+      <button type="button" (click)="Login()" class="btn btn-default btn-sm">Ingresar</button>
+      <button type="button" (click)="myModal.open()" class="btn btn-primary btn-sm">Registrarse</button>
     </div>
-    
+     
   </form>
+</div>
+
+
+
+<div class="row col-md-12 col-sm-8 col-xs-12">
+    <div class="">
+        <modal #myModal modalClass="modal-lg">
+            <modal-header>
+                <h3>Alta de Usuario</h3>
+            </modal-header>
+            <modal-content>
+                <form class="col-sm-13" [formGroup]="formUser">
+                    <div class="form-group col-sm-4">
+                        <label for="nombre">Nombre</label>
+                        <input [(ngModel)]="nombre" formControlName="nombre" required minlength="4" maxlength="24" name="nombre" type="text" class="form-control"
+                            id="nombre" placeholder="Nombre">
+                        <div class="alert alert-danger" *ngIf="!formUser.controls.nombre.valid">Error los valores ingresados para Nombre no son validos</div>
+                        <label for="apellido">Apellido</label>
+                        <input type="text" [(ngModel)]="apellido" formControlName="apellido" class="form-control" id="apellido" name="apellido" placeholder="Apellido">
+                        <div class="alert alert-danger" *ngIf="!formUser.controls.apellido.valid">Error los valores ingresados para Apellido no son validos</div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label for="email">Email</label>
+                        <input type="text" [(ngModel)]="email" formControlName="email" class="form-control" id="email" name="email" placeholder="Email">
+                        <div class="alert alert-danger" *ngIf="!formUser.controls.email.valid">Error los valores ingresados para Email no son validos</div>
+
+                        <label for="dni">DNI</label>
+                        <input type="text" [(ngModel)]="dni" formControlName="dni" class="form-control" id="dni" name="dni" placeholder="DNI">
+                        <div class="alert alert-danger" *ngIf="!formUser.controls.dni.valid">Error los valores ingresados para DNI no son validos</div>
+                    </div>
+                    <div class="form-group col-sm-4">
+
+                        <label for="cuenta">Cuenta</label>
+                        <input type="text" [(ngModel)]="cuenta" formControlName="cuenta" class="form-control" id="cuenta" name="cuenta" placeholder="Cuenta">
+                        <div class="alert alert-danger" *ngIf="!formUser.controls.cuenta.valid">Error los valores ingresados para Cuenta no son validos</div>
+
+                        <label for="rol">Rol</label>
+                        <ng-select [multiple]="false" [options]="myOptions" [ngModelOptions]="{standalone: true}" [(ngModel)]="rol">
+                            <div class="alert alert-danger" *ngIf="!formUser.controls.rol.valid">Error los valores ingresados para Rol no son validos</div>
+                        </ng-select>
+                    </div>
+                    <div class="form-group col-sm-12" *ngIf="rol==4">
+                        <label for="ciudad">ciudad</label>
+                        <input type="text" [(ngModel)]="ciudad" formControlName="ciudad" class="form-control" id="ciudad" name="ciudad" placeholder="ciudad">
+                        <div class="alert alert-danger" *ngIf="!formUser.controls.ciudad.valid">Error los valores ingresados para ciudad no son validos</div>
+
+                        <label for="localidad">localidad</label>
+                        <input type="text" [(ngModel)]="localidad" formControlName="localidad" class="form-control" id="localidad" name="localidad"
+                            placeholder="localidad">
+                        <div class="alert alert-danger" *ngIf="!formUser.controls.localidad.valid">Error los valores ingresados para localidad no son validos</div>
+                    </div>
+                    <div class="form-group col-sm-4" *ngIf="rol==4">
+                        <label for="calle">calle</label>
+                        <input type="text" [(ngModel)]="calle" formControlName="calle" class="form-control" id="calle" name="calle" placeholder="calle">
+                        <div class="alert alert-danger" *ngIf="!formUser.controls.calle.valid">Error los valores ingresados para calle no son validos</div>
+
+
+                        <label for="numero">numero</label>
+                        <input type="text" [(ngModel)]="numero" formControlName="numero" class="form-control" id="numero" name="numero" placeholder="numero">
+                        <div class="alert alert-danger" *ngIf="!formUser.controls.numero.valid">Error los valores ingresados para numero no son validos</div>
+                    </div>
+                    <div class="form-group col-sm-4" *ngIf="rol==4">
+                        <label for="piso">piso</label>
+                        <input type="text" [(ngModel)]="piso" formControlName="piso" class="form-control" id="piso" name="piso" placeholder="piso">
+                        <div class="alert alert-danger" *ngIf="!formUser.controls.piso.valid">Error los valores ingresados para piso no son validos</div>
+
+                        <label for="dpto">dpto</label>
+                        <input type="text" [(ngModel)]="dpto" formControlName="dpto" class="form-control" id="dpto" name="dpto" placeholder="dpto">
+                        <div class="alert alert-danger" *ngIf="!formUser.controls.dpto.valid">Error los valores ingresados para dpto no son validos</div>
+                    </div>
+                    <div class="form-group col-sm-4" *ngIf="rol==4">
+                        <label for="tel">tel</label>
+                        <input type="text" [(ngModel)]="tel" formControlName="tel" class="form-control" id="tel" name="tel" placeholder="tel">
+                        <div class="alert alert-danger" *ngIf="!formUser.controls.tel.valid">Error los valores ingresados para tel no son validos</div>
+                    </div>
+                    <div class="form-group col-sm-4" *ngIf="rol==4">
+                        <label for="entrecalles">entrecalles</label>
+                        <input type="text" [(ngModel)]="entrecalles" formControlName="entrecalles" class="form-control" id="entrecalles" name="entrecalles"
+                            placeholder="entrecalles">
+                        <div class="alert alert-danger" *ngIf="!formUser.controls.entrecalles.valid">Error los valores ingresados para entrecalles no son validos</div>
+                    </div>
+                </form>
+            </modal-content>
+            <modal-footer class="col-sm-3">
+                <button class="btn btn-primary" [disabled]="!formUser.valid" (click)="crear(disa);myModal.close()">Aceptar</button>
+                <button class="btn " (click)="myModal.close()">Cancelar</button>
+            </modal-footer>
+        </modal>
+    </div>
 </div>

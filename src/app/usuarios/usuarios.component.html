@@ -19,9 +19,13 @@
         <td>{{value.roles}}</td>
         <td>{{value.dni}}</td>
         <td>{{value.estado== 1 ? 'Activo' : 'Inactivo'}}</td>
-        <td>
-            <div><a class="btn  btn-info btn-xs" (click)="myModal.open();modificar(value)">Modificar</a><a class="btn  btn-danger btn-xs"
+        <td> 
+            <div *ngIf="rolLogueado!=2"><a class="btn  btn-info btn-xs" (click)="myModal.open();modificar(value)">Modificar</a>&nbsp;&nbsp;<a class="btn  btn-danger btn-xs"
                     (click)="delete(value)">X</a></div>
+            <div *ngIf="rolLogueado==2">
+                <a class="btn  btn-success btn-xs" (click)="changeEstado(1,value.idusuario)">Activo</a>&nbsp;&nbsp;<a class="btn  btn-danger btn-xs"
+                    (click)="changeEstado(0,value.idusuario)">Inactivo</a>
+            </div>
         </td>
     </tr>
 </table>

@@ -76,7 +76,7 @@ export class LocalesComponent implements OnInit {
     this.descripcion = '';
     this.localidad = '';
     this.calle = '';
-    this.numero;
+    this.numero=0;
     this.disa = true;
   }
   eliminar(x) {

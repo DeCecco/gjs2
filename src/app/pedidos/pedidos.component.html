@@ -16,7 +16,7 @@
         <td>{{value.fecha | date: 'dd/MM/yyyy'}}</td>        
         <td>{{value.descripcione}}</td>        
         <td  *ngIf="rol!=4">
-            <div><a class="btn  btn-success btn-xs" (click)="cambiarestado(value,3)">Finalizar</a><a class="btn  btn-danger btn-xs" (click)="cambiarestado(value,2)">Cancelar</a><a class="btn  btn-info btn-xs" (click)="cambiarestado(value,1)">Pendiente</a></div>
+            <div><a class="btn  btn-success btn-xs" (click)="cambiarestado(value,3)">Finalizar</a>&nbsp;&nbsp;&nbsp;<a class="btn  btn-danger btn-xs" (click)="cambiarestado(value,2)">Cancelar</a>&nbsp;&nbsp;&nbsp;<a class="btn  btn-info btn-xs" (click)="cambiarestado(value,1)">Pendiente</a></div>
         </td>
     </tr>
 </table>

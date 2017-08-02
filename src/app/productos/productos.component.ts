@@ -198,7 +198,13 @@ export class ProductosComponent implements OnInit {
     this.disa = true;
   }
   update(x) {
-    var imagenF="http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/"+this.uploadFile.originalName;
+    if(typeof this.uploadFile=='undefined'){
+      var imagenF='http://pablodececco.com.ar/assets/img/peppy.jpg';
+    }else{
+      var imagenF="http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/"+this.uploadFile.originalName;
+    }
+    
+    
     var array = [{
       "descripcion_corta": this.descripcion_corta, "descripcion_larga": this.descripcion_larga, "precio_costo": this.precio_costo,
       "precio_venta": this.precio_venta, "idprod": this.idprod, "promocion": this.promocion,"imagen":imagenF

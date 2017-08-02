@@ -130,6 +130,11 @@ $app->post('/persona/modificar', function (Request $request, Response $response)
 	$idusuario=$request->getParam('idusuario');
 	return $response->withJson(Persona::ModificarPersona($email,$rol,$nombre,$apellido,$dni,$cuenta,$ciudad,$localidad,$calle,$numero,$piso,$dpto,$tel,$entrecalles,$idusuario));     
 });	
+$app->post('/persona/modificarEstado', function (Request $request, Response $response) {    
+	$estado = $request->getParam('estado');	
+	$idusuario = $request->getParam('idusuario');	
+	return $response->withJson(Persona::ModificarPersonaEstado($estado,$idusuario));     
+});	
 $app->post('/persona/eliminar', function (Request $request, Response $response) {		
 	return $response->withJson(Persona::BorrarPersona($request->getParsedBody()));
 });
