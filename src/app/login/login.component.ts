@@ -118,7 +118,8 @@ export class LoginComponent implements OnInit {
           this.WebserviceService.CrearToken(array).then(data => {
 
             localStorage.setItem('Token', data);
-            localStorage.setItem('Rol', rol);
+            localStorage.setItem('Rol', rol);            
+            
             window.location.reload();
             this.router.navigate(['Productos']);
             //this.router.navigate(['Productos']);

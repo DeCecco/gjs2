@@ -157,6 +157,9 @@ $app->get('/persona/obtenerTodas', function (Request $request, Response $respons
 	$idrol = $request->getParam('idrol');
     return $response->withJson(Persona::TraerTodasLasPersonas($idrol));
 });
+$app->get('/persona/TraerPersonasSoloClientes', function (Request $request, Response $response){	
+    return $response->withJson(Persona::TraerPersonasSoloClientes());
+});
 /**
    * @api {any} /Agregar/  Agregar
    * @apiVersion 0.1.0
@@ -428,6 +431,9 @@ $app->get('/estadisticas/ventasporcliente', function (Request $request, Response
 });
 $app->get('/estadisticas/mayorproductovendido', function (Request $request, Response $response){
     return $response->withJson(Persona::MayorProductoVendido());
+});
+$app->get('/estadisticas/ProductoMasVendidoEntreDosFechas', function (Request $request, Response $response){
+    return $response->withJson(Persona::ProductoMasVendidoEntreDosFechas());
 });
 /*----------------------------------FIN ESTADISTICAS--------------------------------*/
 $app->run();

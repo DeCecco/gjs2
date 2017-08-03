@@ -99,6 +99,7 @@ export class EstadisticasComponent implements OnInit {
 
         break;
       case "5":
+      //this.ProductoMasVendidoEntreDosFechas()
       this.MayorProductoVendido();
         break;
       case "6":
@@ -106,6 +107,28 @@ export class EstadisticasComponent implements OnInit {
       case "7":
         break;
     }
+  }
+  ProductoMasVendidoEntreDosFechas(){
+    this.barChartLabels=[];
+    this.WebserviceService.ProductoMasVendidoEntreDosFechas().then(data => {
+      
+      this.listado = data;
+      var ultimo = this.listado.length
+      var xr = [];
+      var myObj = {
+        data: [],        
+        label: 'Producto mas Vendido entre dos Fechas'
+      };
+      this.listado.forEach(element => {
+        
+        myObj.data.push(element.max);   
+        this.barChartLabels.push(element.producto)     
+        
+      });
+      xr.push(myObj)
+      this.barChartData = xr
+
+    })
   }
   MayorProductoVendido() {
     this.barChartLabels=[];

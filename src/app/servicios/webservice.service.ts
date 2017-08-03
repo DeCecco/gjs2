@@ -60,6 +60,9 @@ export class WebserviceService {
     
     return this.http.get(this.route + "persona/obtenerTodas",body).toPromise().then(data => data.json());
   }
+    TraerPersonasSoloClientes() {    
+    return this.http.get(this.route + "persona/TraerPersonasSoloClientes").toPromise().then(data => data.json());
+  }
   AgregarPersona(formData) {
     var body = {
       "email": formData[0].email,
@@ -222,6 +225,9 @@ export class WebserviceService {
   }    
   MayorProductoVendido() {
     return this.http.get(this.route + "/estadisticas/mayorproductovendido").toPromise().then(data => data.json());
+  }    
+  ProductoMasVendidoEntreDosFechas() {
+    return this.http.get(this.route + "/estadisticas/ProductoMasVendidoEntreDosFechas").toPromise().then(data => data.json());
   }        
   /*----------------------------------FIN LOCALES--------------------------------*/
 

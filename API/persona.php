@@ -38,7 +38,7 @@ class Persona
 	}	
 	public static function ListarClientes(){
 
-        	$sql = " SELECT u.*,c.* FROM `usuarios` u left join `cliente-detalle` c on c.idusuario=u.idusuario WHERE u.idrol=4 ";
+        	$sql = " SELECT u.*,c.* FROM `usuarios` u left join `cliente-detalle` c on c.idusuario=u.idusuario WHERE u.idrol=4 and u.estado=1";
 			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);						
 			$consulta->execute();
 			return $consulta->fetchAll();	
@@ -99,13 +99,26 @@ class Persona
 			break;
 		}		*/
 		$sql = "SELECT u.idusuario,u.nombre,u.apellido,u.mail,u.dni,u.cuenta,u.idrol,u.estado,r.descripcion roles,c.ciudad,
-					c.localidad,c.calle,c.numero,c.piso,c.dpto,c.tel,c.entrecalles FROM usuarios u 
+					c.localidad,c.calle,c.numero,c.piso,c.dpto,c.tel,c.entrecalles,CONCAT(c.localidad,' ',c.calle,' ',c.numero) as enmapa
+ FROM usuarios u 
 					left join roles r ON u.idrol=r.idrol 
 					left join `cliente-detalle` c on c.idusuario=u.idusuario
 					order by u.estado desc,u.nombre,u.apellido";//. $filtro ;	
 					
         $consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
 		$consulta->bindValue(':rol', $rol, PDO::PARAM_STR);
+	    $consulta->execute();			
+		return $consulta->fetchAll(PDO::FETCH_ASSOC);	
+		
+	}
+	public static function TraerPersonasSoloClientes(){
+		$sql = "SELECT CONCAT(c.localidad,' ',c.calle,' ',c.numero) as enmapa
+ 					FROM usuarios u 					
+					left join `cliente-detalle` c on c.idusuario=u.idusuario
+					where u.idrol=4
+					order by u.estado desc,u.nombre,u.apellido";//. $filtro ;	
+					
+        $consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);		
 	    $consulta->execute();			
 		return $consulta->fetchAll(PDO::FETCH_ASSOC);	
 		
@@ -384,6 +397,19 @@ class Persona
 		$consulta->execute();
 		return $consulta->fetchAll();	
 	}	
+	public static function ProductoMasVendidoEntreDosFechas(){	
+		$sql = "SELECT count(pd.idproducto) max,pr.descripcion_corta producto
+				from `pedido-detalle` pd
+				left join pedidos p on (p.idpedido=pd.idpedido)
+				left join productos pr on (pr.idprod=pd.idproducto)
+				where fecha between (2017-07-22) and (2017-07-22)
+				group by producto
+				order by max desc 
+		";		
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
+		$consulta->execute();
+		return $consulta->fetchAll();	
+	}		
 /*----------------------------------FIN ESTADISTICAS--------------------------------*/
 
 }

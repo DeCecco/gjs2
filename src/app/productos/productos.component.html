@@ -3,7 +3,7 @@
 
 
 
-<div class="row col-md-12 col-sm-8 col-xs-12 fondo">
+<div class="row col-md-12 col-sm-8 col-xs-12 fondo" style="background-image: url('assets/img/fondo2.jpg');">
   <div class="col-sm-1">
     <button *ngIf="rolId!=1 && rolId!=4" class="btn btn-primary btn-sm" (click)="myModal.open();alta()">Alta</button>
   </div>
@@ -16,7 +16,7 @@
         <tr>
           <td rowspan="2"><img src="{{value.imagen}}" width="100%" alt=""> <br /><button class="btn btn-danger btn-xs" *ngIf="rolId!=1 && rolId!=4" (click)="eliminarProducto(value)">Eliminar</button><br
             /></td>
-          <td style="background-color: antiquewhite;">{{value.descripcion_corta}} <i class="fa fa-plus" aria-hidden="true"></i></td>
+          <td class="fondoProductos">{{value.descripcion_corta}} <i class="fa fa-plus" aria-hidden="true"></i></td>
           <td style="width: 10%;">
             <div *ngIf="value.esoferta"><img src="assets/img/promo.png" width="100%" alt=""></div>
             <div>${{value.precio_venta}}
@@ -25,7 +25,7 @@
           </td>
         </tr>
         <tr>
-          <td style=" width: 80%; background-color: antiquewhite;">{{value.descripcion_larga}}</td>
+          <td class="fondoProductos" style=" width: 80%;">{{value.descripcion_larga}}</td>
         </tr>
       </tbody>
     </table>
