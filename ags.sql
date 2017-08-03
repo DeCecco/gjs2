@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-07-2017 a las 19:57:59
+-- Tiempo de generación: 03-08-2017 a las 15:15:30
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -44,7 +44,51 @@ CREATE TABLE `cliente-detalle` (
 
 INSERT INTO `cliente-detalle` (`idusuario`, `ciudad`, `localidad`, `calle`, `numero`, `piso`, `dpto`, `tel`, `entrecalles`) VALUES
 (6, 'Capital Federal', 'Palermo', 'Ancon', 5390, '4', 'D', 1140920705, 'Av Dorrego y Vias tren mitre'),
-(11, 'Moreno', 'Villa More', 'arce', 5589, '', '', 0, '');
+(11, 'CABA', 'Buenos Aires', 'Salta ', 500, '', '', 0, ''),
+(13, 'pilar', 'del viso', 'penna', 1234, '', '', 0, ''),
+(14, 'CABA', 'Belgrano', 'Federico Lacrozze', 550, '4', 'E', 1145788852, ''),
+(20, 'Buenos Aires', 'Tortuguitas', 'Los Olivos', 1356, '0', ' ', 0, ' '),
+(21, 'Buenos Aires', 'Monserrat', 'Lavalle', 315, '', '', 0, '');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `encuestas`
+--
+
+CREATE TABLE `encuestas` (
+  `idusuario` int(11) NOT NULL,
+  `pregunta1` int(11) NOT NULL,
+  `pregunta2` int(11) NOT NULL,
+  `pregunta3` int(11) NOT NULL,
+  `pregunta4` int(11) NOT NULL,
+  `pregunta5` int(11) NOT NULL,
+  `pregunta6` int(11) NOT NULL,
+  `pregunta7` int(11) NOT NULL,
+  `pregunta8` int(11) NOT NULL,
+  `pregunta9` int(11) NOT NULL,
+  `pregunta10` int(11) NOT NULL,
+  `pregunta11` int(11) NOT NULL,
+  `pregunta12` int(11) NOT NULL,
+  `pregunta13` int(11) NOT NULL,
+  `pregunta14` int(11) NOT NULL,
+  `pregunta15` int(11) NOT NULL,
+  `pregunta16` int(11) NOT NULL,
+  `pregunta17` int(11) NOT NULL,
+  `pregunta18` int(11) NOT NULL,
+  `pregunta19` int(11) NOT NULL,
+  `pregunta20` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `encuestas`
+--
+
+INSERT INTO `encuestas` (`idusuario`, `pregunta1`, `pregunta2`, `pregunta3`, `pregunta4`, `pregunta5`, `pregunta6`, `pregunta7`, `pregunta8`, `pregunta9`, `pregunta10`, `pregunta11`, `pregunta12`, `pregunta13`, `pregunta14`, `pregunta15`, `pregunta16`, `pregunta17`, `pregunta18`, `pregunta19`, `pregunta20`) VALUES
+(6, 27, 7, 40, 16, 16, 26, 15, 26, 11, 30, 21, 26, 13, 16, 7, 32, 6, 17, 10, 20),
+(13, 17, 23, 17, 1, 10, 32, 9, 14, 26, 16, 19, 2, 9, 1, 4, 31, 18, 16, 6, 13),
+(14, 21, 13, 9, 33, 6, 5, 4, 14, 22, 12, 6, 18, 7, 19, 7, 3, 39, 12, 27, 17),
+(20, 27, 16, 5, 32, 10, 9, 8, 9, 3, 9, 18, 7, 5, 2, 1, 33, 25, 20, 3, 6);
 
 -- --------------------------------------------------------
 
@@ -99,7 +143,28 @@ CREATE TABLE `locales` (
 INSERT INTO `locales` (`idlocal`, `descripcion`, `localidad`, `calle`, `numero`, `img`) VALUES
 (1, 'Local 1', 'Palermo', 'Av sta Fe', 2580, 'assets\\img\\local1.jpg'),
 (2, 'Local 2', 'Belgrano', 'Av Cabildo', 356, 'assets\\img\\local2.jpg'),
-(3, 'Local 3', 'Recoleta', 'Av Libertadorr', 1100, 'assets\\img\\local3.jpg');
+(3, 'Local 3', 'Recoleta', 'Av Libertador', 1100, 'assets\\img\\local3.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `logsingreso`
+--
+
+CREATE TABLE `logsingreso` (
+  `idusuario` int(11) NOT NULL,
+  `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `logsingreso`
+--
+
+INSERT INTO `logsingreso` (`idusuario`, `fecha`) VALUES
+(5, '2017-08-03 01:50:59'),
+(6, '2017-08-03 01:52:53'),
+(1, '2017-08-03 01:53:00'),
+(1, '2017-08-03 09:20:08');
 
 -- --------------------------------------------------------
 
@@ -139,7 +204,26 @@ INSERT INTO `pedido-detalle` (`idpedido`, `idproducto`, `cantidad`, `precio_vent
 (10, 1, 1, '164'),
 (11, 8, 1, '155'),
 (11, 1, 1, '164'),
-(11, 7, 1, '225');
+(11, 7, 1, '225'),
+(12, 7, 1, '225'),
+(13, 14, 1, '167'),
+(13, 6, 1, '198'),
+(14, 1, 1, '164'),
+(15, 1, 1, '164'),
+(15, 7, 1, '225'),
+(16, 3, 1, '146'),
+(16, 5, 1, '189'),
+(16, 2, 1, '172'),
+(17, 1, 1, '164'),
+(18, 5, 1, '189'),
+(18, 3, 1, '146'),
+(18, 2, 1, '172'),
+(19, 1, 1, '164'),
+(20, 4, 1, '181'),
+(21, 3, 1, '146'),
+(22, 1, 1, '164'),
+(23, 5, 1, '189'),
+(24, 14, 1, '167');
 
 -- --------------------------------------------------------
 
@@ -175,7 +259,20 @@ INSERT INTO `pedidos` (`idpedido`, `idusuarioC`, `idusuario`, `idestado`, `idloc
 (8, 6, 5, 3, 1, '2017-07-23 21:57:50', 'Palermo', 'Ancon', 5390, 4, 'D', 'Av Dorrego y Vias tren mitre', ''),
 (9, 6, 5, 3, 3, '2017-07-23 21:58:12', 'Palermo', 'Ancon', 5390, 4, 'D', 'Av Dorrego y Vias tren mitre', ''),
 (10, 6, 5, 3, 3, '2017-07-27 11:14:27', 'Palermo', 'Ancon', 5390, 4, 'D', 'Av Dorrego y Vias tren mitre', 'Rapido Por favor'),
-(11, 6, 5, 1, 1, '2017-07-27 14:44:54', 'Palermo', 'Ancon', 5390, 4, 'D', 'Av Dorrego y Vias tren mitre', '');
+(11, 6, 5, 3, 1, '2017-07-27 14:44:54', 'Palermo', 'Ancon', 5390, 4, 'D', 'Av Dorrego y Vias tren mitre', ''),
+(12, 6, 1, 3, 1, '2017-07-27 15:15:43', 'Palermo', 'Ancon', 5390, 4, 'D', 'Av Dorrego y Vias tren mitre', ''),
+(13, 6, 1, 3, 1, '2017-07-27 16:00:41', 'Palermo', 'Ancon', 5390, 4, 'D', 'Av Dorrego y Vias tren mitre', ''),
+(14, 13, 13, 3, 1, '2017-07-27 16:03:11', 'del viso', 'penna', 1234, 0, '', '', ''),
+(15, 13, 3, 3, 3, '2017-07-27 16:10:50', 'del viso', 'penna', 1234, 0, '', '', ''),
+(16, 0, 1, 3, 3, '2017-07-27 17:27:01', 'pilar', 'penna', 3434, 1, '4', 'No se', 'Muchos'),
+(17, 11, 3, 3, 1, '2017-08-02 22:04:32', 'Villa More', 'arce', 5589, 0, '', '', ''),
+(18, 20, 20, 3, 1, '2017-08-02 22:09:21', 'Tortuguitas', 'Los Olivos', 1356, 0, ' ', ' ', ''),
+(19, 20, 20, 3, 1, '2017-08-02 22:09:28', 'Tortuguitas', 'Los Olivos', 1356, 0, ' ', ' ', ''),
+(20, 20, 20, 3, 1, '2017-08-02 22:09:38', 'Tortuguitas', 'Los Olivos', 1356, 0, ' ', ' ', ''),
+(21, 20, 20, 3, 1, '2017-08-02 22:09:45', 'Tortuguitas', 'Los Olivos', 1356, 0, ' ', ' ', ''),
+(22, 14, 14, 3, 1, '2017-08-02 22:10:23', 'Belgrano', 'Federico Lacrozze', 550, 4, 'E', '', ''),
+(23, 14, 14, 3, 1, '2017-08-02 22:10:33', 'Belgrano', 'Federico Lacrozze', 550, 4, 'E', '', ''),
+(24, 14, 14, 3, 1, '2017-08-02 22:10:40', 'Belgrano', 'Federico Lacrozze', 550, 4, 'E', '', '');
 
 -- --------------------------------------------------------
 
@@ -202,7 +299,8 @@ INSERT INTO `precios` (`idprod`, `precio_costo`, `precio_venta`, `fecha`) VALUES
 (5, '80', '189', '2017-07-12 00:26:31'),
 (6, '100', '198', '2017-07-12 00:26:44'),
 (7, '100', '225', '2017-07-27 11:17:00'),
-(8, '99', '155', '2017-07-27 11:19:45');
+(8, '99', '155', '2017-07-27 11:19:45'),
+(14, '99', '167', '2017-07-27 15:59:30');
 
 -- --------------------------------------------------------
 
@@ -214,6 +312,7 @@ CREATE TABLE `productos` (
   `idprod` int(11) NOT NULL,
   `descripcion_corta` varchar(80) COLLATE utf8_spanish_ci NOT NULL,
   `descripcion_larga` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
+  `imagen` varchar(200) COLLATE utf8_spanish_ci NOT NULL DEFAULT 'http://pablodececco.com.ar/assets/img/peppy.jpg',
   `esoferta` tinyint(1) NOT NULL DEFAULT '0',
   `estado` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -222,15 +321,16 @@ CREATE TABLE `productos` (
 -- Volcado de datos para la tabla `productos`
 --
 
-INSERT INTO `productos` (`idprod`, `descripcion_corta`, `descripcion_larga`, `esoferta`, `estado`) VALUES
-(1, 'Pizza mozzarella', 'Salsa de tomates frescos, mozzarella, oregano y aceitunas verdes.', 1, 1),
-(2, 'Pizza mozzarella con anchoas', 'Salsa de tomates frescos, anchoas en aceite, oregano y aceitunas verdes.', 0, 1),
-(3, 'Pizza con anchoas', '', 0, 1),
-(4, 'Pizza napolitana', 'Salsa de tomates frescos, mozzarella, orégano y aceitunas verdes.\r\n', 0, 1),
-(5, 'Pizza de jamón de cerdo natural', 'Salsa de tomates frescos, mozzarella, jamón.', 0, 1),
-(6, 'Pizza de jamón de cerdo natural y morrones\r\n', 'Salsa de tomates frescos, mozzarella, jamón y morrones asados.\r\n', 0, 1),
-(7, 'Promo Manolo  Pizza grande a eleccion ', ' ', 1, 1),
-(8, 'Promo Francesca - Pizza chica a elección y  2 empanadas a elección', ' ', 1, 1);
+INSERT INTO `productos` (`idprod`, `descripcion_corta`, `descripcion_larga`, `imagen`, `esoferta`, `estado`) VALUES
+(1, 'Pizza mozzarella', 'Salsa de tomates frescos, mozzarella, oregano y aceitunas verdes.', 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/mozza.jpg', 1, 1),
+(2, 'Pizza mozzarella con anchoas', 'Salsa de tomates frescos, anchoas en aceite, oregano y aceitunas verdes.', 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/anchoa.jpg', 0, 1),
+(3, 'Pizza con anchoas', ' ', 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/anchoa.jpg', 0, 1),
+(4, 'Pizza napolitana', 'Salsa de tomates frescos, mozzarella, oregano y aceitunas verdes.', 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/napo.png', 0, 1),
+(5, 'Pizza de jamón de cerdo natural', 'Salsa de tomates frescos, mozzarella, jamón.', 'http://pablodececco.com.ar/assets/img/peppy.jpg', 0, 1),
+(6, 'Pizza de jamon de cerdo natural y morrones', 'Salsa de tomates frescos, mozzarella, jamon y morrones asados.', 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/morron.jpg', 0, 1),
+(7, 'Promo Manolo  Pizza grande a eleccion ', ' ', 'http://pablodececco.com.ar/assets/img/peppy.jpg', 1, 1),
+(8, 'Promo Francesca - Pizza chica a elección y  2 empanadas a elección', ' ', 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/pizzaempa.jpg', 1, 1),
+(14, 'Pizza napolitana con tomates cherrys', 'Salsa de tomates frescos, mozzarella, tomates cherry, queso parmesano estacionado, ajo y hojas frescas de albahaca.', 'http://pablodececco.com.ar/assets/img/peppy.jpg', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -281,11 +381,12 @@ INSERT INTO `usuarios` (`idusuario`, `nombre`, `apellido`, `mail`, `dni`, `cuent
 (5, 'Encargado', 'Encargado', 'Encargado@Encargado.com', 202056, 'Encargado', '123456', 2, 1),
 (6, 'Cliente', 'Clientes', 'Cliente@Cliente.com', 897845, 'Cliente', '123456', 4, 1),
 (7, 'Luciana', 'Arrua', 'luarr@gfsa.com', 12451245, 'Luciana', '123456', 2, 1),
-(8, 'nombre', 'apellido', 'email@asd.com', 123123, 'asdasas', '123456', 4, 0),
-(9, 'prueba', 'prueba', 'asda@ds.com', 123123123, 'asddsaasd', '123456', 4, 0),
-(10, 'aaaaaaaaaaaa', 'aaaaaaaaaaaaa', 'aaaaaaaaaa@asaaa.com', 0, 'aaaaaaaaaaaaaaaaa', '123456', 4, 0),
 (11, 'Luciana', 'Gonzalez', 'lgonzales@mail.com', 378890055, 'lgonzalez', '123456', 4, 1),
-(12, 'Martin', 'prof', 'perof@masdil.com', 2147483647, 'profesor', '123456', 1, 1);
+(12, 'Martin', 'prof', 'perof@masdil.com', 2147483647, 'profesor', '123456', 1, 1),
+(13, 'Jorge', 'de cecco', 'jdececco@mail.com', 321123213, 'jdececco', '123456', 4, 1),
+(14, 'Nicolas', 'Avellaneda', 'navella@mail.com', 454578, 'nicoave', '123456', 4, 1),
+(20, 'Juana', 'De Arco', 'juana@mail.com', 69850, 'Juana', '123456', 4, 1),
+(21, 'Richard', 'Zambrano', 'rza@maki.com', 66998790, 'richard', '123456', 4, 1);
 
 --
 -- Índices para tablas volcadas
@@ -337,22 +438,22 @@ ALTER TABLE `estados`
 -- AUTO_INCREMENT de la tabla `locales`
 --
 ALTER TABLE `locales`
-  MODIFY `idlocal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idlocal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `idpedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idpedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `idprod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idprod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
