@@ -234,7 +234,13 @@ export class WebserviceService {
   }    
   ProductoMasVendidoEntreDosFechas() {
     return this.http.get(this.route + "/estadisticas/ProductoMasVendidoEntreDosFechas").toPromise().then(data => data.json());
-  }        
+  }     
+  LogsUsuarios() {
+    return this.http.get(this.route + "/estadisticas/LogsUsuarios").toPromise().then(data => data.json());
+  }    
+  Encuestas() {
+    return this.http.get(this.route + "/estadisticas/Encuestas").toPromise().then(data => data.json());
+  }           
   /*----------------------------------FIN LOCALES--------------------------------*/
 
 

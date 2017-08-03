@@ -439,6 +439,12 @@ $app->get('/estadisticas/mayorproductovendido', function (Request $request, Resp
 $app->get('/estadisticas/ProductoMasVendidoEntreDosFechas', function (Request $request, Response $response){
     return $response->withJson(Persona::ProductoMasVendidoEntreDosFechas());
 });
+$app->get('/estadisticas/LogsUsuarios', function (Request $request, Response $response){
+    return $response->withJson(Persona::LogsUsuarios());
+});
+$app->get('/estadisticas/Encuestas', function (Request $request, Response $response){
+    return $response->withJson(Persona::Encuestas());
+});
 /*----------------------------------FIN ESTADISTICAS--------------------------------*/
 $app->run();
 

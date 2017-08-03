@@ -417,6 +417,27 @@ class Persona
 		$consulta->execute();
 		return $consulta->fetchAll();	
 	}		
+	public static function LogsUsuarios(){	
+		$sql = "select count(l.idusuario) cant,CONCAT(u.nombre,', ',u.apellido ) AS nomap
+				from logsingreso l 
+				left join usuarios u on u.idusuario=l.idusuario 
+				GROUP by nomap
+		";		
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
+		$consulta->execute();
+		return $consulta->fetchAll();	
+	}	
+	public static function Encuestas(){	
+		$sql = "SELECT CONCAT(u.nombre,', ',u.apellido ) AS nomap,pregunta1,pregunta2,pregunta3,pregunta4,pregunta5,pregunta6,pregunta7,pregunta8,
+		pregunta9,pregunta10,pregunta11,pregunta12,pregunta13,pregunta14,pregunta15,pregunta16,pregunta17,pregunta18,pregunta19,pregunta20 
+		from encuestas e 
+		LEFT join usuarios u on u.idusuario=e.idusuario 
+		GROUP by nomap
+		";		
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
+		$consulta->execute();
+		return $consulta->fetchAll();	
+	}		
 /*----------------------------------FIN ESTADISTICAS--------------------------------*/
 
 }
