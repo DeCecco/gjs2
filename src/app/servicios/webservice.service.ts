@@ -10,6 +10,7 @@ export class WebserviceService {
 
   constructor(private http: Http) { }
   /*----------------------------------INICIO  COMUN A TODOS--------------------------------*/
+  
   Login(array) {
     var data = {
       'cuenta': array[0].cuenta,
@@ -49,20 +50,7 @@ export class WebserviceService {
   cmbClientes() {
     return this.http.get(this.route + "clientes/listar").toPromise().then(data => data.json());
   }
-  ListadoPedidos(form) {
-    var data = {
-      "idusuario": form[0].idusuario,
-      "idrol": form[0].idrol
-    }
-    return this.http.post(this.route + "pedidos", data).toPromise().then(data => data.json());
-  }
-  CambiarEstadoPedido(form) {
-    var data = {
-      "idpedido": form[0].idpedido,
-      "estado": form[0].estado
-    }
-    return this.http.post(this.route + "pedidos/estado", data).toPromise().then(data => data.json());
-  }  
+
   /*----------------------------------FIN  COMUN A TODOS--------------------------------*/
   /*----------------------------------INICIO PERSONAS--------------------------------*/
   TraerPersonas(form) {
@@ -155,6 +143,7 @@ export class WebserviceService {
     console.info(body)
     return this.http.post(this.route + "producto/eliminar", body).toPromise();
   }
+
   NuevoPedido(datoCliente,datoPedido) {
     var body = {
       "localidad": datoCliente[0].localidad,
@@ -172,6 +161,20 @@ export class WebserviceService {
     
     return this.http.post(this.route + "pedido/nuevo", body).toPromise();
   }
+    ListadoPedidos(form) {
+    var data = {
+      "idusuario": form[0].idusuario,
+      "idrol": form[0].idrol
+    }
+    return this.http.post(this.route + "pedidos", data).toPromise().then(data => data.json());
+  }
+  CambiarEstadoPedido(form) {
+    var data = {
+      "idpedido": form[0].idpedido,
+      "estado": form[0].estado
+    }
+    return this.http.post(this.route + "pedidos/estado", data).toPromise().then(data => data.json());
+  }  
   /*----------------------------------FIN PRODUCTOS--------------------------------*/
   /*----------------------------------INICIO LOCALES--------------------------------*/
   ListarLocales() {

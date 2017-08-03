@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { WebserviceService } from '../servicios/webservice.service';
 import * as jsPDF from 'jspdf'
 
-
 @Component({
   selector: 'app-pedidos',
   templateUrl: './pedidos.component.html',
