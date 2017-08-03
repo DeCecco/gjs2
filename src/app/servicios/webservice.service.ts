@@ -63,6 +63,12 @@ export class WebserviceService {
     TraerPersonasSoloClientes() {    
     return this.http.get(this.route + "persona/TraerPersonasSoloClientes").toPromise().then(data => data.json());
   }
+  Logs(formData) {
+    var body = {    
+      "idusuario": formData[0].idusuario,
+    }    
+    return this.http.post(this.route + "persona/logs", body).toPromise();
+  }  
   AgregarPersona(formData) {
     var body = {
       "email": formData[0].email,

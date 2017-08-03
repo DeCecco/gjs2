@@ -240,6 +240,10 @@ $app->post('/persona/modificarEstado', function (Request $request, Response $res
 	$idusuario = $request->getParam('idusuario');	
 	return $response->withJson(Persona::ModificarPersonaEstado($estado,$idusuario));     
 });	
+$app->post('/persona/logs', function (Request $request, Response $response) {    	
+	$idusuario = $request->getParam('idusuario');	
+	return $response->withJson(Persona::logs($idusuario));     
+});	
 
 $app->post('/persona/eliminar', function (Request $request, Response $response) {		
 	return $response->withJson(Persona::BorrarPersona($request->getParsedBody()));

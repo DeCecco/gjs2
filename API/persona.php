@@ -123,6 +123,13 @@ class Persona
 		return $consulta->fetchAll(PDO::FETCH_ASSOC);	
 		
 	}
+	public static function logs($idusuario){	
+		$sql = 'insert into logsingreso (idusuario) values (:idusuario)';
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);		
+		$consulta->bindValue(':idusuario', $idusuario,PDO::PARAM_STR);		
+		$consulta->execute();
+		return true;	
+	} 
 	//ELIMINACION DE UNA PERSONA DE LA BASE DE DATOS
 	public static function BorrarPersona($id){	
 		$sql = 'UPDATE usuarios set estado=0 WHERE idusuario = :id';

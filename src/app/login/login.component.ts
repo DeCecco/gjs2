@@ -115,8 +115,13 @@ export class LoginComponent implements OnInit {
             "nombre": data[0].nombre, "apellido": data[0].apellido, "cuenta": data[0].cuenta, "mail": data[0].mail, "dni": data[0].dni,
             "idrol": data[0].idrol, "idusuario": data[0].idusuario
           }];
+          var array2 = [{
+            "idusuario": data[0].idusuario
+          }];
+          this.WebserviceService.Logs(array2).then(data => {
+            })
           this.WebserviceService.CrearToken(array).then(data => {
-
+            
             localStorage.setItem('Token', data);
             localStorage.setItem('Rol', rol);            
             
