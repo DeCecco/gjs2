@@ -38,7 +38,7 @@ class Persona
 	}	
 	public static function ListarClientes(){
 
-        	$sql = " SELECT u.*,c.* FROM `usuarios` u left join `cliente-detalle` c on c.idusuario=u.idusuario WHERE u.idrol=4 ";
+        	$sql = " SELECT u.*,c.* FROM `usuarios` u left join `cliente-detalle` c on c.idusuario=u.idusuario WHERE u.idrol=4 and u.estado=1";
 			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);						
 			$consulta->execute();
 			return $consulta->fetchAll();	
@@ -99,7 +99,8 @@ class Persona
 			break;
 		}		*/
 		$sql = "SELECT u.idusuario,u.nombre,u.apellido,u.mail,u.dni,u.cuenta,u.idrol,u.estado,r.descripcion roles,c.ciudad,
-					c.localidad,c.calle,c.numero,c.piso,c.dpto,c.tel,c.entrecalles FROM usuarios u 
+					c.localidad,c.calle,c.numero,c.piso,c.dpto,c.tel,c.entrecalles,CONCAT(c.localidad,' ',c.calle,' ',c.numero) as enmapa
+ FROM usuarios u 
 					left join roles r ON u.idrol=r.idrol 
 					left join `cliente-detalle` c on c.idusuario=u.idusuario
 					order by u.estado desc,u.nombre,u.apellido";//. $filtro ;	
@@ -110,6 +111,25 @@ class Persona
 		return $consulta->fetchAll(PDO::FETCH_ASSOC);	
 		
 	}
+	public static function TraerPersonasSoloClientes(){
+		$sql = "SELECT CONCAT(c.localidad,' ',c.calle,' ',c.numero) as enmapa
+ 					FROM usuarios u 					
+					left join `cliente-detalle` c on c.idusuario=u.idusuario
+					where u.idrol=4
+					order by u.estado desc,u.nombre,u.apellido";//. $filtro ;	
+					
+        $consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);		
+	    $consulta->execute();			
+		return $consulta->fetchAll(PDO::FETCH_ASSOC);	
+		
+	}
+	public static function logs($idusuario){	
+		$sql = 'insert into logsingreso (idusuario) values (:idusuario)';
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);		
+		$consulta->bindValue(':idusuario', $idusuario,PDO::PARAM_STR);		
+		$consulta->execute();
+		return true;	
+	} 
 	//ELIMINACION DE UNA PERSONA DE LA BASE DE DATOS
 	public static function BorrarPersona($id){	
 		$sql = 'UPDATE usuarios set estado=0 WHERE idusuario = :id';
@@ -384,6 +404,40 @@ class Persona
 		$consulta->execute();
 		return $consulta->fetchAll();	
 	}	
+	public static function ProductoMasVendidoEntreDosFechas(){	
+		$sql = "SELECT count(pd.idproducto) max,pr.descripcion_corta producto
+				from `pedido-detalle` pd
+				left join pedidos p on (p.idpedido=pd.idpedido)
+				left join productos pr on (pr.idprod=pd.idproducto)
+				where fecha between (2017-07-22) and (2017-07-22)
+				group by producto
+				order by max desc 
+		";		
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
+		$consulta->execute();
+		return $consulta->fetchAll();	
+	}		
+	public static function LogsUsuarios(){	
+		$sql = "select count(l.idusuario) cant,CONCAT(u.nombre,', ',u.apellido ) AS nomap
+				from logsingreso l 
+				left join usuarios u on u.idusuario=l.idusuario 
+				GROUP by nomap
+		";		
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
+		$consulta->execute();
+		return $consulta->fetchAll();	
+	}	
+	public static function Encuestas(){	
+		$sql = "SELECT CONCAT(u.nombre,', ',u.apellido ) AS nomap,pregunta1,pregunta2,pregunta3,pregunta4,pregunta5,pregunta6,pregunta7,pregunta8,
+		pregunta9,pregunta10,pregunta11,pregunta12,pregunta13,pregunta14,pregunta15,pregunta16,pregunta17,pregunta18,pregunta19,pregunta20 
+		from encuestas e 
+		LEFT join usuarios u on u.idusuario=e.idusuario 
+		GROUP by nomap
+		";		
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
+		$consulta->execute();
+		return $consulta->fetchAll();	
+	}		
 /*----------------------------------FIN ESTADISTICAS--------------------------------*/
 
 }

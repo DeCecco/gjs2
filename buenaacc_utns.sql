@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
+-- version 4.0.10.14
+-- http://www.phpmyadmin.net
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 03-08-2017 a las 15:13:08
--- Versión del servidor: 10.1.21-MariaDB
--- Versión de PHP: 5.6.30
+-- Servidor: localhost:3306
+-- Tiempo de generación: 03-08-2017 a las 09:08:05
+-- Versión del servidor: 5.6.33
+-- Versión de PHP: 5.4.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,10 +14,10 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
--- Base de datos: `ags2`
+-- Base de datos: `buenaacc_utn`
 --
 
 -- --------------------------------------------------------
@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `cliente-detalle`
 --
 
-CREATE TABLE `cliente-detalle` (
+CREATE TABLE IF NOT EXISTS `cliente-detalle` (
   `idusuario` int(11) NOT NULL,
   `ciudad` varchar(60) COLLATE utf8_spanish_ci NOT NULL,
   `localidad` varchar(60) COLLATE utf8_spanish_ci NOT NULL,
@@ -47,48 +47,7 @@ INSERT INTO `cliente-detalle` (`idusuario`, `ciudad`, `localidad`, `calle`, `num
 (11, 'CABA', 'Buenos Aires', 'Salta ', 500, '', '', 0, ''),
 (13, 'pilar', 'del viso', 'penna', 1234, '', '', 0, ''),
 (14, 'CABA', 'Belgrano', 'Federico Lacrozze', 550, '4', 'E', 1145788852, ''),
-(20, 'Buenos Aires', 'Tortuguitas', 'Los Olivos', 1356, '0', ' ', 0, ' '),
-(21, 'Buenos Aires', 'Monserrat', 'Lavalle', 315, '', '', 0, '');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `encuestas`
---
-
-CREATE TABLE `encuestas` (
-  `idusuario` int(11) NOT NULL,
-  `pregunta1` int(11) NOT NULL,
-  `pregunta2` int(11) NOT NULL,
-  `pregunta3` int(11) NOT NULL,
-  `pregunta4` int(11) NOT NULL,
-  `pregunta5` int(11) NOT NULL,
-  `pregunta6` int(11) NOT NULL,
-  `pregunta7` int(11) NOT NULL,
-  `pregunta8` int(11) NOT NULL,
-  `pregunta9` int(11) NOT NULL,
-  `pregunta10` int(11) NOT NULL,
-  `pregunta11` int(11) NOT NULL,
-  `pregunta12` int(11) NOT NULL,
-  `pregunta13` int(11) NOT NULL,
-  `pregunta14` int(11) NOT NULL,
-  `pregunta15` int(11) NOT NULL,
-  `pregunta16` int(11) NOT NULL,
-  `pregunta17` int(11) NOT NULL,
-  `pregunta18` int(11) NOT NULL,
-  `pregunta19` int(11) NOT NULL,
-  `pregunta20` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `encuestas`
---
-
-INSERT INTO `encuestas` (`idusuario`, `pregunta1`, `pregunta2`, `pregunta3`, `pregunta4`, `pregunta5`, `pregunta6`, `pregunta7`, `pregunta8`, `pregunta9`, `pregunta10`, `pregunta11`, `pregunta12`, `pregunta13`, `pregunta14`, `pregunta15`, `pregunta16`, `pregunta17`, `pregunta18`, `pregunta19`, `pregunta20`) VALUES
-(6, 27, 7, 40, 16, 16, 26, 15, 26, 11, 30, 21, 26, 13, 16, 7, 32, 6, 17, 10, 20),
-(13, 17, 23, 17, 1, 10, 32, 9, 14, 26, 16, 19, 2, 9, 1, 4, 31, 18, 16, 6, 13),
-(14, 21, 13, 9, 33, 6, 5, 4, 14, 22, 12, 6, 18, 7, 19, 7, 3, 39, 12, 27, 17),
-(20, 27, 16, 5, 32, 10, 9, 8, 9, 3, 9, 18, 7, 5, 2, 1, 33, 25, 20, 3, 6);
+(20, 'Buenos Aires', 'Tortuguitas', 'Los Olivos', 1356, '0', ' ', 0, ' ');
 
 -- --------------------------------------------------------
 
@@ -96,10 +55,11 @@ INSERT INTO `encuestas` (`idusuario`, `pregunta1`, `pregunta2`, `pregunta3`, `pr
 -- Estructura de tabla para la tabla `estados`
 --
 
-CREATE TABLE `estados` (
-  `idestado` int(11) NOT NULL,
-  `descripcion` varchar(30) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+CREATE TABLE IF NOT EXISTS `estados` (
+  `idestado` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`idestado`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=4 ;
 
 --
 -- Volcado de datos para la tabla `estados`
@@ -116,7 +76,7 @@ INSERT INTO `estados` (`idestado`, `descripcion`) VALUES
 -- Estructura de tabla para la tabla `local-usuario`
 --
 
-CREATE TABLE `local-usuario` (
+CREATE TABLE IF NOT EXISTS `local-usuario` (
   `idlocal` int(11) NOT NULL,
   `idusuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -127,14 +87,15 @@ CREATE TABLE `local-usuario` (
 -- Estructura de tabla para la tabla `locales`
 --
 
-CREATE TABLE `locales` (
-  `idlocal` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `locales` (
+  `idlocal` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
   `localidad` varchar(80) COLLATE utf8_spanish_ci NOT NULL,
   `calle` varchar(80) COLLATE utf8_spanish_ci NOT NULL,
   `numero` int(20) NOT NULL,
-  `img` varchar(200) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `img` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`idlocal`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=6 ;
 
 --
 -- Volcado de datos para la tabla `locales`
@@ -151,7 +112,7 @@ INSERT INTO `locales` (`idlocal`, `descripcion`, `localidad`, `calle`, `numero`,
 -- Estructura de tabla para la tabla `logsingreso`
 --
 
-CREATE TABLE `logsingreso` (
+CREATE TABLE IF NOT EXISTS `logsingreso` (
   `idusuario` int(11) NOT NULL,
   `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -163,8 +124,7 @@ CREATE TABLE `logsingreso` (
 INSERT INTO `logsingreso` (`idusuario`, `fecha`) VALUES
 (5, '2017-08-03 01:50:59'),
 (6, '2017-08-03 01:52:53'),
-(1, '2017-08-03 01:53:00'),
-(1, '2017-08-03 09:20:08');
+(1, '2017-08-03 01:53:00');
 
 -- --------------------------------------------------------
 
@@ -172,7 +132,7 @@ INSERT INTO `logsingreso` (`idusuario`, `fecha`) VALUES
 -- Estructura de tabla para la tabla `pedido-detalle`
 --
 
-CREATE TABLE `pedido-detalle` (
+CREATE TABLE IF NOT EXISTS `pedido-detalle` (
   `idpedido` int(11) NOT NULL,
   `idproducto` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
@@ -231,8 +191,8 @@ INSERT INTO `pedido-detalle` (`idpedido`, `idproducto`, `cantidad`, `precio_vent
 -- Estructura de tabla para la tabla `pedidos`
 --
 
-CREATE TABLE `pedidos` (
-  `idpedido` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `pedidos` (
+  `idpedido` int(11) NOT NULL AUTO_INCREMENT,
   `idusuarioC` int(11) NOT NULL,
   `idusuario` int(11) NOT NULL,
   `idestado` int(11) NOT NULL,
@@ -244,8 +204,9 @@ CREATE TABLE `pedidos` (
   `piso` int(11) NOT NULL,
   `dpto` varchar(5) COLLATE utf8_spanish_ci NOT NULL,
   `entrecalles` varchar(120) COLLATE utf8_spanish_ci NOT NULL,
-  `comentarios` varchar(500) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `comentarios` varchar(500) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`idpedido`,`idusuarioC`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=25 ;
 
 --
 -- Volcado de datos para la tabla `pedidos`
@@ -280,7 +241,7 @@ INSERT INTO `pedidos` (`idpedido`, `idusuarioC`, `idusuario`, `idestado`, `idloc
 -- Estructura de tabla para la tabla `precios`
 --
 
-CREATE TABLE `precios` (
+CREATE TABLE IF NOT EXISTS `precios` (
   `idprod` int(11) NOT NULL,
   `precio_costo` decimal(10,0) NOT NULL,
   `precio_venta` decimal(10,0) NOT NULL,
@@ -308,14 +269,15 @@ INSERT INTO `precios` (`idprod`, `precio_costo`, `precio_venta`, `fecha`) VALUES
 -- Estructura de tabla para la tabla `productos`
 --
 
-CREATE TABLE `productos` (
-  `idprod` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `productos` (
+  `idprod` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion_corta` varchar(80) COLLATE utf8_spanish_ci NOT NULL,
   `descripcion_larga` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
   `imagen` varchar(200) COLLATE utf8_spanish_ci NOT NULL DEFAULT 'http://pablodececco.com.ar/assets/img/peppy.jpg',
   `esoferta` tinyint(1) NOT NULL DEFAULT '0',
-  `estado` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `estado` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`idprod`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=16 ;
 
 --
 -- Volcado de datos para la tabla `productos`
@@ -338,7 +300,7 @@ INSERT INTO `productos` (`idprod`, `descripcion_corta`, `descripcion_larga`, `im
 -- Estructura de tabla para la tabla `roles`
 --
 
-CREATE TABLE `roles` (
+CREATE TABLE IF NOT EXISTS `roles` (
   `idrol` int(11) NOT NULL,
   `descripcion` varchar(60) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
@@ -359,8 +321,8 @@ INSERT INTO `roles` (`idrol`, `descripcion`) VALUES
 -- Estructura de tabla para la tabla `usuarios`
 --
 
-CREATE TABLE `usuarios` (
-  `idusuario` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `usuarios` (
+  `idusuario` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
   `apellido` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
   `mail` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
@@ -368,8 +330,12 @@ CREATE TABLE `usuarios` (
   `cuenta` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
   `password` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
   `idrol` int(11) NOT NULL,
-  `estado` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `estado` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`idusuario`),
+  UNIQUE KEY `mailunico` (`mail`),
+  UNIQUE KEY `dniunico` (`dni`),
+  UNIQUE KEY `cuentunica` (`cuenta`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=21 ;
 
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -385,75 +351,8 @@ INSERT INTO `usuarios` (`idusuario`, `nombre`, `apellido`, `mail`, `dni`, `cuent
 (12, 'Martin', 'prof', 'perof@masdil.com', 2147483647, 'profesor', '123456', 1, 1),
 (13, 'Jorge', 'de cecco', 'jdececco@mail.com', 321123213, 'jdececco', '123456', 4, 1),
 (14, 'Nicolas', 'Avellaneda', 'navella@mail.com', 454578, 'nicoave', '123456', 4, 1),
-(20, 'Juana', 'De Arco', 'juana@mail.com', 69850, 'Juana', '123456', 4, 1),
-(21, 'Richard', 'Zambrano', 'rza@maki.com', 66998790, 'richard', '123456', 4, 1);
+(20, 'Juana', 'De Arco', 'juana@mail.com', 69850, 'Juana', '123456', 4, 1);
 
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `estados`
---
-ALTER TABLE `estados`
-  ADD PRIMARY KEY (`idestado`);
-
---
--- Indices de la tabla `locales`
---
-ALTER TABLE `locales`
-  ADD PRIMARY KEY (`idlocal`);
-
---
--- Indices de la tabla `pedidos`
---
-ALTER TABLE `pedidos`
-  ADD PRIMARY KEY (`idpedido`,`idusuarioC`);
-
---
--- Indices de la tabla `productos`
---
-ALTER TABLE `productos`
-  ADD PRIMARY KEY (`idprod`);
-
---
--- Indices de la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`idusuario`),
-  ADD UNIQUE KEY `mailunico` (`mail`),
-  ADD UNIQUE KEY `dniunico` (`dni`),
-  ADD UNIQUE KEY `cuentunica` (`cuenta`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `estados`
---
-ALTER TABLE `estados`
-  MODIFY `idestado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT de la tabla `locales`
---
-ALTER TABLE `locales`
-  MODIFY `idlocal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT de la tabla `pedidos`
---
-ALTER TABLE `pedidos`
-  MODIFY `idpedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
---
--- AUTO_INCREMENT de la tabla `productos`
---
-ALTER TABLE `productos`
-  MODIFY `idprod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
---
--- AUTO_INCREMENT de la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -116,3 +116,10 @@
         </modal>
     </div>
 </div>
+
+
+<ngui-map center={{position}}>
+      <marker *ngFor="let pos of listadomapa" 
+      [position]="pos.enmapa"
+      (initialized$)="onMarkerInit($event)"></marker>
+</ngui-map>

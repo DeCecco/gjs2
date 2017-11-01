@@ -180,7 +180,7 @@ export class ProductosComponent implements OnInit {
     })
   }
   modificarProducto(x) {
-    console.info(x)
+    
     this.descripcion_corta = x.descripcion_corta;
     this.descripcion_larga = x.descripcion_larga;
     this.precio_costo = x.precio_costo;

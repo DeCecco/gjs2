@@ -49,6 +49,7 @@ export class UsuariosComponent implements OnInit {
   entrecalles: string;
   idusuario: string;
   disa: number;
+  listadomapa:string;
   constructor(private WebserviceService: WebserviceService, private ModalModule: ModalModule, private router: Router, public formBuilder: FormBuilder) {
     var tk = localStorage.getItem('Token')
     this.rolLogueado = localStorage.getItem('Rol')
@@ -198,7 +199,7 @@ export class UsuariosComponent implements OnInit {
 
   cargarListado() {    
       var array = [{ idrol: localStorage.getItem('Rol')    }];
-    
+    this.cargarListadoSoloPersonas()
     this.WebserviceService.TraerPersonas(array)
       .then(data => {
         console.info(data)
@@ -207,7 +208,22 @@ export class UsuariosComponent implements OnInit {
       .catch(error => {
           console.log(error);
         });
-  }/*
+  }
+    cargarListadoSoloPersonas() {    
+          
+    this.WebserviceService.TraerPersonasSoloClientes()
+      .then(data => {
+        console.info(data)
+        this.listadomapa=data;
+      })
+      .catch(error => {
+          console.log(error);
+        });
+  }
+  onMarkerInit(marker) {
+    console.log('marker', marker);
+  }
+  /*
   verificacion(x){
     var rol = localStorage.getItem('Rol');
     if(rol=="1"){

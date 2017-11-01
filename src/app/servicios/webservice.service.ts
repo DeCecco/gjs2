@@ -4,12 +4,13 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class WebserviceService {
-  //route: string = "http://buenaaccion.com.ar/UTN/finallab/GJS2/API/index.php/"; //server
+  route: string = "http://buenaaccion.com.ar/UTN/finallab/GJS2/API/index.php/"; //server
   //route: string = "http://localhost/UTN/finallab/GJS2/API/index.php/"; //casa
-  route: string = "http://localhost/UTN/GJS2/API/index.php/"; //laburo
+  //route: string = "http://localhost/UTN/GJS2/API/index.php/"; //laburo
 
   constructor(private http: Http) { }
   /*----------------------------------INICIO  COMUN A TODOS--------------------------------*/
+  
   Login(array) {
     var data = {
       'cuenta': array[0].cuenta,
@@ -49,20 +50,7 @@ export class WebserviceService {
   cmbClientes() {
     return this.http.get(this.route + "clientes/listar").toPromise().then(data => data.json());
   }
-  ListadoPedidos(form) {
-    var data = {
-      "idusuario": form[0].idusuario,
-      "idrol": form[0].idrol
-    }
-    return this.http.post(this.route + "pedidos", data).toPromise().then(data => data.json());
-  }
-  CambiarEstadoPedido(form) {
-    var data = {
-      "idpedido": form[0].idpedido,
-      "estado": form[0].estado
-    }
-    return this.http.post(this.route + "pedidos/estado", data).toPromise().then(data => data.json());
-  }  
+
   /*----------------------------------FIN  COMUN A TODOS--------------------------------*/
   /*----------------------------------INICIO PERSONAS--------------------------------*/
   TraerPersonas(form) {
@@ -72,6 +60,15 @@ export class WebserviceService {
     
     return this.http.get(this.route + "persona/obtenerTodas",body).toPromise().then(data => data.json());
   }
+    TraerPersonasSoloClientes() {    
+    return this.http.get(this.route + "persona/TraerPersonasSoloClientes").toPromise().then(data => data.json());
+  }
+  Logs(formData) {
+    var body = {    
+      "idusuario": formData[0].idusuario,
+    }    
+    return this.http.post(this.route + "persona/logs", body).toPromise();
+  }  
   AgregarPersona(formData) {
     var body = {
       "email": formData[0].email,
@@ -155,6 +152,7 @@ export class WebserviceService {
     console.info(body)
     return this.http.post(this.route + "producto/eliminar", body).toPromise();
   }
+
   NuevoPedido(datoCliente,datoPedido) {
     var body = {
       "localidad": datoCliente[0].localidad,
@@ -172,6 +170,20 @@ export class WebserviceService {
     
     return this.http.post(this.route + "pedido/nuevo", body).toPromise();
   }
+    ListadoPedidos(form) {
+    var data = {
+      "idusuario": form[0].idusuario,
+      "idrol": form[0].idrol
+    }
+    return this.http.post(this.route + "pedidos", data).toPromise().then(data => data.json());
+  }
+  CambiarEstadoPedido(form) {
+    var data = {
+      "idpedido": form[0].idpedido,
+      "estado": form[0].estado
+    }
+    return this.http.post(this.route + "pedidos/estado", data).toPromise().then(data => data.json());
+  }  
   /*----------------------------------FIN PRODUCTOS--------------------------------*/
   /*----------------------------------INICIO LOCALES--------------------------------*/
   ListarLocales() {
@@ -219,7 +231,16 @@ export class WebserviceService {
   }    
   MayorProductoVendido() {
     return this.http.get(this.route + "/estadisticas/mayorproductovendido").toPromise().then(data => data.json());
-  }        
+  }    
+  ProductoMasVendidoEntreDosFechas() {
+    return this.http.get(this.route + "/estadisticas/ProductoMasVendidoEntreDosFechas").toPromise().then(data => data.json());
+  }     
+  LogsUsuarios() {
+    return this.http.get(this.route + "/estadisticas/LogsUsuarios").toPromise().then(data => data.json());
+  }    
+  Encuestas() {
+    return this.http.get(this.route + "/estadisticas/Encuestas").toPromise().then(data => data.json());
+  }           
   /*----------------------------------FIN LOCALES--------------------------------*/
 
 

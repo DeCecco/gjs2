@@ -1,0 +1,27 @@
+define({
+  "name": "API Proyecto Angular 2 ",
+  "version": "0.1.0",
+  "description": "API version 0.1.0",
+  "title": "API PIZZERIA ARGENTA",
+  "url": "http://localhost:8080/EjemploAjax+APIREST/backEnd/apirest",
+  "order": [
+    "TOKEN",
+    "PERSONAS",
+    "PEDIDOS",
+    "PRODUCTOS",
+    "LOCAL"
+  ],
+  "template": {
+    "withCompare": true,
+    "withGenerator": true
+  },
+  "sampleUrl": false,
+  "defaultVersion": "0.0.0",
+  "apidoc": "0.3.0",
+  "generator": {
+    "name": "apidoc",
+    "time": "2017-08-03T00:02:01.863Z",
+    "url": "http://apidocjs.com",
+    "version": "0.17.6"
+  }
+});
