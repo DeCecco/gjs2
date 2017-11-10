@@ -1,7 +1,7 @@
-import { Component , Output, EventEmitter} from '@angular/core';
+import { Component , Output, Input, EventEmitter} from '@angular/core';
 import { WebserviceService } from './servicios/webservice.service';
 import { Router } from '@angular/router';
-import { ModalModule } from "ng2-modal";
+import { ModalModule } from 'ng2-modal';
 
 @Component({
   selector: 'app-root',
@@ -14,19 +14,20 @@ export class AppComponent {
   myOptions = [];
   local: any;
   datosLocal: any;
-  img:string;
-  rol:any;
-  position:string;
-  @Output() public eventoLocal=new EventEmitter<any>();
+  img: string;
+  rol: any;
+  position: string;
+  @Input() vieneNombre: string;
+  @Output() public eventoLocal= new EventEmitter<any>();
   constructor(private WebserviceService: WebserviceService, private router: Router, private ModalModule: ModalModule) {
     this.verificarToken();
-    var x=localStorage.getItem('Local');
-    if(x==null){
+    const x = localStorage.getItem('Local');
+    if (x == null) {
     this.local = '1';
     }else{
-      this.local=x;
+      this.local = x;
     }
-    this.rol=0;
+    this.rol = 0;
     this.myOptions = [
       { value: '1', label: 'LOCAL 1' },
       { value: '2', label: 'LOCAL 2' },
@@ -63,7 +64,7 @@ export class AppComponent {
     })
   }
   verificarToken() {
-    var tk = localStorage.getItem('Token')
+    let tk = localStorage.getItem('Token')
     this.usuario = 'Perfil';
     if (tk != null) {
       var array = [{ "token": tk }];
