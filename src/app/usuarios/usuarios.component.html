@@ -19,12 +19,14 @@
         <td>{{value.roles}}</td>
         <td>{{value.dni}}</td>
         <td>{{value.estado== 1 ? 'Activo' : 'Inactivo'}}</td>
-        <td> 
-            <div *ngIf="rolLogueado!=2"><a class="btn  btn-info btn-xs" (click)="myModal.open();modificar(value)">Modificar</a>&nbsp;&nbsp;<a class="btn  btn-danger btn-xs"
-                    (click)="delete(value)">X</a></div>
+        <td>
+            <div *ngIf="rolLogueado!=2">
+                <a class="btn  btn-info btn-xs" (click)="myModal.open();modificar(value)">Modificar</a>&nbsp;&nbsp;
+                <a class="btn  btn-danger btn-xs" (click)="delete(value)">X</a>
+            </div>
             <div *ngIf="rolLogueado==2">
-                <a class="btn  btn-success btn-xs" (click)="changeEstado(1,value.idusuario)">Activo</a>&nbsp;&nbsp;<a class="btn  btn-danger btn-xs"
-                    (click)="changeEstado(0,value.idusuario)">Inactivo</a>
+                <a class="btn  btn-success btn-xs" (click)="changeEstado(1,value.idusuario)">Activo</a>&nbsp;&nbsp;
+                <a class="btn  btn-danger btn-xs" (click)="changeEstado(0,value.idusuario)">Inactivo</a>
             </div>
         </td>
     </tr>
@@ -41,8 +43,9 @@
                     <div class="form-group col-sm-4">
                         <label for="nombre">Nombre</label>
                         <input [(ngModel)]="nombre" formControlName="nombre" required minlength="4" maxlength="24" name="nombre" type="text" class="form-control"
-                            id="nombre" placeholder="Nombre">
+                            id="nombre" placeholder="Nombre">                        
                         <div class="alert alert-danger" *ngIf="!formUser.controls.nombre.valid">Error los valores ingresados para Nombre no son validos</div>
+                        
                         <label for="apellido">Apellido</label>
                         <input type="text" [(ngModel)]="apellido" formControlName="apellido" class="form-control" id="apellido" name="apellido" placeholder="Apellido">
                         <div class="alert alert-danger" *ngIf="!formUser.controls.apellido.valid">Error los valores ingresados para Apellido no son validos</div>
@@ -68,41 +71,41 @@
                         </ng-select>
                     </div>
                     <div class="form-group col-sm-12" *ngIf="rol==4">
-                        <label for="ciudad">ciudad</label>
+                        <label for="ciudad">Ciudad</label>
                         <input type="text" [(ngModel)]="ciudad" formControlName="ciudad" class="form-control" id="ciudad" name="ciudad" placeholder="ciudad">
                         <div class="alert alert-danger" *ngIf="!formUser.controls.ciudad.valid">Error los valores ingresados para ciudad no son validos</div>
 
-                        <label for="localidad">localidad</label>
+                        <label for="localidad">Localidad</label>
                         <input type="text" [(ngModel)]="localidad" formControlName="localidad" class="form-control" id="localidad" name="localidad"
                             placeholder="localidad">
                         <div class="alert alert-danger" *ngIf="!formUser.controls.localidad.valid">Error los valores ingresados para localidad no son validos</div>
                     </div>
                     <div class="form-group col-sm-4" *ngIf="rol==4">
-                        <label for="calle">calle</label>
+                        <label for="calle">Calle</label>
                         <input type="text" [(ngModel)]="calle" formControlName="calle" class="form-control" id="calle" name="calle" placeholder="calle">
                         <div class="alert alert-danger" *ngIf="!formUser.controls.calle.valid">Error los valores ingresados para calle no son validos</div>
 
 
-                        <label for="numero">numero</label>
+                        <label for="numero">Número</label>
                         <input type="text" [(ngModel)]="numero" formControlName="numero" class="form-control" id="numero" name="numero" placeholder="numero">
                         <div class="alert alert-danger" *ngIf="!formUser.controls.numero.valid">Error los valores ingresados para numero no son validos</div>
                     </div>
                     <div class="form-group col-sm-4" *ngIf="rol==4">
-                        <label for="piso">piso</label>
+                        <label for="piso">Piso</label>
                         <input type="text" [(ngModel)]="piso" formControlName="piso" class="form-control" id="piso" name="piso" placeholder="piso">
                         <div class="alert alert-danger" *ngIf="!formUser.controls.piso.valid">Error los valores ingresados para piso no son validos</div>
 
-                        <label for="dpto">dpto</label>
+                        <label for="dpto">Dpto</label>
                         <input type="text" [(ngModel)]="dpto" formControlName="dpto" class="form-control" id="dpto" name="dpto" placeholder="dpto">
                         <div class="alert alert-danger" *ngIf="!formUser.controls.dpto.valid">Error los valores ingresados para dpto no son validos</div>
                     </div>
                     <div class="form-group col-sm-4" *ngIf="rol==4">
-                        <label for="tel">tel</label>
+                        <label for="tel">Tel</label>
                         <input type="text" [(ngModel)]="tel" formControlName="tel" class="form-control" id="tel" name="tel" placeholder="tel">
                         <div class="alert alert-danger" *ngIf="!formUser.controls.tel.valid">Error los valores ingresados para tel no son validos</div>
                     </div>
                     <div class="form-group col-sm-4" *ngIf="rol==4">
-                        <label for="entrecalles">entrecalles</label>
+                        <label for="entrecalles">Entrecalles</label>
                         <input type="text" [(ngModel)]="entrecalles" formControlName="entrecalles" class="form-control" id="entrecalles" name="entrecalles"
                             placeholder="entrecalles">
                         <div class="alert alert-danger" *ngIf="!formUser.controls.entrecalles.valid">Error los valores ingresados para entrecalles no son validos</div>
@@ -119,7 +122,26 @@
 
 
 <ngui-map center={{position}}>
-      <marker *ngFor="let pos of listadomapa" 
-      [position]="pos.enmapa"
-      (initialized$)="onMarkerInit($event)"></marker>
+        <h2>{{position}}</h2>
+    <marker *ngFor="let pos of listadomapa" [position]="pos.enmapa"  (click)="clicked($event,pos)" (initialized$)="onMarkerInit($event)">
+        <info-window id="iw">
+            <div *ngIf="marker.display">
+                <div>
+                    Nombre: {{dato1}}
+                </div>            
+                <div >
+                    Direccion: {{dato2}}
+                </div>            
+            </div>
+        </info-window>    
+    </marker>
 </ngui-map>
+<!--ngui-map center="Brampton, Canada">
+        <marker position="Brampton, Canada" draggable="true" (click)="clicked($event)"></marker>
+        <info-window id="iw">
+          <div *ngIf="marker.display">
+            lat: {{ marker.lat }}, lng: {{ marker.lng }}
+          </div>
+          <button (click)="hideMarkerInfo()">Hide Info</button>
+        </info-window>
+      </ngui-map-->

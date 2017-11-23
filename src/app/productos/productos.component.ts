@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { WebserviceService } from '../servicios/webservice.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DirectionsRenderer } from '@ngui/map';
 
 @Component({
   selector: 'app-productos',
@@ -9,6 +10,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./productos.component.css']
 })
 export class ProductosComponent implements OnInit {
+  @ViewChild(DirectionsRenderer) directionsRendererDirective: DirectionsRenderer;
+  directionsRenderer: google.maps.DirectionsRenderer;
+  directionsResult: google.maps.DirectionsResult;
+
+
   listadoProductos: any;
   pedidos: any;
   lista: string[];
@@ -39,18 +45,30 @@ export class ProductosComponent implements OnInit {
   promocion: boolean;
   uploadFile: any;
   hasBaseDropZoneOver: boolean = false;
+  modoDeViaje = [];
+  mdViaje: string;
+  sinPedidos: boolean;
   options: Object = {
     //url: 'http://localhost/UTN/gjs2/API/file.php' //laburo
     //url: 'http://localhost/UTN/finallab/GJS2/API/file.php' //casa
     url: 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/file.php' //server
+
+
+  
+  };
+  direction: any = {
+    origin: 'Av. Federico Lacroze 3814-3818, C1427EDQ CABA',
+    destination: 'Av. Cabildo 356, C1426AAQ CABA',
+    travelMode: 'DRIVING'
   };
   sizeLimit = 2000000;
 
   handleUpload(data): void {
     if (data && data.response) {
       data = JSON.parse(data.response);
-      this.uploadFile = data;      
-      console.info("http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/"+this.uploadFile.originalName)
+      this.uploadFile = data;
+      // tslint:disable-next-line:no-console
+      console.info('http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/' + this.uploadFile.originalName)
       alert('Archivo subido con exito')
     }
   }
@@ -65,7 +83,7 @@ export class ProductosComponent implements OnInit {
       alert('El archivo es muy pesado!');
     }
   }
-  constructor(private WebserviceService: WebserviceService, private router: Router, public formBuilder: FormBuilder) {
+  constructor(private WebserviceService: WebserviceService, private router: Router, public formBuilder: FormBuilder, private cdr: ChangeDetectorRef) {
     this.ptotal = 0;
     this.lista = [];
     this.cantidad = 0;
@@ -73,13 +91,20 @@ export class ProductosComponent implements OnInit {
     this.existenP = false;
     this.promocion = false;
     this.comentarios = '';
+    this.sinPedidos = false;
     this.rolId = localStorage.getItem('Rol')
     var array = [{ "token": localStorage.getItem('Token') }];
-
+    this.modoDeViaje = [
+      { value: 'DRIVING', label: 'Auto' },
+      { value: 'WALKING', label: 'Caminando' },
+      { value: 'BICYCLING', label: 'Bicicleta' },
+      { value: 'TRANSIT', label:'Transporte Público'}
+    ];
+    this.mdViaje = 'DRIVING';
     this.WebserviceService.PayLoad(array).then(data => {
       this.usuario = data.data.idusuario;
     })
-
+    
     this.formProductos = formBuilder.group({
       //VALIDACIONES      
       descripcion_corta: [this.descripcion_corta, Validators.compose([Validators.required, Validators.maxLength(80), Validators.pattern('^[A-Z a-z0-9ÑñáéíóúÁÉÍÓÚ\\-\\#]+$')])],
@@ -121,11 +146,28 @@ export class ProductosComponent implements OnInit {
 
   ngOnInit() {
     this.WebserviceService.ListarProductos().then(data => {
-      this.listadoProductos = data;      
-    })
+      this.listadoProductos = data;
 
+    });
+    /*this.directionsRendererDirective['initialized$'].subscribe( directionsRenderer => {
+      this.directionsRenderer = directionsRenderer;
+    });*/
+  }
+  directionsChanged() {
+    this.directionsResult = this.directionsRenderer.getDirections();
+    this.cdr.detectChanges();
+    
   }
 
+  showDirection() {
+    this.directionsRendererDirective['showDirections'](this.direction);
+  }
+  cambio() {
+    
+    this.direction.travelMode = this.mdViaje;
+    this.direction.destination= this.calle + ' ' + this.numero + ', ' + this.localidad;
+    this.showDirection();
+  }
   agregar(pizza) {
 
 
@@ -231,14 +273,13 @@ export class ProductosComponent implements OnInit {
 
   confirmar() {
 
-
+    this.sinPedidos = true;
     if (this.rolId != '4') {
 
       this.comboClientes();
     } else {
       var array = [{ "token": localStorage.getItem('Token') }];
       this.WebserviceService.PayLoad(array).then(data => {
-
         this.datosCliente(data.data.idusuario);
       })
 
@@ -275,7 +316,9 @@ export class ProductosComponent implements OnInit {
         this.localidad = data[0].localidad;
         this.numero = data[0].numero;
         this.piso = data[0].piso;
-
+        this.direction.origin = localStorage.getItem('Posicion');
+        this.direction.destination = this.calle + ' ' + this.numero + ', ' + this.localidad;
+        this.showDirection();
       })
     }
   }

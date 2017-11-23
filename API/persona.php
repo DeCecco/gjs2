@@ -51,7 +51,8 @@ class Persona
 			left join usuarios u on u.idusuario=p.idusuario
 			left join usuarios uu on uu.idusuario=p.idusuarioc
 			left join estados e on e.idestado=p.idestado
-			left join locales l on l.idlocal=p.idlocal ";
+			left join locales l on l.idlocal=p.idlocal 
+			order by p.idestado,p.idpedido desc";
 			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);		
 		}else{
 			$sql = " SELECT p.idpedido,p.idusuarioc,uu.nombre nombrec,uu.apellido apellidoc,p.idusuario,u.nombre,u.apellido,p.idestado,e.descripcion descripcione
@@ -61,7 +62,8 @@ class Persona
 			left join usuarios uu on uu.idusuario=p.idusuarioc
 			left join estados e on e.idestado=p.idestado
 			left join locales l on l.idlocal=p.idlocal
-			where p.idusuarioC=:idusuario ";
+			where p.idusuarioC=:idusuario 
+			order by p.idestado,p.idpedido desc";
 			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);		
 			$consulta->bindValue(':idusuario', $idusuario,PDO::PARAM_STR);				
 		}		
@@ -112,10 +114,10 @@ class Persona
 		
 	}
 	public static function TraerPersonasSoloClientes(){
-		$sql = "SELECT CONCAT(c.localidad,' ',c.calle,' ',c.numero) as enmapa
+		$sql = "SELECT CONCAT(c.localidad,' ',c.calle,' ',c.numero) as enmapa,CONCAT(u.nombre, ' ',u.apellido) as nomap
  					FROM usuarios u 					
 					left join `cliente-detalle` c on c.idusuario=u.idusuario
-					where u.idrol=4
+					where u.idrol=4 and u.estado=1
 					order by u.estado desc,u.nombre,u.apellido";//. $filtro ;	
 					
         $consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);		

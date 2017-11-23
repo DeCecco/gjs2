@@ -4,12 +4,13 @@ import { WebserviceService } from '../servicios/webservice.service';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ButtonRenderComponent } from '../button-render.component';
 import { ImageRenderComponent } from '../image-render.component';
-import { ModalModule } from "ng2-modal";
+import { ModalModule } from 'ng2-modal';
 
 import { Router } from '@angular/router';
 
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 declare let alasql;
+// tslint:disable-next-line:class-name
 export interface login {
   nombre: string;
   apellido: string;
@@ -49,6 +50,9 @@ export class UsuariosComponent implements OnInit {
   entrecalles: string;
   idusuario: string;
   disa: number;
+  // tslint:disable-next-line:typedef-whitespace
+  dato1 : string;
+  dato2 : string;
   listadomapa:string;
   constructor(private WebserviceService: WebserviceService, private ModalModule: ModalModule, private router: Router, public formBuilder: FormBuilder) {
     var tk = localStorage.getItem('Token')
@@ -75,16 +79,16 @@ export class UsuariosComponent implements OnInit {
       apellido: [this.apellido, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
       email: [this.email, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)])],
       rol: [this.rol],
-      dni: [this.dni, Validators.compose([Validators.maxLength(10), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
+      dni: [this.dni, Validators.compose([Validators.required,Validators.maxLength(10), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
       cuenta: [this.cuenta, Validators.compose([Validators.required, Validators.maxLength(30), Validators.minLength(5), Validators.pattern('^[a-zA-Z]+$')])],
-      ciudad: [this.ciudad, Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
-      localidad: [this.localidad, Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
-      calle: [this.calle, Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
-      numero: [this.numero, Validators.compose([Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
-      piso: [this.piso, Validators.compose([Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
-      dpto: [this.dpto, Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z]$')])],
-      tel: [this.tel, Validators.compose([Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
-      entrecalles: [this.entrecalles, Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
+      ciudad: [this.ciudad, Validators.compose([Validators.required,Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
+      localidad: [this.localidad, Validators.compose([Validators.required,Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
+      calle: [this.calle, Validators.compose([Validators.required,Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
+      numero: [this.numero, Validators.compose([Validators.required,Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
+      piso: [this.piso, Validators.compose([Validators.required,Validators.maxLength(3), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
+      dpto: [this.dpto, Validators.compose([Validators.required,Validators.maxLength(3), Validators.pattern('#^[a-z]*[0-9][a-z0-9]*$#i')])],
+      tel: [this.tel, Validators.compose([Validators.required,Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
+      entrecalles: [this.entrecalles, Validators.compose([Validators.required,Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
     });
   }
 
@@ -202,7 +206,7 @@ export class UsuariosComponent implements OnInit {
     this.cargarListadoSoloPersonas()
     this.WebserviceService.TraerPersonas(array)
       .then(data => {
-        console.info(data)
+      //  console.info(data)
         this.data=data;
       })
       .catch(error => {
@@ -221,7 +225,19 @@ export class UsuariosComponent implements OnInit {
         });
   }
   onMarkerInit(marker) {
-    console.log('marker', marker);
+    // console.log('marker', marker);
+  }
+  // tslint:disable-next-line:member-ordering
+  marker = {
+    display: true
+  };
+  hideMarkerInfo() {
+    this.marker.display = !this.marker.display;
+  }
+  clicked({target: marker},datos) {
+    this.dato1 = datos.nomap;
+    this.dato2 = datos.enmapa;
+    marker.nguiMapComponent.openInfoWindow('iw', marker);
   }
   /*
   verificacion(x){
@@ -345,6 +361,7 @@ export class UsuariosComponent implements OnInit {
     
     if (x == 1) {
       this.WebserviceService.AgregarPersona(array).then(data => {
+        console.info(data)
         if (data.ok) {
           this.cargarListado();
           //window.location.reload();
