@@ -1,6 +1,6 @@
 //Nativos
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule, } from '@angular/platform-browser';
+import { NgModule, } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
@@ -13,7 +13,7 @@ import { WebserviceService } from './servicios/webservice.service';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ChartsModule } from 'ng2-charts';
 import { ImageRenderComponent } from './image-render.component';
-import { ModalModule } from "ng2-modal";
+import { ModalModule } from 'ng2-modal';
 import { SelectModule } from 'angular2-select';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -56,7 +56,7 @@ const appRoutes: Routes = [
   ],
   imports: [
     BsDropdownModule.forRoot(),
-    BrowserModule,
+    BrowserModule,    
     FormsModule,
     ReactiveFormsModule,
     ModalModule,
@@ -65,7 +65,7 @@ const appRoutes: Routes = [
     Ng2UploaderModule,
     ChartsModule,
     RouterModule.forRoot(appRoutes),
-    Ng2SmartTableModule,
+    Ng2SmartTableModule,    
     NguiMapModule.forRoot({ apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyBZPpjpLrJRPNwPimYSEBRErThcxu9oEZs' })
 
   ],

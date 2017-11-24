@@ -16,3 +16,6 @@
 .displayer{
     display: none;
 }
+.colorpick{
+    background-color: aliceblue; 
+}

@@ -14,7 +14,7 @@ export class ProductosComponent implements OnInit {
   @ViewChild(DirectionsRenderer) directionsRendererDirective: DirectionsRenderer;
   directionsRenderer: google.maps.DirectionsRenderer;
   directionsResult: google.maps.DirectionsResult;
-
+  
 
   listadoProductos: any;
   pedidos: any;
@@ -153,9 +153,7 @@ export class ProductosComponent implements OnInit {
       this.listadoProductos = data;
 
     });
-    /*this.directionsRendererDirective['initialized$'].subscribe( directionsRenderer => {
-      this.directionsRenderer = directionsRenderer;
-    });*/
+
   }
   directionsChanged() {
     this.directionsResult = this.directionsRenderer.getDirections();
@@ -167,6 +165,7 @@ export class ProductosComponent implements OnInit {
     // tslint:disable-next-line:one-line
     try {
       this.directionsRendererDirective['showDirections'](this.direction);
+      this.cdr.detectChanges();
     } catch (error) {
       alert('Por favor, defina una ruta correcta');
     }
@@ -298,9 +297,6 @@ export class ProductosComponent implements OnInit {
       })
 
     }
-
-    console.info(this.pedidos)
-    console.info(this.ptotal)
   }
   comboClientes() {
 
@@ -314,7 +310,7 @@ export class ProductosComponent implements OnInit {
         array2['label'] = element['nombre'];
         array.push(array2);
       });
-      console.info(array)
+      
       this.cmbClientes = array;
     })
   }
@@ -332,7 +328,9 @@ export class ProductosComponent implements OnInit {
         this.piso = data[0].piso;
         this.direction.origin = localStorage.getItem('Posicion');
         this.direction.destination = this.calle + ' ' + this.numero + ', ' + this.localidad;
-        this.showDirection();
+        setTimeout(() => {
+          this.showDirection();
+        }, 2000);
       })
     }
   }

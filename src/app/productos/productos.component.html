@@ -160,11 +160,12 @@
             <input type="text" id="cantidad+[index]" value="x1" readonly name="cantidad+[index]" width="50%" style="width: 8%;"> ${{value.precio_venta}} - {{value.descripcion_corta}}
             <p>
         </div>
+        
         <div class="center">SubTotal: ${{ptotal}}</div>
         <div class="center">Delivery: $40</div>
         <div class="center">Total: ${{ptotal+40}}</div>
       </div>
-    </form>
+    </form>    
     <div class="col-sm-6" *ngIf="sinPedidos">
      
         <div id="floating-panel">
