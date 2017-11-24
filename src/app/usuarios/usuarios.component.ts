@@ -42,6 +42,7 @@ export class UsuariosComponent implements OnInit {
   formUser: FormGroup;
   ciudad: string;
   localidad: string;
+  mensajeError: boolean;
   calle: string;
   numero: number;
   piso: string;
@@ -56,6 +57,7 @@ export class UsuariosComponent implements OnInit {
   listadomapa:string;
   constructor(private WebserviceService: WebserviceService, private ModalModule: ModalModule, private router: Router, public formBuilder: FormBuilder) {
     var tk = localStorage.getItem('Token')
+    this.mensajeError = false;
     this.rolLogueado = localStorage.getItem('Rol')
     if (tk == null) {
       alert('Por favor, para continuar logueese');
@@ -74,21 +76,21 @@ export class UsuariosComponent implements OnInit {
     }
     //this.rol = '4';
     this.formUser = formBuilder.group({
-      //VALIDACIONES      
+      // VALIDACIONES
       nombre: [this.nombre, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('^[a-zA-Z]+$')])],
       apellido: [this.apellido, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
       email: [this.email, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)])],
       rol: [this.rol],
       dni: [this.dni, Validators.compose([Validators.required,Validators.maxLength(10), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
       cuenta: [this.cuenta, Validators.compose([Validators.required, Validators.maxLength(30), Validators.minLength(5), Validators.pattern('^[a-zA-Z]+$')])],
-      ciudad: [this.ciudad, Validators.compose([Validators.required,Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
-      localidad: [this.localidad, Validators.compose([Validators.required,Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
-      calle: [this.calle, Validators.compose([Validators.required,Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
-      numero: [this.numero, Validators.compose([Validators.required,Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
-      piso: [this.piso, Validators.compose([Validators.required,Validators.maxLength(3), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
-      dpto: [this.dpto, Validators.compose([Validators.required,Validators.maxLength(3), Validators.pattern('#^[a-z]*[0-9][a-z0-9]*$#i')])],
-      tel: [this.tel, Validators.compose([Validators.required,Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
-      entrecalles: [this.entrecalles, Validators.compose([Validators.required,Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
+      ciudad: [this.ciudad, Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
+      localidad: [this.localidad, Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
+      calle: [this.calle, Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
+      numero: [this.numero, Validators.compose([Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
+      piso: [this.piso, Validators.compose([Validators.maxLength(3), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
+      dpto: [this.dpto, Validators.compose([Validators.maxLength(3), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
+      tel: [this.tel, Validators.compose([Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
+      entrecalles: [this.entrecalles, Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
     });
   }
 
@@ -352,7 +354,24 @@ export class UsuariosComponent implements OnInit {
     this.entrecalles = '';
   }
   crear(x) {
-    
+    // tslint:disable-next-line:curly
+    if (this.numero === null)
+      this.numero = 0;
+    // tslint:disable-next-line:curly
+    if (this.ciudad === null)
+      this.ciudad = ' ';
+      if (this.localidad === null)
+      this.localidad = ' ';
+      if (this.calle === null)
+      this.calle = ' ';
+      if (this.piso === null)
+      this.piso = ' ';
+      if (this.dpto === null)
+      this.dpto = ' ';
+      if (this.tel === null)
+      this.tel = ' ';
+      if (this.entrecalles === null)
+      this.entrecalles = ' ';
     var array = [{
       "nombre": this.nombre, "apellido": this.apellido, "email": this.email, "rol": this.rol, "dni": this.dni, "cuenta": this.cuenta,
       "ciudad": this.ciudad, "localidad": this.localidad, "calle": this.calle, "numero": this.numero, "piso": this.piso, "dpto": this.dpto,
@@ -407,5 +426,16 @@ export class UsuariosComponent implements OnInit {
       }).catch(error => {
         console.warn(error)
       })
+  }
+
+  validar(que){
+    // tslint:disable-next-line:curly
+    if (this.formUser.controls[que].valid === false) {
+      this.mensajeError = true;
+      document.getElementById('error' + que).style.display = 'block';
+    }else {
+      this.mensajeError = false;
+      document.getElementById('error' + que).style.display = 'none';
+    }
   }
 }

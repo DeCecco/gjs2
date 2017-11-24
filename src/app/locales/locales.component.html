@@ -33,21 +33,22 @@
             <div class="form-group col-sm-5">
                 <label for="descripcion">descripcion</label>
                 <input [(ngModel)]="descripcion" formControlName="descripcion" required minlength="4" maxlength="24" name="descripcion" type="text"
-                    class="form-control" id="descripcion" placeholder="descripcion">
-                <div class="alert alert-danger" *ngIf="!formLocales.controls.descripcion.valid">Error los valores ingresados para descripcion no son validos</div>
+                    class="form-control" id="descripcion" placeholder="descripcion" (blur)="validar('descripcion')" [ngClass]="{'error':!formLocales.controls['descripcion'].valid}">
+                    <div class="alert alert-danger displayer" id="errordescripcion">Error los valores ingresados para descripcion no son validos</div>
+
                 <label for="localidad">localidad</label>
                 <input type="text" [(ngModel)]="localidad" formControlName="localidad" class="form-control" id="localidad" name="localidad"
-                    placeholder="localidad">
-                <div class="alert alert-danger" *ngIf="!formLocales.controls.localidad.valid">Error los valores ingresados para localidad no son validos</div>
+                    placeholder="localidad" (blur)="validar('localidad')" [ngClass]="{'error':!formLocales.controls['localidad'].valid}">
+                <div class="alert alert-danger displayer" id="errorlocalidad">Error los valores ingresados para localidad no son validos</div>
             </div>
             <div class="form-group col-sm-5">
                 <label for="calle">calle</label>
-                <input type="text" [(ngModel)]="calle" formControlName="calle" class="form-control" id="calle" name="calle" placeholder="calle">
-                <div class="alert alert-danger" *ngIf="!formLocales.controls.calle.valid">Error los valores ingresados para calle no son validos</div>
+                <input type="text" [(ngModel)]="calle" formControlName="calle" class="form-control" id="calle" name="calle" placeholder="calle"  (blur)="validar('calle')" [ngClass]="{'error':!formLocales.controls['calle'].valid}">
+                <div class="alert alert-danger displayer" id="errorcalle">Error los valores ingresados para calle no son validos</div>
 
                 <label for="numero">numero</label>
-                <input type="text" [(ngModel)]="numero" formControlName="numero" class="form-control" id="numero" name="numero" placeholder="numero">
-                <div class="alert alert-danger" *ngIf="!formLocales.controls.numero.valid">Error los valores ingresados para numero no son validos</div>
+                <input type="text" [(ngModel)]="numero" formControlName="numero" class="form-control" id="numero" name="numero" placeholder="numero" (blur)="validar('numero')" [ngClass]="{'error':!formLocales.controls['numero'].valid}">
+                <div class="alert alert-danger displayer" id="errornumero">Error los valores ingresados para numero no son validos</div>
             </div>
         </form>
     </modal-content>

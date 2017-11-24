@@ -17,8 +17,10 @@ export class LocalesComponent implements OnInit {
   formLocales: FormGroup;
   disa: boolean;
   rol:string;
+  mensajeError: boolean;
   constructor(private WebserviceService: WebserviceService, public formBuilder: FormBuilder) {
     this.disa = false;
+    this.mensajeError = false;
     this.rol= localStorage.getItem('Rol')
     this.formLocales = formBuilder.group({
       //VALIDACIONES
@@ -76,7 +78,7 @@ export class LocalesComponent implements OnInit {
     this.descripcion = '';
     this.localidad = '';
     this.calle = '';
-    this.numero=0;
+    this.numero=null;
     this.disa = true;
   }
   eliminar(x) {
@@ -93,5 +95,15 @@ export class LocalesComponent implements OnInit {
       }*/
     })
 
+  }
+  validar(que){
+    // tslint:disable-next-line:curly
+    if (this.formLocales.controls[que].valid === false) {
+      this.mensajeError = true;
+      document.getElementById('error' + que).style.display = 'block';
+    }else {
+      this.mensajeError = false;
+      document.getElementById('error' + que).style.display = 'none';
+    }
   }
 }

@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { WebserviceService } from '../servicios/webservice.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DirectionsRenderer } from '@ngui/map';
+import { error } from 'util';
 
 @Component({
   selector: 'app-productos',
@@ -48,13 +49,15 @@ export class ProductosComponent implements OnInit {
   modoDeViaje = [];
   mdViaje: string;
   sinPedidos: boolean;
+  mensajeError: boolean;
+  img: string;
   options: Object = {
     //url: 'http://localhost/UTN/gjs2/API/file.php' //laburo
     //url: 'http://localhost/UTN/finallab/GJS2/API/file.php' //casa
     url: 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/file.php' //server
 
 
-  
+
   };
   direction: any = {
     origin: 'Av. Federico Lacroze 3814-3818, C1427EDQ CABA',
@@ -92,23 +95,24 @@ export class ProductosComponent implements OnInit {
     this.promocion = false;
     this.comentarios = '';
     this.sinPedidos = false;
+    this.mensajeError = false;
     this.rolId = localStorage.getItem('Rol')
     var array = [{ "token": localStorage.getItem('Token') }];
     this.modoDeViaje = [
       { value: 'DRIVING', label: 'Auto' },
       { value: 'WALKING', label: 'Caminando' },
       { value: 'BICYCLING', label: 'Bicicleta' },
-      { value: 'TRANSIT', label:'Transporte Público'}
+      { value: 'TRANSIT', label: 'Transporte Público' }
     ];
     this.mdViaje = 'DRIVING';
     this.WebserviceService.PayLoad(array).then(data => {
       this.usuario = data.data.idusuario;
     })
-    
+
     this.formProductos = formBuilder.group({
       //VALIDACIONES      
       descripcion_corta: [this.descripcion_corta, Validators.compose([Validators.required, Validators.maxLength(80), Validators.pattern('^[A-Z a-z0-9ÑñáéíóúÁÉÍÓÚ\\-\\#]+$')])],
-      descripcion_larga: [this.descripcion_larga, Validators.compose([Validators.required, Validators.maxLength(200), Validators.pattern('^[a-zA-Z,. ]+$')])],
+      descripcion_larga: [this.descripcion_larga, Validators.compose([Validators.required, Validators.maxLength(200), Validators.pattern('^[A-Z a-z0-9ÑñáéíóúÁÉÍÓÚ\\-\\#]+$')])],
       precio_costo: [this.precio_costo, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
       precio_venta: [this.precio_venta, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
       promocion: [this.promocion]
@@ -119,10 +123,10 @@ export class ProductosComponent implements OnInit {
       localidad: [Validators.compose([Validators.required, Validators.maxLength(40), Validators.pattern('^[a-zA-Z,.´ ]+$')])],
       calle: [Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern('^[a-zA-Z,. ]+$')])],
       numero: [Validators.compose([Validators.required, Validators.maxLength(5), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
-      piso: [Validators.compose([Validators.required, Validators.maxLength(4), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
-      dpto: [Validators.compose([Validators.required, Validators.maxLength(3), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
-      entrecalles: [Validators.compose([Validators.required, Validators.maxLength(80), Validators.pattern('^[a-zA-Z,.´ ]+$')])],
-      comentarios: [Validators.compose([Validators.required, Validators.maxLength(200), Validators.pattern('^[a-zA-Z,.´ ]+$')])],
+      piso: [Validators.compose([Validators.maxLength(4), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
+      dpto: [Validators.compose([Validators.maxLength(3), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
+      entrecalles: [Validators.compose([Validators.maxLength(80), Validators.pattern('^[a-zA-Z,.´ ]+$')])],
+      comentarios: [Validators.compose([Validators.maxLength(200), Validators.pattern('^[a-zA-Z,.´ ]+$')])],
 
     });
 
@@ -156,16 +160,22 @@ export class ProductosComponent implements OnInit {
   directionsChanged() {
     this.directionsResult = this.directionsRenderer.getDirections();
     this.cdr.detectChanges();
-    
+
   }
 
   showDirection() {
-    this.directionsRendererDirective['showDirections'](this.direction);
+    // tslint:disable-next-line:one-line
+    try {
+      this.directionsRendererDirective['showDirections'](this.direction);
+    } catch (error) {
+      alert('Por favor, defina una ruta correcta');
+    }
+
   }
   cambio() {
-    
+
     this.direction.travelMode = this.mdViaje;
-    this.direction.destination= this.calle + ' ' + this.numero + ', ' + this.localidad;
+    this.direction.destination = this.calle + ' ' + this.numero + ', ' + this.localidad;
     this.showDirection();
   }
   agregar(pizza) {
@@ -222,36 +232,40 @@ export class ProductosComponent implements OnInit {
     })
   }
   modificarProducto(x) {
-    
+
     this.descripcion_corta = x.descripcion_corta;
     this.descripcion_larga = x.descripcion_larga;
     this.precio_costo = x.precio_costo;
     this.precio_venta = x.precio_venta;
     this.idprod = x.idprod;
     this.promocion = x.esoferta;
+    this.img = x.imagen;
     this.disa = false;
   }
   alta() {
     this.descripcion_corta = '';
     this.descripcion_larga = '';
-    this.precio_costo;
-    this.precio_venta;
+    this.precio_costo = null;
+    this.precio_venta = null;
     this.promocion = false;
     this.disa = true;
   }
   update(x) {
-    if(typeof this.uploadFile=='undefined'){
-      var imagenF='http://pablodececco.com.ar/assets/img/peppy.jpg';
-    }else{
-      var imagenF="http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/"+this.uploadFile.originalName;
+    if (typeof this.uploadFile == 'undefined') {
+      var imagenF = 'http://pablodececco.com.ar/assets/img/peppy.jpg';
+    } else {
+      var imagenF = "http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/" + this.uploadFile.originalName;
     }
-    
-    
+
+    if (this.img == null)
+      this.img = imagenF
+    else
+      imagenF = this.img
+
     var array = [{
       "descripcion_corta": this.descripcion_corta, "descripcion_larga": this.descripcion_larga, "precio_costo": this.precio_costo,
-      "precio_venta": this.precio_venta, "idprod": this.idprod, "promocion": this.promocion,"imagen":imagenF
+      "precio_venta": this.precio_venta, "idprod": this.idprod, "promocion": this.promocion, "imagen": imagenF
     }];
-
     if (x == 1) {
       this.WebserviceService.ModificarProducto(array).then(data => {
         if (data.ok) {
@@ -338,6 +352,30 @@ export class ProductosComponent implements OnInit {
         alert('error al grabar');
       }
     })
+  }
+
+  validar(que, form) {
+    // tslint:disable-next-line:curly
+    switch (form) {
+      case 1:
+        if (this.formPedido.controls[que].valid === false) {
+          this.mensajeError = true;
+          document.getElementById('error' + que).style.display = 'block';
+        } else {
+          this.mensajeError = false;
+          document.getElementById('error' + que).style.display = 'none';
+        }
+        break;
+      case 2:
+        if (this.formProductos.controls[que].valid === false) {
+          this.mensajeError = true;
+          document.getElementById('error' + que).style.display = 'block';
+        } else {
+          this.mensajeError = false;
+          document.getElementById('error' + que).style.display = 'none';
+        }
+        break;
+    }
 
   }
 }

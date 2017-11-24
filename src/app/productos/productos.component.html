@@ -67,13 +67,13 @@
       <div class="form-group col-sm-5">
         <label for="descripcion_corta">Descripcion Corta</label>
         <input [(ngModel)]="descripcion_corta" formControlName="descripcion_corta" required minlength="4" maxlength="80" name="descripcion_corta"
-          type="text" class="form-control" id="descripcion_corta" placeholder="descripcion_corta">
-        <div class="alert alert-danger" *ngIf="!formProductos.controls.descripcion_corta.valid">Error los valores ingresados para Descripcion Corta no son validos</div>
+          type="text" class="form-control" id="descripcion_corta" placeholder="descripcion_corta" (blur)="validar('descripcion_corta',2)" [ngClass]="{'error':!formProductos.controls['descripcion_corta'].valid}">
+          <div class="alert alert-danger displayer" id="errordescripcion_corta">Error los valores ingresados para Descripcion Corta no son validos</div>
 
         <label for="descripcion_larga">Descripcion Larga</label>
         <input type="text" [(ngModel)]="descripcion_larga" formControlName="descripcion_larga" class="form-control" id="descripcion_larga"
-          name="descripcion_larga" placeholder="descripcion_larga">
-        <div class="alert alert-danger" *ngIf="!formProductos.controls.descripcion_larga.valid">Error los valores ingresados para Descripcion Larga no son validos</div>
+          name="descripcion_larga" placeholder="descripcion_larga" (blur)="validar('descripcion_larga',2)" [ngClass]="{'error':!formProductos.controls['descripcion_larga'].valid}">
+          <div class="alert alert-danger displayer" id="errordescripcion_larga">Error los valores ingresados para Descripcion Larga no son validos</div>
 
         <label for="imagen">Imagen</label>
         <input type="file" ngFileSelect [options]="options" (onUpload)="handleUpload($event)" (beforeUpload)="beforeUpload($event)">
@@ -81,13 +81,13 @@
       <div class="form-group col-sm-5">
         <label for="precio_costo">Precio Costo</label>
         <input type="text" [(ngModel)]="precio_costo" formControlName="precio_costo" class="form-control" id="precio_costo" name="precio_costo"
-          placeholder="precio_costo">
-        <div class="alert alert-danger" *ngIf="!formProductos.controls.precio_costo.valid">Error los valores ingresados para Precio Costo no son validos</div>
+          placeholder="precio_costo" (blur)="validar('precio_costo',2)" [ngClass]="{'error':!formProductos.controls['precio_costo'].valid}">
+          <div class="alert alert-danger displayer" id="errorprecio_costo"> Error los valores ingresados para Precio Costo no son validos</div>
 
         <label for="precio_venta">Precio Venta</label>
         <input type="text" [(ngModel)]="precio_venta" formControlName="precio_venta" class="form-control" id="precio_venta" name="precio_venta"
-          placeholder="precio_venta">
-        <div class="alert alert-danger" *ngIf="!formProductos.controls.precio_venta.valid">Error los valores ingresados para Precio Venta no son validos</div>
+          placeholder="precio_venta" (blur)="validar('precio_venta',2)" [ngClass]="{'error':!formProductos.controls['precio_venta'].valid}">
+          <div class="alert alert-danger displayer" id="errorprecio_venta">Error los valores ingresados para Precio Venta no son validos</div>
       </div>
     </form>
   </modal-content>
@@ -104,7 +104,7 @@
   </modal-header>
 
   <modal-content>
-    <div *ngIf="rolId!=4" class="col-sm-4">
+    <div *ngIf="rolId!=4" class="col-sm-12">
       <label for="Cli">Seleccione un cliente</label>
       <ng-select [multiple]="false" [options]="cmbClientes" [ngModelOptions]="{standalone: true}" (selected)="datosCliente(cliente)"
         [(ngModel)]="cliente"></ng-select>
@@ -113,38 +113,38 @@
       <div class="form-group col-sm-12">
         <label for="localidad">Localidad</label>
         <input [(ngModel)]="localidad" formControlName="localidad" required minlength="4" maxlength="40" name="localidad" type="text"
-          class="form-control" id="localidad" placeholder="localidad" (blur)="cambio()">
-        <div class="alert alert-danger" *ngIf="!formPedido.controls.localidad.valid">Error los valores ingresados para Localidad no son validos</div>
+          class="form-control" id="localidad"  placeholder="localidad" (blur)="cambio(); validar('localidad',1)" [ngClass]="{'error':!formPedido.controls['localidad'].valid}">
+        <div class="alert alert-danger displayer" id="errorlocalidad">Error los valores ingresados para Localidad no son validos</div>
       </div>
       <div class="form-group col-sm-12">
         <label for="calle">Calle</label>
-        <input type="text" [(ngModel)]="calle" (blur)="cambio()" required minlength="3" maxlength="50" formControlName="calle" class="form-control"
-          id="calle" name="calle" placeholder="calle">
-        <div class="alert alert-danger" *ngIf="!formPedido.controls.calle.valid">Error los valores ingresados para Calle no son validos</div>
+        <input type="text" [(ngModel)]="calle" (blur)="cambio();validar('calle',1)" required minlength="3" maxlength="50" formControlName="calle" class="form-control"
+          id="calle" name="calle" [ngClass]="{'error':!formPedido.controls['calle'].valid}" placeholder="calle">
+        <div class="alert displayer alert-danger" id="errorcalle">Error los valores ingresados para Calle no son validos</div>
       </div>
       <div class="form-group col-sm-12">
         <label for="numero">Numero</label>
-        <input type="text" [(ngModel)]="numero" (blur)="cambio()" required minlength="2" maxlength="5" formControlName="numero" class="form-control"
-          id="numero" name="numero" placeholder="numero">
-        <div class="alert alert-danger" *ngIf="!formPedido.controls.numero.valid">Error los valores ingresados para Numero no son validos</div>
+        <input type="text" [(ngModel)]="numero" (blur)="cambio();validar('numero',1)" required minlength="2" maxlength="5" formControlName="numero" class="form-control"
+          id="numero" name="numero" [ngClass]="{'error':!formPedido.controls['numero'].valid}" placeholder="numero">
+        <div class="alert displayer alert-danger" id="errornumero">Error los valores ingresados para Numero no son validos</div>
       </div>
       <div class="form-group col-sm-12">
         <label for="piso">Piso</label>
-        <input type="text" [(ngModel)]="piso" minlength="1" maxlength="3" formControlName="piso" class="form-control" id="piso" name="piso"
-          placeholder="piso">
-        <div class="alert alert-danger" *ngIf="!formPedido.controls.piso.valid">Error los valores ingresados para Piso no son validos</div>
+        <input type="text" (blur)="validar('piso',1);" [(ngModel)]="piso" minlength="1" maxlength="3" formControlName="piso" class="form-control" id="piso" name="piso"
+          [ngClass]="{'error':!formPedido.controls['piso'].valid}" placeholder="piso">
+        <div class="alert displayer alert-danger" id="errorpiso">Error los valores ingresados para Piso no son validos</div>
       </div>
       <div class="form-group col-sm-12">
         <label for="dpto">Dpto</label>
-        <input type="text" [(ngModel)]="dpto" minlength="1" maxlength="3" formControlName="dpto" class="form-control" id="dpto" name="dpto"
-          placeholder="dpto">
-        <div class="alert alert-danger" *ngIf="!formPedido.controls.dpto.valid">Error los valores ingresados para Dpto no son validos</div>
+        <input type="text" (blur)="validar('dpto',1);" [(ngModel)]="dpto" minlength="1" maxlength="3" formControlName="dpto" class="form-control" id="dpto" name="dpto"
+          [ngClass]="{'error':!formPedido.controls['dpto'].valid}" placeholder="dpto">
+        <div class="alert displayer alert-danger" id="errordpto">Error los valores ingresados para Dpto no son validos</div>
       </div>
       <div class="form-group col-sm-12">
         <label for="entrecalles">Entre Calles</label>
-        <input type="text" [(ngModel)]="entrecalles" minlength="1" maxlength="80" formControlName="entrecalles" class="form-control"
-          id="entrecalles" name="entrecalles" placeholder="entrecalles">
-        <div class="alert alert-danger" *ngIf="!formPedido.controls.entrecalles.valid">Error los valores ingresados para Entre Calles no son validos</div>
+        <input type="text" (blur)="validar('entrecalles',1);" [(ngModel)]="entrecalles" minlength="1" maxlength="80" formControlName="entrecalles" class="form-control"
+          id="entrecalles" name="entrecalles" [ngClass]="{'error':!formPedido.controls['entrecalles'].valid}" placeholder="entrecalles">
+        <div class="alert displayer alert-danger" id="errorentrecalles">Error los valores ingresados para Entre Calles no son validos</div>
       </div>
       <div class="form-group col-sm-12">
         <label for="comentarios">Comentarios</label>
