@@ -51,6 +51,7 @@ export class UsuariosComponent implements OnInit {
   entrecalles: string;
   idusuario: string;
   disa: number;
+  public loading = false;
   // tslint:disable-next-line:typedef-whitespace
   dato1 : string;
   dato2 : string;
@@ -58,6 +59,7 @@ export class UsuariosComponent implements OnInit {
   constructor(private WebserviceService: WebserviceService, private ModalModule: ModalModule, private router: Router, public formBuilder: FormBuilder) {
     var tk = localStorage.getItem('Token')
     this.mensajeError = false;
+    this.loading = true;
     this.rolLogueado = localStorage.getItem('Rol')
     if (tk == null) {
       alert('Por favor, para continuar logueese');
@@ -209,10 +211,12 @@ export class UsuariosComponent implements OnInit {
     this.WebserviceService.TraerPersonas(array)
       .then(data => {
       //  console.info(data)
+      this.loading = false;
         this.data=data;
       })
       .catch(error => {
           console.log(error);
+          this.loading = false;
         });
   }
     cargarListadoSoloPersonas() {    

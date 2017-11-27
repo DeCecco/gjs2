@@ -242,6 +242,12 @@ export class WebserviceService {
     return this.http.get(this.route + "/estadisticas/Encuestas").toPromise().then(data => data.json());
   }           
   /*----------------------------------FIN LOCALES--------------------------------*/
-
-
+  /*----------------------------------INICIO ENCUESTAS--------------------------------*/
+  ListadoPreguntas() {
+    return this.http.get(this.route + "/encuestas/preguntas").toPromise().then(data => data.json());
+  }
+  ListadoRespuestas() {
+    return this.http.get(this.route + "/encuestas/respuestas").toPromise().then(data => data.json());
+  }
+  /*----------------------------------FIN ENCUESTAS--------------------------------*/
 }

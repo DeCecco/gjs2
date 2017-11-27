@@ -1,4 +1,12 @@
-
+<div class="row" >
+		<div class="col-lg-12">			
+	      <ol class="breadcrumb">
+          <h2>Login</h2> 
+				</ol>	        
+		</div>
+		
+		<!-- /.col-lg-12 -->
+  </div>
 {{vieneNombre}}
 <div class="row col-md-12 col-sm-8 col-xs-12">
   <form class="col-sm-6" [formGroup]="formLogin"> 
@@ -58,7 +66,7 @@
 
                         <label for="cuenta">Cuenta</label>
                         <input type="text" [(ngModel)]="cuenta" formControlName="cuenta" class="form-control" id="cuenta" name="cuenta" placeholder="Cuenta" (blur)="validar('cuenta')" [ngClass]="{'error':!formUser.controls['cuenta'].valid}">
-                        <div class="alert alert-danger" *ngIf="!formUser.controls.cuenta.valid">Error los valores ingresados para Cuenta no son validos</div>
+                        <div class="alert alert-danger displayer" id="errorcuenta">Error los valores ingresados para Cuenta no son validos</div>
 
                         <label for="rol">Rol</label>
                         <ng-select [multiple]="false" [options]="myOptions" [ngModelOptions]="{standalone: true}" [(ngModel)]="rol">
@@ -98,12 +106,18 @@
                         <label for="tel">tel</label>
                         <input type="text" [(ngModel)]="tel" formControlName="tel" class="form-control" id="tel" name="tel" placeholder="tel">
                         <div class="alert alert-danger" *ngIf="!formUser.controls.tel.valid">Error los valores ingresados para tel no son validos</div>
-                    </div>
-                    <div class="form-group col-sm-4" *ngIf="rol==4">
+
                         <label for="entrecalles">entrecalles</label>
                         <input type="text" [(ngModel)]="entrecalles" formControlName="entrecalles" class="form-control" id="entrecalles" name="entrecalles"
                             placeholder="entrecalles">
                         <div class="alert alert-danger" *ngIf="!formUser.controls.entrecalles.valid">Error los valores ingresados para entrecalles no son validos</div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                            {{rand}} + {{rand2}} = 
+                    </div>
+                    <div class="form-group col-sm-4">
+                            <input type="text" [(ngModel)]="captchaN" formControlName="captchaN" class="form-control" id="captchaN" name="captchaN" placeholder="Ingrese la suma" [ngClass]="{'error':!formUser.controls['captchaN'].valid}">
+                            <div class="alert alert-danger displayer" id="errorcaptcha">Debe ingresar un valor correcto</div>
                     </div>
                 </form>
             </modal-content>

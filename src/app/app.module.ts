@@ -29,7 +29,8 @@ import { LocalesComponent } from './locales/locales.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
 import { AcercadeComponent } from './acercade/acercade.component';
-
+import { EncuestaComponent } from './encuesta/encuesta.component';
+import { LoadingModule } from 'ngx-loading';
 
 const appRoutes: Routes = [
   { path: 'Login', component: LoginComponent },
@@ -39,6 +40,7 @@ const appRoutes: Routes = [
   { path: 'Estadisticas', component: EstadisticasComponent },
   { path: 'Pedidos', component: PedidosComponent },
   { path: 'AcercaDe', component: AcercadeComponent },
+  { path: 'Encuesta', component: EncuestaComponent },
 ];
 
 @NgModule({
@@ -52,7 +54,8 @@ const appRoutes: Routes = [
     LocalesComponent,
     EstadisticasComponent,
     PedidosComponent,
-    AcercadeComponent
+    AcercadeComponent,
+    EncuestaComponent
   ],
   imports: [
     BsDropdownModule.forRoot(),
@@ -64,6 +67,7 @@ const appRoutes: Routes = [
     HttpModule,
     Ng2UploaderModule,
     ChartsModule,
+    LoadingModule,
     RouterModule.forRoot(appRoutes),
     Ng2SmartTableModule,    
     NguiMapModule.forRoot({ apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyBZPpjpLrJRPNwPimYSEBRErThcxu9oEZs' })

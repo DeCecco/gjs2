@@ -10,7 +10,10 @@ declare let alasql;
 export class PedidosComponent implements OnInit {
   lista: any;
   rol: any;
-  constructor(private WebserviceService: WebserviceService) { }
+  public loading = false;
+  constructor(private WebserviceService: WebserviceService) {
+    this.loading = true;
+   }
 
   ngOnInit() {
     this.listado();
@@ -24,6 +27,7 @@ export class PedidosComponent implements OnInit {
     this.WebserviceService.ListadoPedidos(array).then(data => {
       console.info(data)
       this.lista = data;
+      this.loading = false;
 
     })
   }

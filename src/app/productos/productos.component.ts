@@ -51,6 +51,7 @@ export class ProductosComponent implements OnInit {
   sinPedidos: boolean;
   mensajeError: boolean;
   img: string;
+  public loading = false;
   options: Object = {
     //url: 'http://localhost/UTN/gjs2/API/file.php' //laburo
     //url: 'http://localhost/UTN/finallab/GJS2/API/file.php' //casa
@@ -87,6 +88,7 @@ export class ProductosComponent implements OnInit {
     }
   }
   constructor(private WebserviceService: WebserviceService, private router: Router, public formBuilder: FormBuilder, private cdr: ChangeDetectorRef) {
+    this.loading = true;
     this.ptotal = 0;
     this.lista = [];
     this.cantidad = 0;
@@ -151,6 +153,7 @@ export class ProductosComponent implements OnInit {
   ngOnInit() {
     this.WebserviceService.ListarProductos().then(data => {
       this.listadoProductos = data;
+      this.loading = false;
 
     });
 
@@ -345,7 +348,12 @@ export class ProductosComponent implements OnInit {
 
     this.WebserviceService.NuevoPedido(data, this.pedidos).then(data => {
       if (data.ok) {
-        window.location.reload();
+        var r = confirm("Pedido Realizado, ¿Desea cargar una encuesta de Satisfacción?");
+        if (r == true) {
+          this.router.navigate(['Encuesta']);
+        } else {
+            
+        }
       } else {
         alert('error al grabar');
       }

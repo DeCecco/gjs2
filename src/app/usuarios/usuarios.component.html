@@ -1,8 +1,18 @@
+<div class="row" >
+		<div class="col-lg-12">			
+	      <ol class="breadcrumb">
+          <h2>Usuarios</h2> 
+				</ol>	        
+		</div>
+		
+		<!-- /.col-lg-12 -->
+  </div>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
 <button (click)="myModal.open();alta();" class="btn-primary">Alta</button>
 <img (click)="excel()" src="assets/img/xls.png" alt="xls" width="3%">
 <!--ng2-smart-table [settings]="settings" [source]="data" (editConfirm)="editar($event)" (deleteConfirm)="delete($event)" (createConfirm)="crear($event)">
 </ng2-smart-table-->
-<table>
+<table id="tablausuarios">
     <tr>
         <th>Nombre</th>
         <th>Apellido</th>
@@ -136,6 +146,16 @@
         </info-window>    
     </marker>
 </ngui-map>
+<script>
+    $(document).ready(function() 
+    { 
+        $("table").tablesorter({
+            sortList: [[0,0],[2,0]] 
+        }); 
+    } 
+); 
+    
+</script>
 <!--ngui-map center="Brampton, Canada">
         <marker position="Brampton, Canada" draggable="true" (click)="clicked($event)"></marker>
         <info-window id="iw">

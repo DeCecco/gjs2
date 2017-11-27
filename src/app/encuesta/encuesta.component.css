@@ -1,0 +1,13 @@
+.pregunta{
+    font-weight:bold;    
+    font-size: 15px;
+}
+.respuesta{
+    margin: 13px 7px 8px 28px
+}
+.contenedor{
+    background-color:aliceblue;
+}
+.contenedorRespuestas{
+    background-color:seashell;
+}

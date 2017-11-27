@@ -18,9 +18,11 @@ export class LocalesComponent implements OnInit {
   disa: boolean;
   rol:string;
   mensajeError: boolean;
+  public loading = false;
   constructor(private WebserviceService: WebserviceService, public formBuilder: FormBuilder) {
     this.disa = false;
     this.mensajeError = false;
+    this.loading = true;
     this.rol= localStorage.getItem('Rol')
     this.formLocales = formBuilder.group({
       //VALIDACIONES
@@ -36,7 +38,7 @@ export class LocalesComponent implements OnInit {
   }
   listado(){
     this.WebserviceService.ListarLocales().then(data => {
-      
+      this.loading = false;
       this.lista = data;
 
     })

@@ -441,5 +441,28 @@ class Persona
 		return $consulta->fetchAll();	
 	}		
 /*----------------------------------FIN ESTADISTICAS--------------------------------*/
+/*----------------------------------INICIO ENCUESTAS--------------------------------*/	
+/*SELECT preg.idpreg,preg.idpreg idpreg2, preg.descripcion as pregunta,resp.idresp, resp.descripcion as respuesta
+FROM `preg-resp` as p 
+join `preguntas` as preg on preg.idpreg=p.idpreg 
+join `respuestas` as resp on resp.idresp=p.idresp 
+order by preg.orden*/
+	public static function ListadoPreguntas(){	
+		$sql = "SELECT * from preguntas";
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
+		$consulta->execute();
+		return $consulta->fetchAll();	
+	} 
+	public static function ListadoRespuestas(){	
+		$sql = "SELECT r.*,pr.idpreg
+		from respuestas as r 
+		join `preg-resp` pr on pr.idresp=r.idresp
+		order by r.orden
+		";
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
+		$consulta->execute();
+		return $consulta->fetchAll();	
+	} 
+/*----------------------------------FIN ESTADISTICAS--------------------------------*/
 
 }

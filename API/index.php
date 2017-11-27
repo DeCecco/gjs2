@@ -414,6 +414,14 @@ $app->post('/local/eliminar', function (Request $request, Response $response) {
 	return $response->withJson(Persona::EliminarLocal($idlocal));     
 });	
 /*----------------------------------FIN LOCALES--------------------------------*/
+/*----------------------------------INICIO ENCUESTAS--------------------------------*/
+$app->get('/encuestas/preguntas', function (Request $request, Response $response){
+    return $response->withJson(Persona::ListadoPreguntas());
+});
+$app->get('/encuestas/respuestas', function (Request $request, Response $response){
+    return $response->withJson(Persona::ListadoRespuestas());
+});
+/*----------------------------------FIN ENCUESTAS--------------------------------*/
 /*----------------------------------INICIO ESTADISTICAS--------------------------------*/
 /**
    * @api {any} /Listados/  Listados

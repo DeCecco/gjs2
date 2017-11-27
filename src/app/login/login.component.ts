@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { WebserviceService } from '../servicios/webservice.service';
 import { RouterModule, Routes, Router } from '@angular/router';
+import { Console } from '@angular/core/src/console';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ import { RouterModule, Routes, Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   cuenta = 'pdececco';
-  password = '72256'; 
+  password = '72256';
   datosTraidos;
   formLogin: FormGroup;
   nombre: string;
@@ -30,6 +31,11 @@ export class LoginComponent implements OnInit {
   entrecalles: string;
   myOptions = [];
   mensajeError: boolean;
+  rand: string;
+  rand2: number;
+  rand3: number;
+  captchaN :number;
+
   @Input() vieneNombre: string;
   constructor(private WebserviceService: WebserviceService, public formBuilder: FormBuilder, private router: Router) {
     this.myOptions = [{ value: '4', label: 'Cliente' },];
@@ -40,7 +46,7 @@ export class LoginComponent implements OnInit {
     this.piso='0';
     this.dpto=' ';
     this.tel='0';*/
-    this.rol='4';
+    this.rol = '4';
     // this.entrecalles=' ';
     this.mensajeError = false;
     this.formLogin = formBuilder.group({
@@ -54,7 +60,7 @@ export class LoginComponent implements OnInit {
       apellido: [this.apellido, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
       email: [this.email, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)])],
       rol: [this.rol],
-      dni: [this.dni, Validators.compose([Validators.required,Validators.maxLength(10), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
+      dni: [this.dni, Validators.compose([Validators.required, Validators.maxLength(10), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
       cuenta: [this.cuenta, Validators.compose([Validators.required, Validators.maxLength(30), Validators.minLength(5), Validators.pattern('^[a-zA-Z]+$')])],
       ciudad: [this.ciudad, Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
       localidad: [this.localidad, Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
@@ -64,6 +70,7 @@ export class LoginComponent implements OnInit {
       dpto: [this.dpto, Validators.compose([Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
       tel: [this.tel, Validators.compose([Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
       entrecalles: [this.entrecalles, Validators.compose([Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]+$')])],
+      captchaN: [this.captchaN, Validators.compose([Validators.required])],
     });
     var tk = localStorage.getItem('Token')
     if (tk == null) {
@@ -123,7 +130,7 @@ export class LoginComponent implements OnInit {
             'idusuario': data[0].idusuario
           }];
           this.WebserviceService.Logs(array2).then(data => {
-            })
+          })
           this.WebserviceService.CrearToken(array).then(data => {
 
             localStorage.setItem('Token', data);
@@ -165,7 +172,7 @@ export class LoginComponent implements OnInit {
       console.info(data)
     })
   }
-  registroN(){       
+  registroN() {
     this.ciudad = '';
     this.localidad = '';
     this.calle = '';
@@ -173,38 +180,42 @@ export class LoginComponent implements OnInit {
     this.piso = '';
     this.dpto = '';
     this.tel = '';
+    this.cuenta = '';
     this.entrecalles = '';
+    this.captcha();
   }
-  crear(x) {    
-     // tslint:disable-next-line:curly
-     if (this.numero === null)
-     this.numero = 0;
-   // tslint:disable-next-line:curly
-   if (this.ciudad === null)
-     this.ciudad = ' ';
-     if (this.localidad === null)
-     this.localidad = ' ';
-     if (this.calle === null)
-     this.calle = ' ';
-     if (this.piso === null)
-     this.piso = ' ';
-     if (this.dpto === null)
-     this.dpto = ' ';
-     if (this.tel === null)
-     this.tel = ' ';
-     if (this.entrecalles === null)
-     this.entrecalles = ' ';
+  crear(x) {
+    // tslint:disable-next-line:curly
+    if (this.numero === null)
+      this.numero = 0;
+    // tslint:disable-next-line:curly
+    if (this.ciudad === null)
+      this.ciudad = ' ';
+    if (this.localidad === null)
+      this.localidad = ' ';
+    if (this.calle === null)
+      this.calle = ' ';
+    if (this.piso === null)
+      this.piso = ' ';
+    if (this.dpto === null)
+      this.dpto = ' ';
+    if (this.tel === null)
+      this.tel = ' ';
+    if (this.entrecalles === null)
+      this.entrecalles = ' ';
     var array = [{
       "nombre": this.nombre, "apellido": this.apellido, "email": this.email, "rol": this.rol, "dni": this.dni, "cuenta": this.cuenta,
       "ciudad": this.ciudad, "localidad": this.localidad, "calle": this.calle, 'numero': this.numero, 'piso': this.piso, 'dpto': this.dpto,
       'tel': this.tel, 'entrecalles': this.entrecalles
     }];
-    console.log(array)
+    
+    if(this.rand2+this.rand3==this.captchaN){
+
       this.WebserviceService.AgregarPersona(array).then(data => {
-        console.info(data)
+    
         if (data.ok) {
           this.cuenta;
-          this.password='123456'
+          this.password = '123456'
           this.Login();
           //window.location.reload();
         } else {
@@ -214,16 +225,58 @@ export class LoginComponent implements OnInit {
         alert('Error al grabar datos. Comuniquese con Soporte')
         console.warn(error)
       })
-
+    }else{
+      alert('El captcha ingresado es invalido');
+    }
   }
-  validar(que){
+  validar(que) {
     // tslint:disable-next-line:curly
     if (this.formUser.controls[que].valid === false) {
       this.mensajeError = true;
       document.getElementById('error' + que).style.display = 'block';
-    }else {
+    } else {
       this.mensajeError = false;
       document.getElementById('error' + que).style.display = 'none';
     }
   }
+  captcha() {
+    this.rand2 = Math.floor((Math.random() * 100) + 1);
+    console.info(this.rand2)
+    let rand = { 1: 'UNO', 2: 'DOS', 3: 'TRES', 4: 'CUATRO', 5: 'CINCO', 6: 'SEIS', 7: 'SIETE', 8: 'OCHO', 9: 'NUEVE', 10: 'DIEZ' };
+    this.rand = rand[Math.floor(Math.random() * 10)];
+    
+    switch (this.rand) {
+      case 'UNO':
+        this.rand3 = 1;
+        break;
+      case 'DOS':
+        this.rand3 = 2;
+      break;
+      case 'TRES':
+        this.rand3 = 3;
+      break;
+      case 'CUATRO':
+        this.rand3 = 4;
+      break;
+      case 'CINCO':
+        this.rand3 = 5;
+      break;
+      case 'SEIS':
+        this.rand3 = 6;
+      break;
+      case 'SIETE':
+        this.rand3 = 7;
+      break;
+      case 'OCHO':
+        this.rand3 = 8;
+      break;
+      case 'NUEVE':
+        this.rand3 = 9;
+      break;
+      case 'DIEZ':
+        this.rand3 = 10;
+      break;
+    }
+  }
+
 }
