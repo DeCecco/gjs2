@@ -4,6 +4,10 @@ import { WebserviceService } from '../servicios/webservice.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DirectionsRenderer } from '@ngui/map';
 import { error } from 'util';
+//import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+//import { AppModule } from '../app.module';
+
+//platformBrowserDynamic().bootstrapModule(AppModule);
 
 @Component({
   selector: 'app-productos',
@@ -51,7 +55,9 @@ export class ProductosComponent implements OnInit {
   sinPedidos: boolean;
   mensajeError: boolean;
   img: string;
+  paso: boolean;
   public loading = false;
+  captcha : any;
   options: Object = {
     //url: 'http://localhost/UTN/gjs2/API/file.php' //laburo
     //url: 'http://localhost/UTN/finallab/GJS2/API/file.php' //casa
@@ -97,6 +103,7 @@ export class ProductosComponent implements OnInit {
     this.promocion = false;
     this.comentarios = '';
     this.sinPedidos = false;
+    this.paso = false;
     this.mensajeError = false;
     this.rolId = localStorage.getItem('Rol')
     var array = [{ "token": localStorage.getItem('Token') }];
@@ -118,7 +125,7 @@ export class ProductosComponent implements OnInit {
       precio_costo: [this.precio_costo, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
       precio_venta: [this.precio_venta, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
       promocion: [this.promocion]
-
+      
     });
     this.formPedido = formBuilder.group({
 
@@ -129,6 +136,7 @@ export class ProductosComponent implements OnInit {
       dpto: [Validators.compose([Validators.maxLength(3), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
       entrecalles: [Validators.compose([Validators.maxLength(80), Validators.pattern('^[a-zA-Z,.´ ]+$')])],
       comentarios: [Validators.compose([Validators.maxLength(200), Validators.pattern('^[a-zA-Z,.´ ]+$')])],
+      captcha : [this.captcha]
 
     });
 
@@ -153,8 +161,9 @@ export class ProductosComponent implements OnInit {
   ngOnInit() {
     this.WebserviceService.ListarProductos().then(data => {
       this.listadoProductos = data;
-      this.loading = false;
-
+      setTimeout(() => {
+        this.loading = false;
+      }, 1000);
     });
 
   }
@@ -384,4 +393,9 @@ export class ProductosComponent implements OnInit {
     }
 
   }
+  public resolved(captchaResponse: string) {
+    console.log(`Resolved captcha with response ${captchaResponse}:`);
+    this.paso = true;
+  }
+
 }

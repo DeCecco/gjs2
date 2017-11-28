@@ -27,7 +27,9 @@ export class PedidosComponent implements OnInit {
     this.WebserviceService.ListadoPedidos(array).then(data => {
       console.info(data)
       this.lista = data;
-      this.loading = false;
+      setTimeout(() => {
+        this.loading = false;
+      }, 1000);
 
     })
   }

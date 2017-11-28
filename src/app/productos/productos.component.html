@@ -58,7 +58,10 @@
     <div *ngIf="existenP" class="right">Delivery: $40</div>
     <div *ngIf="existenP" class="right">Total: ${{ptotal+40}}</div>
     <div *ngIf="existenP">
-      <button class="btn btn-primary btn-sm" (click)="confirmPedido.open();confirmar()">Continuar</button>
+        
+            <re-captcha id="cpt" name="cpt" render="explicit" (resolved)="resolved($event)" siteKey="6Lc6xv8SAAAAAHqVKZyrQ7c7ZKbxdd2kAd-1D6ID"></re-captcha>
+        
+      <button *ngIf="paso" class="btn btn-primary btn-sm" (click)="confirmPedido.open();confirmar()">Continuar</button>
     </div>
   </div>
 </div>
@@ -163,7 +166,7 @@
         <!--input type="text" [(ngModel)]="comentarios" minlength="1" maxlength="200" formControlName="comentarios" class="form-control"
           id="comentarios" name="comentarios" placeholder="comentarios"-->
         <div class="alert alert-danger" *ngIf="!formPedido.controls.comentarios.valid">Error los valores ingresados para Comentarios no son validos</div>
-      </div>
+      </div>            
       <div class="form-group col-sm-8">
         <div *ngFor='let value of pedidos let index = index'>
           <p>
@@ -176,6 +179,7 @@
         <div class="center">Total: ${{ptotal+40}}</div>
       </div>
     </form>    
+    
     <div class="col-sm-6" *ngIf="sinPedidos">
      
         <div id="floating-panel">
@@ -194,8 +198,10 @@
         </directions-renderer>
       </ngui-map>
       <div id="my-panel"></div>      
-    </div>
-
+    </div>    
+    <!--div  class="form-group col-sm-1"  id="captcha-holder">        
+        <re-captcha id="cpt" name="cpt" render="explicit" onloadCallback="{console.log.bind(this,'recaptcha loaded')}" (resolved)="resolved($event)" siteKey="6Lc6xv8SAAAAAHqVKZyrQ7c7ZKbxdd2kAd-1D6ID"></re-captcha>
+    </div-->
   </modal-content>
   <modal-footer class="col-sm-12">
     <button class="btn btn-primary pull-left" *ngIf="!disa" [disabled]="!formPedido.valid" (click)="confirmarPedido();confirmPedido.close();">Confirmar</button>

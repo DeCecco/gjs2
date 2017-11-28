@@ -241,10 +241,8 @@ export class LoginComponent implements OnInit {
   }
   captcha() {
     this.rand2 = Math.floor((Math.random() * 100) + 1);
-    console.info(this.rand2)
     let rand = { 1: 'UNO', 2: 'DOS', 3: 'TRES', 4: 'CUATRO', 5: 'CINCO', 6: 'SEIS', 7: 'SIETE', 8: 'OCHO', 9: 'NUEVE', 10: 'DIEZ' };
     this.rand = rand[Math.floor(Math.random() * 10)];
-    
     switch (this.rand) {
       case 'UNO':
         this.rand3 = 1;

@@ -19,6 +19,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NguiMapModule } from '@ngui/map';
 import { Ng2UploaderModule } from 'ng2-uploader';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 //Componentes
 import { LoginComponent } from './login/login.component';
@@ -59,7 +60,7 @@ const appRoutes: Routes = [
   ],
   imports: [
     BsDropdownModule.forRoot(),
-    BrowserModule,    
+    BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     ModalModule,
@@ -69,7 +70,8 @@ const appRoutes: Routes = [
     ChartsModule,
     LoadingModule,
     RouterModule.forRoot(appRoutes),
-    Ng2SmartTableModule,    
+    Ng2SmartTableModule,
+    RecaptchaModule.forRoot(),
     NguiMapModule.forRoot({ apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyBZPpjpLrJRPNwPimYSEBRErThcxu9oEZs' })
 
   ],

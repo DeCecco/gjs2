@@ -211,12 +211,16 @@ export class UsuariosComponent implements OnInit {
     this.WebserviceService.TraerPersonas(array)
       .then(data => {
       //  console.info(data)
-      this.loading = false;
+      setTimeout(() => {
+        this.loading = false;
+      }, 1000);
         this.data=data;
       })
       .catch(error => {
           console.log(error);
-          this.loading = false;
+          setTimeout(() => {
+            this.loading = false;
+          }, 1000);
         });
   }
     cargarListadoSoloPersonas() {    

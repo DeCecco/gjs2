@@ -87,4 +87,7 @@ export class AppComponent {
       this.router.navigate(['Login']);
     }
   }
+  resolved(captchaResponse: string) {
+    console.log(`Resolved captcha with response ${captchaResponse}:`);
+  }
 }

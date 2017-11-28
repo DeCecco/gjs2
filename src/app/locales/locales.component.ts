@@ -38,7 +38,9 @@ export class LocalesComponent implements OnInit {
   }
   listado(){
     this.WebserviceService.ListarLocales().then(data => {
-      this.loading = false;
+      setTimeout(() => {
+        this.loading = false;
+      }, 1000);
       this.lista = data;
 
     })
