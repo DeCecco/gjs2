@@ -8,9 +8,6 @@ Este proyecto utiliza Angular CLI para ello es requerido Node 6.9.0 o una versio
 
 * [Instalacion](#instalacion)
 * [Uso](#usage)
-* [Generating Components, Directives, Pipes and Services](#generating-components-directives-pipes-and-services)
-* [Updating Angular CLI](#updating-angular-cli)
-* [Development Hints for working on Angular CLI](#development-hints-for-working-on-angular-cli)
 * [Documentation](#documentation)
 * [License](#license)
 
