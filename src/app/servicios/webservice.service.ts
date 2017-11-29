@@ -177,6 +177,13 @@ export class WebserviceService {
     }
     return this.http.post(this.route + "pedidos", data).toPromise().then(data => data.json());
   }
+  ListadoSoloPedidos(form) {
+    var data = {
+      "idusuario": form[0].idusuario,
+      "idrol": form[0].idrol
+    }
+    return this.http.post(this.route + "solopedidos", data).toPromise().then(data => data.json());
+  }
   CambiarEstadoPedido(form) {
     var data = {
       "idpedido": form[0].idpedido,

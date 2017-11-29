@@ -14,11 +14,18 @@ export class EncuestaComponent implements OnInit {
   respuestas: any;
   respondidas: string[]
   public loading = false;
-  /*datapreguntas = {};
-  preguntas = [];*/
+  datapreguntas = {};
+  formEncuestas: FormGroup;
+  /*preguntas = [];*/
   constructor(private WebserviceService: WebserviceService, public formBuilder: FormBuilder, private router: Router) {
+    console.info(this.datapreguntas);
     this.loading = true;
-   }
+    this.formEncuestas = formBuilder.group({
+      // VALIDACIONES
+      // tslint:disable-next-line:max-line-length
+      respuesta: [this.datapreguntas[0]],
+    });
+  }
 
   ngOnInit() {
     this.WebserviceService.ListadoPreguntas().then(data => {
@@ -53,11 +60,11 @@ export class EncuestaComponent implements OnInit {
   trackByIndex(index: number, value: number) {
     return index;
   }
-  agregar(P,R){
+  agregar(P, R) {
     console.info(P);
     console.info(R);
   }
-  encuestaF(P){
+  encuestaF(P) {
     console.info(P)
   }
 

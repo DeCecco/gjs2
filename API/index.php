@@ -131,7 +131,11 @@ $app->post('/pedidos', function (Request $request, Response $response){
 	$idrol = $request->getParam('idrol');
     return $response->withJson(Persona::ListadoPedidos($idusuario,$idrol));
 });
-
+$app->post('/solopedidos', function (Request $request, Response $response){
+	$idusuario = $request->getParam('idusuario');
+	$idrol = $request->getParam('idrol');
+    return $response->withJson(Persona::ListadoSoloPedidos($idusuario,$idrol));
+});
 /**
    * @api {any} /Cambiar_Estado/  Cambiar Estado
    * @apiVersion 0.1.0

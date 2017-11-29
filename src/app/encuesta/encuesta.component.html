@@ -11,7 +11,7 @@
 <div class="row col-md-12 col-sm-8 col-xs-12 fondo" style="background-image: url('assets/img/fondo2.jpg');">
   <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
   <div class="row col-sm-8">
-      
+
     <h3 style="color:white">Bienvenido a nuestra Encuesta de Satisfacción. Le agradecemos tomarse unos minutos para completar esta encuesta.</h3>
   </div>
   <br>
@@ -21,16 +21,18 @@
   <br>
   <div class="row col-sm-12">
     <div class="col-sm-12 contenedor">
+      <!--form class="col-sm-10" [formGroup]="formEncuestas"-->
       <div class="col-sm-8" *ngFor='let preg of preguntas let index = index1'>
         <div class="pregunta">{{preg.idpreg}} {{preg.descripcion}} </div>
         <div class="contenedorRespuestas" *ngFor='let res of respuestas let index = index  trackBy:trackByIndex'>
-          <span *ngIf="preg.idpreg == res.idpreg">
-            <input class="respuesta" [(ngModel)]="respuestas[index]" (click)="agregar(res.idresp,preg.idpreg);" type="{{res.tipo}}">{{res.descripcion}}
+          <span *ngIf="preg.idpreg == res.idpreg">            
+            <input class="respuesta" [(ngModel)]="datapreguntas[index]" (click)="agregar(res.idresp,preg.idpreg);" name="respuesta{res.idresp}" id="respuesta{res.idresp}" type="{{res.tipo}}">{{res.descripcion}}
           </span>
         </div>
       </div>
-      
-    <!--div class="col-sm-8">
+      <!--/form-->
+
+      <!--div class="col-sm-8">
     
     ¿Que es lo que mejoraria? -> El sitio Web'); myObj.data.push(element.pregunta6); ¿Que es lo que mejoraria? -> Menores
     precios'); myObj.data.push(element.pregunta7); ¿Que es lo que mejoraria? -> Mas Locales'); myObj.data.push(element.pregunta8);    
@@ -38,10 +40,10 @@
     a cambio de una promo'); myObj.data.push(element.pregunta12);
   </div-->
       <div class="col-sm-6">
-        <button type="button" (click)="encuestaF(respuestas)" class="btn btn-primary btn-sm">Completar</button>
+        <button type="button" (click)="encuestaF(datapreguntas)" class="btn btn-primary btn-sm">Completar</button>
       </div>
     </div>
   </div>
-  
+
 
 </div>

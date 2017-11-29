@@ -69,7 +69,32 @@ class Persona
 		}		
 		$consulta->execute();
 		return $consulta->fetchAll();	
-	} 	
+	} 
+	public static function ListadoSoloPedidos($idusuario,$idrol){	
+		if($idrol<4){
+		$sql = " SELECT p.idpedido,CONCAT(uu.nombre, ' ',uu.apellido) as nombrec ,CONCAT(u.nombre,' ', u.apellido) as nombrev,l.descripcion descripcionl,date(p.fecha) fecha,e.descripcion descripcione
+			from pedidos p
+			left join usuarios u on u.idusuario=p.idusuario
+			left join usuarios uu on uu.idusuario=p.idusuarioc
+			left join estados e on e.idestado=p.idestado
+			left join locales l on l.idlocal=p.idlocal 
+			order by p.idestado,p.idpedido desc";
+			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);		
+		}else{
+			$sql = " SELECT p.idpedido,CONCAT(uu.nombre, ' ',uu.apellido) as nombrec ,CONCAT(u.nombre,' ', u.apellido) as nombrev,l.descripcion descripcionl,p.fecha,e.descripcion descripcione
+			from pedidos p
+			left join usuarios u on u.idusuario=p.idusuario
+			left join usuarios uu on uu.idusuario=p.idusuarioc
+			left join estados e on e.idestado=p.idestado
+			left join locales l on l.idlocal=p.idlocal
+			where p.idusuarioC=:idusuario 
+			order by p.idestado,p.idpedido desc";
+			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);		
+			$consulta->bindValue(':idusuario', $idusuario,PDO::PARAM_STR);				
+		}		
+		$consulta->execute();
+		return $consulta->fetchAll(); //PDO::FETCH_CLASS, "Persona"	
+	}		
 	public static function CambiarEstadoPedido($idpedido,$estado){	
 		$sql = "UPDATE pedidos set idestado=:estado where idpedido=:idpedido";
 		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);		
