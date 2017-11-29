@@ -18,14 +18,23 @@ Este proyecto utiliza Angular CLI para ello es requerido Node 6.9.0 o una versio
 npm install 
 
 incluye:
-[npm i ng-recaptcha --save] (https://github.com/DethAriel/ng-recaptcha)
 
+npm i ng-recaptcha --save                  					---> https://github.com/DethAriel/ng-recaptcha
+npm install ng2-charts --save              					---> https://github.com/valor-software/ng2-charts
+npm install ng2-modal --save               					---> https://github.com/pleerock/ngx-modal
+npm install ngx-uploader --save            					---> https://github.com/bleenco/ngx-uploader
+npm install ngx-bootstrap --save           					---> https://github.com/valor-software/ngx-bootstrap
+npm install --save ngx-loading             					---> https://github.com/Zak-C/ngx-loading
+npm install --save alasql 		           					---> https://github.com/agershun/alasql
+npm install @ngui/map @types/googlemaps --save 		 	    ---> https://github.com/ng2-ui/map
+
+entre otros
 ```
 
 ## Usage
 
 ```bash
-ng help
+ng serve 
 ```
 
 ## Documentation
@@ -34,14 +43,4 @@ The documentation for the Angular CLI is located in this repo's [wiki](https://g
 
 ## License
 
-MIT
-
-
-[travis-badge]: https://travis-ci.org/angular/angular-cli.svg?branch=master
-[travis-badge-url]: https://travis-ci.org/angular/angular-cli
-[david-badge]: https://david-dm.org/angular/angular-cli.svg
-[david-badge-url]: https://david-dm.org/angular/angular-cli
-[david-dev-badge]: https://david-dm.org/angular/angular-cli/dev-status.svg
-[david-dev-badge-url]: https://david-dm.org/angular/angular-cli?type=dev
-[npm-badge]: https://img.shields.io/npm/v/@angular/cli.svg
-[npm-badge-url]: https://www.npmjs.com/package/@angular/cli
+MIT 
