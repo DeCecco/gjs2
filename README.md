@@ -7,9 +7,9 @@ Este proyecto utiliza Angular CLI para ello es requerido Node 6.9.0 o una versio
 ## Tabla de Contenidos
 
 * [Instalacion](#instalacion)
-* [Uso](#usage)
-* [Documentation](#documentation)
-* [License](#license)
+* [Uso](#uso)
+* [Documentation](#documentacion)
+* [Licencia](#licencia)
 
 ## Instalacion
 
@@ -31,16 +31,16 @@ npm install @ngui/map @types/googlemaps --save 	---> https://github.com/ng2-ui/m
 entre otros
 ```
 
-## Usage
+## uso
 
 ```bash
 ng serve 
 ```
 
-## Documentation
+## Documentacion
 
-The documentation for the Angular CLI is located in this repo's [wiki](https://github.com/angular/angular-cli/wiki).
+The Documentacion for the Angular CLI is located in this repo's [wiki](https://github.com/angular/angular-cli/wiki).
 
-## License
+## Licencia
 
 MIT 
