@@ -17,6 +17,9 @@ Este proyecto utiliza Angular CLI para ello es requerido Node 6.9.0 o una versio
 ```bash
 npm install 
 
+incluye:
+[npm i ng-recaptcha --save] (https://github.com/DethAriel/ng-recaptcha)
+
 ```
 
 ## Usage
