@@ -31,7 +31,7 @@ npm install @ngui/map @types/googlemaps --save 	---> https://github.com/ng2-ui/m
 entre otros
 ```
 
-## uso
+## Uso
 
 ```bash
 ng serve 
@@ -39,7 +39,8 @@ ng serve
 
 ## Documentacion
 
-The Documentacion for the Angular CLI is located in this repo's [wiki](https://github.com/angular/angular-cli/wiki).
+La Documentacion para Angular CLI se encuentra en este repositorio [wiki](https://github.com/angular/angular-cli/wiki).
+La Documentacion para GJS2 se encuentra en este link [GJS2](http://pablodececco.com.ar/doc).
 
 ## Licencia
 
