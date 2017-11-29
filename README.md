@@ -19,14 +19,14 @@ npm install
 
 incluye:
 
-npm i ng-recaptcha --save                  					---> https://github.com/DethAriel/ng-recaptcha
-npm install ng2-charts --save              					---> https://github.com/valor-software/ng2-charts
-npm install ng2-modal --save               					---> https://github.com/pleerock/ngx-modal
-npm install ngx-uploader --save            					---> https://github.com/bleenco/ngx-uploader
-npm install ngx-bootstrap --save           					---> https://github.com/valor-software/ngx-bootstrap
-npm install --save ngx-loading             					---> https://github.com/Zak-C/ngx-loading
-npm install --save alasql 		           					---> https://github.com/agershun/alasql
-npm install @ngui/map @types/googlemaps --save 		 	    ---> https://github.com/ng2-ui/map
+npm i ng-recaptcha --save                  		---> https://github.com/DethAriel/ng-recaptcha
+npm install ng2-charts --save              		---> https://github.com/valor-software/ng2-charts
+npm install ng2-modal --save               		---> https://github.com/pleerock/ngx-modal
+npm install ngx-uploader --save            		---> https://github.com/bleenco/ngx-uploader
+npm install ngx-bootstrap --save           		---> https://github.com/valor-software/ngx-bootstrap
+npm install --save ngx-loading             		---> https://github.com/Zak-C/ngx-loading
+npm install --save alasql 		           		---> https://github.com/agershun/alasql
+npm install @ngui/map @types/googlemaps --save 	---> https://github.com/ng2-ui/map
 
 entre otros
 ```
