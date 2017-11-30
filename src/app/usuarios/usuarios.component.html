@@ -12,7 +12,8 @@
 <img (click)="excel()" src="assets/img/xls.png" alt="xls" width="3%">
 <!--ng2-smart-table [settings]="settings" [source]="data" (editConfirm)="editar($event)" (deleteConfirm)="delete($event)" (createConfirm)="crear($event)">
 </ng2-smart-table-->
-<table id="tablausuarios">
+<div style="overflow-y:scroll !important;height:500px">
+<table id="tablausuarios" >
     <tr>
         <th>Nombre</th>
         <th>Apellido</th>
@@ -41,7 +42,7 @@
         </td>
     </tr>
 </table>
-
+</div>
 <div class="row col-md-12 col-sm-8 col-xs-12">
     <div class="">
         <modal #myModal modalClass="modal-lg">

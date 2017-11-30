@@ -12,7 +12,7 @@
   <div class="col-sm-1">
     <button *ngIf="rolId!=1 && rolId!=4" class="btn btn-primary btn-sm" (click)="myModal.open();alta()">Alta</button>
   </div>
-  <div class="row col-sm-8">
+  <div class="row col-sm-8"><!-- style="overflow-y:scroll !important;height:500px"-->
     <div class="col-sm-3" *ngFor='let value of listadoProductos let index = index'>
       <div class="col-sm-12"><br>
         <button *ngIf="rolId!=1 && rolId!=4" class="btn btn-xs" (click)="myModal.open();modificarProducto(value)">Modificar</button>&nbsp;&nbsp;&nbsp;
@@ -22,13 +22,13 @@
       <div class="col-sm-12">
         <ngx-carousel [inputs]="carouselOne" (carouselLoad)="myfunc($event)">
           <ngx-item NgxCarouselItem>
-            <img style="width: 100%;height: 20%;" src="{{value.imagen}}" class="local" alt="local" class="imgCentrada">
+            <img style="width: 100%;height: 20%;" src="{{value.imagen}}" alt="{{value.imagen}}" class="imgCentrada">
           </ngx-item>
           <ngx-item NgxCarouselItem>
-            <img style="width: 100%;height: 20%;" src="{{value.imagen}}" class="local" alt="local" class="imgCentrada">
+            <img style="width: 100%;height: 20%;" src="{{value.imagen}}" alt="{{value.imagen}}" class="imgCentrada">
           </ngx-item>
           <ngx-item NgxCarouselItem>
-            <img style="width: 100%;height: 20%;" src="{{value.imagen}}" class="local" alt="local" class="imgCentrada">
+            <img style="width: 100%;height: 20%;" src="{{value.imagen}}" alt="{{value.imagen}}" class="imgCentrada">
           </ngx-item>
           <button NgxCarouselPrev class='leftRs btnhide'>&lt;</button>
           <button NgxCarouselNext class='rightRs btnhide'>&gt;</button>
