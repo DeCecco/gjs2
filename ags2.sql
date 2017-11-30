@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-11-2017 a las 19:41:29
+-- Tiempo de generación: 30-11-2017 a las 21:30:55
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -54,7 +54,8 @@ INSERT INTO `cliente-detalle` (`idusuario`, `ciudad`, `localidad`, `calle`, `num
 (27, 'CIUDAD AUTONOMA BUENOS AIRES', 'CIUDAD AUTONOMA BUENOS AIRES', ' Av Manuel Belgrano ', 600, '0', '', 0, ' '),
 (28, 'caba', 'caba', 'Florida', 1369, '', '', 0, ''),
 (31, 'caba', '', '', 0, '', '', 0, ''),
-(39, '', '', '', 0, '', '', 0, '');
+(39, '', '', '', 0, '', '', 0, ''),
+(40, '', '', '', 0, '', '', 0, '');
 
 -- --------------------------------------------------------
 
@@ -150,17 +151,19 @@ CREATE TABLE `locales` (
   `localidad` varchar(80) COLLATE utf8_spanish_ci NOT NULL,
   `calle` varchar(80) COLLATE utf8_spanish_ci NOT NULL,
   `numero` int(20) NOT NULL,
-  `img` varchar(200) COLLATE utf8_spanish_ci NOT NULL
+  `img` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
+  `img2` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
+  `img3` varchar(200) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `locales`
 --
 
-INSERT INTO `locales` (`idlocal`, `descripcion`, `localidad`, `calle`, `numero`, `img`) VALUES
-(1, 'Local 1', 'Palermo', 'Av sta Fe', 2580, 'assets\\img\\local1.jpg'),
-(2, 'Local 2', 'Belgrano', 'Av Cabildo', 356, 'assets\\img\\local2.jpg'),
-(3, 'Local 3', 'Recoleta', 'Av Libertador', 1100, 'assets\\img\\local3.jpg');
+INSERT INTO `locales` (`idlocal`, `descripcion`, `localidad`, `calle`, `numero`, `img`, `img2`, `img3`) VALUES
+(1, 'Local 1', 'Palermo', 'Av sta Fe', 2580, 'assets\\img\\lc1.png', 'assets\\img\\lc2.png', 'assets\\img\\lc3.png'),
+(2, 'Local 2', 'Belgrano', 'Av Cabildo', 356, 'assets\\img\\lc2.png', '', ''),
+(3, 'Local 3', 'Recoleta', 'Av Libertador', 1100, 'assets\\img\\lc3.png', '', '');
 
 -- --------------------------------------------------------
 
@@ -255,7 +258,24 @@ INSERT INTO `logsingreso` (`idusuario`, `fecha`) VALUES
 (1, '2017-11-27 13:58:00'),
 (1, '2017-11-27 14:34:53'),
 (1, '2017-11-27 14:39:23'),
-(28, '2017-11-27 14:39:30');
+(28, '2017-11-27 14:39:30'),
+(1, '2017-11-27 15:42:40'),
+(1, '2017-11-27 17:13:44'),
+(40, '2017-11-27 17:32:47'),
+(1, '2017-11-28 09:30:55'),
+(26, '2017-11-28 10:08:46'),
+(1, '2017-11-28 16:19:42'),
+(6, '2017-11-28 16:30:21'),
+(1, '2017-11-28 16:35:27'),
+(6, '2017-11-28 17:16:43'),
+(1, '2017-11-29 11:43:07'),
+(1, '2017-11-29 14:15:46'),
+(1, '2017-11-29 15:53:29'),
+(1, '2017-11-29 16:54:59'),
+(1, '2017-11-30 16:11:26'),
+(3, '2017-11-30 16:11:33'),
+(1, '2017-11-30 17:17:14'),
+(3, '2017-11-30 17:27:38');
 
 -- --------------------------------------------------------
 
@@ -326,7 +346,8 @@ INSERT INTO `pedido-detalle` (`idpedido`, `idproducto`, `cantidad`, `precio_vent
 (31, 2, 1, '172'),
 (32, 8, 1, '155'),
 (33, 5, 1, '189'),
-(34, 5, 1, '189');
+(34, 5, 1, '189'),
+(35, 5, 1, '189');
 
 -- --------------------------------------------------------
 
@@ -385,7 +406,8 @@ INSERT INTO `pedidos` (`idpedido`, `idusuarioC`, `idusuario`, `idestado`, `idloc
 (31, 27, 27, 1, 3, '2017-11-27 10:43:07', 'CIUDAD AUTONOMA BUENOS AIRES', ' Av Manuel Belgrano ', 600, 0, '', ' ', ''),
 (32, 27, 27, 1, 3, '2017-11-27 10:49:43', 'CIUDAD AUTONOMA BUENOS AIRES', ' Av Manuel Belgrano ', 600, 0, '', ' ', ''),
 (33, 28, 28, 1, 3, '2017-11-27 14:39:41', 'caba', 'Florida', 1369, 0, '', '', ''),
-(34, 28, 28, 1, 3, '2017-11-27 14:39:45', 'caba', 'Florida', 1369, 0, '', '', '');
+(34, 28, 28, 1, 3, '2017-11-27 14:39:45', 'caba', 'Florida', 1369, 0, '', '', ''),
+(35, 26, 26, 1, 3, '2017-11-28 10:09:37', 'CABA', 'luis maria campos ', 1300, 1, '500', 'zaraza', 'rapido');
 
 -- --------------------------------------------------------
 
@@ -605,7 +627,8 @@ INSERT INTO `usuarios` (`idusuario`, `nombre`, `apellido`, `mail`, `dni`, `cuent
 (28, 'Sebastian', 'Salgueiro', 'ssalgueiro@mail.com', 1245, 'ssalgueiro', '123456', 4, 1),
 (29, 'sarafino', 'asdasd', 'sarafino@mail.co', 1212, 'sarafino', '123456', 4, 0),
 (31, 'Elizabeth', 'run', 'Elizabeth@gmail.com', 2323, 'Elizabeth', '123456', 4, 1),
-(39, 'Eliza', 'the', 'Eliza@asdsda.com', 889, 'Eliza', '123456', 4, 1);
+(39, 'Eliza', 'the', 'Eliza@asdsda.com', 889, 'Eliza', '123456', 4, 1),
+(40, 'Juan', 'Roman', 'jroman@mail.com', 232356, 'jroman', '123456', 4, 1);
 
 --
 -- Índices para tablas volcadas
@@ -698,7 +721,7 @@ ALTER TABLE `locales`
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `idpedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `idpedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
 --
@@ -718,7 +741,7 @@ ALTER TABLE `respuestas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
