@@ -2,6 +2,7 @@ import { Component , Output, Input, EventEmitter} from '@angular/core';
 import { WebserviceService } from './servicios/webservice.service';
 import { Router } from '@angular/router';
 import { ModalModule } from 'ng2-modal';
+import { NgxCarousel } from 'ngx-carousel';
 
 @Component({
   selector: 'app-root',
@@ -15,8 +16,12 @@ export class AppComponent {
   local: any;
   datosLocal: any;
   img: string;
+  img2: string;
+  img3: string;
   rol: any;
-  position: string;
+  position: string;  
+  public carouselOne: NgxCarousel;
+
   @Input() vieneNombre: string;
   @Output() public eventoLocal= new EventEmitter<any>();
   constructor(private WebserviceService: WebserviceService, private router: Router, private ModalModule: ModalModule) {
@@ -34,8 +39,25 @@ export class AppComponent {
       { value: '3', label: 'LOCAL 3' }
     ];
     this.cambio();
+    this.carouselOne = {
+      grid: {xs: 1, sm: 1, md: 1, lg: 1, all: 0},
+      slide: 1,
+      speed: 400,
+      interval: 4000,
+      point: {
+        visible: true
+      },
+      load: 2,
+      touch: true,
+      loop: true,
+      custom: 'banner'
+    }
   }
-
+  public myfunc(event: Event) {
+    // carouselLoad will trigger this funnction when your load value reaches
+    // it is helps to load the data by parts to increase the performance of the app
+    // must use feature to all carousel
+ }
   cambio() {
     localStorage.removeItem('Local');
     localStorage.setItem('Local', this.local);
@@ -60,6 +82,8 @@ export class AppComponent {
     this.WebserviceService.TraerLocal(data).then(data => {      
       this.datosLocal = data;
       this.img=data[0].img;
+      this.img2=data[0].img2;
+      this.img3=data[0].img3;
       //console.info(data)
     })
   }

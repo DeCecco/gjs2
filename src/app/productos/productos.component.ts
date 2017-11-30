@@ -4,6 +4,7 @@ import { WebserviceService } from '../servicios/webservice.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DirectionsRenderer } from '@ngui/map';
 import { error } from 'util';
+import { NgxCarousel } from 'ngx-carousel';
 //import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 //import { AppModule } from '../app.module';
 
@@ -19,7 +20,7 @@ export class ProductosComponent implements OnInit {
   directionsRenderer: google.maps.DirectionsRenderer;
   directionsResult: google.maps.DirectionsResult;
   
-
+  public carouselOne: NgxCarousel;
   listadoProductos: any;
   pedidos: any;
   lista: string[];
@@ -105,7 +106,20 @@ export class ProductosComponent implements OnInit {
     this.sinPedidos = false;
     this.paso = false;
     this.mensajeError = false;
-    this.rolId = localStorage.getItem('Rol')
+    this.rolId = localStorage.getItem('Rol');
+    this.carouselOne = {
+      grid: {xs: 1, sm: 1, md: 1, lg: 1, all: 0},
+      slide: 1,
+      speed: 400,
+      interval: 4000,
+      point: {
+        visible: true
+      },
+      load: 1,
+      touch: true,
+      loop: true,
+      custom: 'banner'
+    }
     var array = [{ "token": localStorage.getItem('Token') }];
     this.modoDeViaje = [
       { value: 'DRIVING', label: 'Auto' },
@@ -159,13 +173,20 @@ export class ProductosComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.listarprod();
+  }
+  public myfunc(event: Event) {
+    // carouselLoad will trigger this funnction when your load value reaches
+    // it is helps to load the data by parts to increase the performance of the app
+    // must use feature to all carousel
+ }
+  listarprod(){
     this.WebserviceService.ListarProductos().then(data => {
       this.listadoProductos = data;
       setTimeout(() => {
         this.loading = false;
       }, 1000);
     });
-
   }
   directionsChanged() {
     this.directionsResult = this.directionsRenderer.getDirections();
@@ -280,7 +301,8 @@ export class ProductosComponent implements OnInit {
     if (x == 1) {
       this.WebserviceService.ModificarProducto(array).then(data => {
         if (data.ok) {
-          window.location.reload();
+          this.listarprod();
+          //window.location.reload();
         } else {
           alert('error al grabar');
         }
@@ -288,7 +310,8 @@ export class ProductosComponent implements OnInit {
     } else {
       this.WebserviceService.AgregarProducto(array).then(data => {
         if (data.ok) {
-          window.location.reload();
+          this.listarprod();
+          //window.location.reload();
         } else {
           alert('error al grabar');
         }

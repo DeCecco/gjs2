@@ -7,8 +7,10 @@
 		
 		<!-- /.col-lg-12 -->
   </div>
-{{vieneNombre}}
-<div class="row col-md-12 col-sm-8 col-xs-12">
+<a><img src="assets/img/logo.jpg" class="centerimg" alt="logo" height="100%" width="50%"></a>
+<div class="row col-md-12 col-sm-8 col-xs-12"  style="background-image: url('assets/img/fondo2.jpg');">
+    <div class="col-sm-3"></div>
+
   <form class="col-sm-6" [formGroup]="formLogin"> 
     <div class="form-group  col-sm-6">
       <label for="cuenta">Cuenta</label>
@@ -26,12 +28,13 @@
       <button type="button" (click)="ingreso(3)" class="btn btn-secondary btn-xs">Empleado</button>
       <button type="button" (click)="ingreso(4)" class="btn btn-secondary btn-xs">Cliente</button>
     </div>
-    <div class=" form-group col-sm-6">
+    <div class=" form-group col-sm-12" style="text-align:center">
       <button type="button" (click)="Login()" class="btn btn-default btn-sm">Ingresar</button>
       <button type="button" (click)="myModal.open();registroN();" class="btn btn-primary btn-sm">Registrarse</button>
     </div>
      
   </form>
+  <div class="col-sm-3"></div>
 </div>
 
 

@@ -1,19 +1,46 @@
-<div class="row" >
-		<div class="col-lg-12">			
-	      <ol class="breadcrumb">
-          <h2>Productos</h2> 
-				</ol>	        
-		</div>
-		
-		<!-- /.col-lg-12 -->
+<div class="row">
+  <div class="col-lg-12">
+    <ol class="breadcrumb">
+      <h2>Productos</h2>
+    </ol>
   </div>
-  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+
+  <!-- /.col-lg-12 -->
+</div>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
 <div class="row col-md-12 col-sm-8 col-xs-12 fondo" style="background-image: url('assets/img/fondo2.jpg');">
   <div class="col-sm-1">
     <button *ngIf="rolId!=1 && rolId!=4" class="btn btn-primary btn-sm" (click)="myModal.open();alta()">Alta</button>
   </div>
-  <div class="col-sm-8">
-    <table style="height: 136px;" width="100%">
+  <div class="row col-sm-8">
+    <div class="col-sm-3" *ngFor='let value of listadoProductos let index = index'>
+      <div class="col-sm-12"><br>
+        <button *ngIf="rolId!=1 && rolId!=4" class="btn btn-xs" (click)="myModal.open();modificarProducto(value)">Modificar</button>&nbsp;&nbsp;&nbsp;
+        <button class="btn btn-danger btn-xs" *ngIf="rolId!=1 && rolId!=4" (click)="eliminarProducto(value)">Eliminar</button>
+      </div>
+      <div class="col-sm-12 fondoProductosT"> {{value.descripcion_corta}}</div>
+      <div class="col-sm-12">
+        <ngx-carousel [inputs]="carouselOne" (carouselLoad)="myfunc($event)">
+          <ngx-item NgxCarouselItem>
+            <img style="width: 100%;height: 20%;" src="{{value.imagen}}" class="local" alt="local" class="imgCentrada">
+          </ngx-item>
+          <ngx-item NgxCarouselItem>
+            <img style="width: 100%;height: 20%;" src="{{value.imagen}}" class="local" alt="local" class="imgCentrada">
+          </ngx-item>
+          <ngx-item NgxCarouselItem>
+            <img style="width: 100%;height: 20%;" src="{{value.imagen}}" class="local" alt="local" class="imgCentrada">
+          </ngx-item>
+          <button NgxCarouselPrev class='leftRs btnhide'>&lt;</button>
+          <button NgxCarouselNext class='rightRs btnhide'>&gt;</button>
+        </ngx-carousel>
+        <!--img src="{{value.imagen}}" width="100%" alt=""-->
+      </div>
+      <div class="fondoProductosD col-sm-12">{{value.descripcion_larga}}</div>
+      <div class="col-sm-12">${{value.precio_venta}}
+        <button *ngIf="rolId!=1" class="btn btn-success btn-xs" (click)="agregar(value)">+</button>
+      </div>
+    </div>
+    <!--table style="height: 136px;" width="100%">
       <tbody *ngFor='let value of listadoProductos let index = index'>
         <tr>
           <td>
@@ -43,7 +70,7 @@
           <td class="fondoProductos" style=" width: 80%;">{{value.descripcion_larga}}</td>
         </tr>
       </tbody>
-    </table>
+    </table-->
   </div>
   <div class="col-sm-3">
     <h3>Pedido</h3>
@@ -58,14 +85,28 @@
     <div *ngIf="existenP" class="right">Delivery: $40</div>
     <div *ngIf="existenP" class="right">Total: ${{ptotal+40}}</div>
     <div *ngIf="existenP">
-        
-            <re-captcha id="cpt" name="cpt" render="explicit" (resolved)="resolved($event)" siteKey="6Lc6xv8SAAAAAHqVKZyrQ7c7ZKbxdd2kAd-1D6ID"></re-captcha>
-        
+
+      <re-captcha id="cpt" name="cpt" render="explicit" (resolved)="resolved($event)" siteKey="6Lc6xv8SAAAAAHqVKZyrQ7c7ZKbxdd2kAd-1D6ID"></re-captcha>
+
       <button *ngIf="paso" class="btn btn-primary btn-sm" (click)="confirmPedido.open();confirmar()">Continuar</button>
     </div>
   </div>
 </div>
-
+<!--ngx-carousel
+      [inputs]="carouselOne"
+      (carouselLoad)="myfunc($event)">
+        <ngx-item NgxCarouselItem>
+            <img src="{{img}}" class="local" alt="local" class="imgCentrada" >
+        </ngx-item>
+        <ngx-item NgxCarouselItem>
+          <img src="{{img2}}" class="local" alt="local" class="imgCentrada" >
+        </ngx-item>
+        <ngx-item NgxCarouselItem>
+          <img src="{{img3}}" class="local" alt="local" class="imgCentrada" >
+        </ngx-item>
+        <button NgxCarouselPrev class='leftRs'>&lt;</button>
+        <button NgxCarouselNext class='rightRs'>&gt;</button>
+  </ngx-carousel-->
 
 <modal #myModal modalClass="modal-sm modal-lg  ">
   <modal-header>
@@ -80,13 +121,14 @@
       <div class="form-group col-sm-5">
         <label for="descripcion_corta">Descripcion Corta</label>
         <input [(ngModel)]="descripcion_corta" formControlName="descripcion_corta" required minlength="4" maxlength="80" name="descripcion_corta"
-          type="text" class="form-control" id="descripcion_corta" placeholder="descripcion_corta" (blur)="validar('descripcion_corta',2)" [ngClass]="{'error':!formProductos.controls['descripcion_corta'].valid}">
-          <div class="alert alert-danger displayer" id="errordescripcion_corta">Error los valores ingresados para Descripcion Corta no son validos</div>
+          type="text" class="form-control" id="descripcion_corta" placeholder="descripcion_corta" (blur)="validar('descripcion_corta',2)"
+          [ngClass]="{'error':!formProductos.controls['descripcion_corta'].valid}">
+        <div class="alert alert-danger displayer" id="errordescripcion_corta">Error los valores ingresados para Descripcion Corta no son validos</div>
 
         <label for="descripcion_larga">Descripcion Larga</label>
         <input type="text" [(ngModel)]="descripcion_larga" formControlName="descripcion_larga" class="form-control" id="descripcion_larga"
           name="descripcion_larga" placeholder="descripcion_larga" (blur)="validar('descripcion_larga',2)" [ngClass]="{'error':!formProductos.controls['descripcion_larga'].valid}">
-          <div class="alert alert-danger displayer" id="errordescripcion_larga">Error los valores ingresados para Descripcion Larga no son validos</div>
+        <div class="alert alert-danger displayer" id="errordescripcion_larga">Error los valores ingresados para Descripcion Larga no son validos</div>
 
         <label for="imagen">Imagen</label>
         <input type="file" ngFileSelect [options]="options" (onUpload)="handleUpload($event)" (beforeUpload)="beforeUpload($event)">
@@ -95,18 +137,18 @@
         <label for="precio_costo">Precio Costo</label>
         <input type="text" [(ngModel)]="precio_costo" formControlName="precio_costo" class="form-control" id="precio_costo" name="precio_costo"
           placeholder="precio_costo" (blur)="validar('precio_costo',2)" [ngClass]="{'error':!formProductos.controls['precio_costo'].valid}">
-          <div class="alert alert-danger displayer" id="errorprecio_costo"> Error los valores ingresados para Precio Costo no son validos</div>
+        <div class="alert alert-danger displayer" id="errorprecio_costo"> Error los valores ingresados para Precio Costo no son validos</div>
 
         <label for="precio_venta">Precio Venta</label>
         <input type="text" [(ngModel)]="precio_venta" formControlName="precio_venta" class="form-control" id="precio_venta" name="precio_venta"
           placeholder="precio_venta" (blur)="validar('precio_venta',2)" [ngClass]="{'error':!formProductos.controls['precio_venta'].valid}">
-          <div class="alert alert-danger displayer" id="errorprecio_venta">Error los valores ingresados para Precio Venta no son validos</div>
+        <div class="alert alert-danger displayer" id="errorprecio_venta">Error los valores ingresados para Precio Venta no son validos</div>
       </div>
     </form>
   </modal-content>
   <modal-footer class="col-sm-5">
-    <button class="btn btn-primary" *ngIf="!disa" [disabled]="!formProductos.valid" (click)="update(1)">Aceptar</button>
-    <button class="btn btn-primary" *ngIf="disa" [disabled]="!formProductos.valid" (click)="update(2)">Aceptar</button>
+    <button class="btn btn-primary" *ngIf="!disa" [disabled]="!formProductos.valid" (click)="update(1);myModal.close()">Aceptar</button>
+    <button class="btn btn-primary" *ngIf="disa" [disabled]="!formProductos.valid" (click)="update(2);myModal.close()">Aceptar</button>
     <button class="btn " (click)="myModal.close()">Cancelar</button>
   </modal-footer>
 </modal>
@@ -126,37 +168,38 @@
       <div class="form-group col-sm-12">
         <label for="localidad">Localidad</label>
         <input [(ngModel)]="localidad" formControlName="localidad" required minlength="4" maxlength="40" name="localidad" type="text"
-          class="form-control" id="localidad"  placeholder="localidad" (blur)="cambio(); validar('localidad',1)" [ngClass]="{'error':!formPedido.controls['localidad'].valid}">
+          class="form-control" id="localidad" placeholder="localidad" (blur)="cambio(); validar('localidad',1)" [ngClass]="{'error':!formPedido.controls['localidad'].valid}">
         <div class="alert alert-danger displayer" id="errorlocalidad">Error los valores ingresados para Localidad no son validos</div>
       </div>
       <div class="form-group col-sm-12">
         <label for="calle">Calle</label>
-        <input type="text" [(ngModel)]="calle" (blur)="cambio();validar('calle',1)" required minlength="3" maxlength="50" formControlName="calle" class="form-control"
-          id="calle" name="calle" [ngClass]="{'error':!formPedido.controls['calle'].valid}" placeholder="calle">
+        <input type="text" [(ngModel)]="calle" (blur)="cambio();validar('calle',1)" required minlength="3" maxlength="50" formControlName="calle"
+          class="form-control" id="calle" name="calle" [ngClass]="{'error':!formPedido.controls['calle'].valid}" placeholder="calle">
         <div class="alert displayer alert-danger" id="errorcalle">Error los valores ingresados para Calle no son validos</div>
       </div>
       <div class="form-group col-sm-12">
         <label for="numero">Numero</label>
-        <input type="text" [(ngModel)]="numero" (blur)="cambio();validar('numero',1)" required minlength="2" maxlength="5" formControlName="numero" class="form-control"
-          id="numero" name="numero" [ngClass]="{'error':!formPedido.controls['numero'].valid}" placeholder="numero">
+        <input type="text" [(ngModel)]="numero" (blur)="cambio();validar('numero',1)" required minlength="2" maxlength="5" formControlName="numero"
+          class="form-control" id="numero" name="numero" [ngClass]="{'error':!formPedido.controls['numero'].valid}" placeholder="numero">
         <div class="alert displayer alert-danger" id="errornumero">Error los valores ingresados para Numero no son validos</div>
       </div>
       <div class="form-group col-sm-12">
         <label for="piso">Piso</label>
-        <input type="text" (blur)="validar('piso',1);" [(ngModel)]="piso" minlength="1" maxlength="3" formControlName="piso" class="form-control" id="piso" name="piso"
-          [ngClass]="{'error':!formPedido.controls['piso'].valid}" placeholder="piso">
+        <input type="text" (blur)="validar('piso',1);" [(ngModel)]="piso" minlength="1" maxlength="3" formControlName="piso" class="form-control"
+          id="piso" name="piso" [ngClass]="{'error':!formPedido.controls['piso'].valid}" placeholder="piso">
         <div class="alert displayer alert-danger" id="errorpiso">Error los valores ingresados para Piso no son validos</div>
       </div>
       <div class="form-group col-sm-12">
         <label for="dpto">Dpto</label>
-        <input type="text" (blur)="validar('dpto',1);" [(ngModel)]="dpto" minlength="1" maxlength="3" formControlName="dpto" class="form-control" id="dpto" name="dpto"
-          [ngClass]="{'error':!formPedido.controls['dpto'].valid}" placeholder="dpto">
+        <input type="text" (blur)="validar('dpto',1);" [(ngModel)]="dpto" minlength="1" maxlength="3" formControlName="dpto" class="form-control"
+          id="dpto" name="dpto" [ngClass]="{'error':!formPedido.controls['dpto'].valid}" placeholder="dpto">
         <div class="alert displayer alert-danger" id="errordpto">Error los valores ingresados para Dpto no son validos</div>
       </div>
       <div class="form-group col-sm-12">
         <label for="entrecalles">Entre Calles</label>
-        <input type="text" (blur)="validar('entrecalles',1);" [(ngModel)]="entrecalles" minlength="1" maxlength="80" formControlName="entrecalles" class="form-control"
-          id="entrecalles" name="entrecalles" [ngClass]="{'error':!formPedido.controls['entrecalles'].valid}" placeholder="entrecalles">
+        <input type="text" (blur)="validar('entrecalles',1);" [(ngModel)]="entrecalles" minlength="1" maxlength="80" formControlName="entrecalles"
+          class="form-control" id="entrecalles" name="entrecalles" [ngClass]="{'error':!formPedido.controls['entrecalles'].valid}"
+          placeholder="entrecalles">
         <div class="alert displayer alert-danger" id="errorentrecalles">Error los valores ingresados para Entre Calles no son validos</div>
       </div>
       <div class="form-group col-sm-12">
@@ -166,39 +209,33 @@
         <!--input type="text" [(ngModel)]="comentarios" minlength="1" maxlength="200" formControlName="comentarios" class="form-control"
           id="comentarios" name="comentarios" placeholder="comentarios"-->
         <div class="alert alert-danger" *ngIf="!formPedido.controls.comentarios.valid">Error los valores ingresados para Comentarios no son validos</div>
-      </div>            
+      </div>
       <div class="form-group col-sm-8">
         <div *ngFor='let value of pedidos let index = index'>
           <p>
             <input type="text" id="cantidad+[index]" value="x1" readonly name="cantidad+[index]" width="50%" style="width: 8%;"> ${{value.precio_venta}} - {{value.descripcion_corta}}
             <p>
         </div>
-        
+
         <div class="center">SubTotal: ${{ptotal}}</div>
         <div class="center">Delivery: $40</div>
         <div class="center">Total: ${{ptotal+40}}</div>
       </div>
-    </form>    
-    
+    </form>
+
     <div class="col-sm-6" *ngIf="sinPedidos">
-     
-        <div id="floating-panel">
-            <b>Modo de Viaje: </b>
-            <ng-select 
-              [multiple]="false"
-              [options]="modoDeViaje"
-              [ngModelOptions]="{standalone: true}"
-              (selected)="cambio()"
-              [(ngModel)]="mdViaje">                     
-            </ng-select>            
-            </div>
+
+      <div id="floating-panel">
+        <b>Modo de Viaje: </b>
+        <ng-select [multiple]="false" [options]="modoDeViaje" [ngModelOptions]="{standalone: true}" (selected)="cambio()" [(ngModel)]="mdViaje">
+        </ng-select>
+      </div>
       <ngui-map zoom="13" center="{{position}}">
-        <directions-renderer [suppressMarkers]="true" panel="#my-panel" 
-          [directions-request]="direction">
+        <directions-renderer [suppressMarkers]="true" panel="#my-panel" [directions-request]="direction">
         </directions-renderer>
       </ngui-map>
-      <div id="my-panel"></div>      
-    </div>    
+      <div id="my-panel"></div>
+    </div>
     <!--div  class="form-group col-sm-1"  id="captcha-holder">        
         <re-captcha id="cpt" name="cpt" render="explicit" onloadCallback="{console.log.bind(this,'recaptcha loaded')}" (resolved)="resolved($event)" siteKey="6Lc6xv8SAAAAAHqVKZyrQ7c7ZKbxdd2kAd-1D6ID"></re-captcha>
     </div-->

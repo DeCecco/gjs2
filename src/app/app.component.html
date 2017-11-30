@@ -2,7 +2,22 @@
   <div>
     <div>
       <img src="assets/img/pizzalogo.jpg" class="logo" alt="logo">
-      <img src="{{img}}" class="local" alt="local" class="imgCentrada" >
+      <img src="{{img}}" class="local" alt="local" class="imgCentrada">
+      <!--ngx-carousel
+      [inputs]="carouselOne"
+      (carouselLoad)="myfunc($event)">
+        <ngx-item NgxCarouselItem>
+            <img src="{{img}}" class="local" alt="local" class="imgCentrada" >
+        </ngx-item>
+        <ngx-item NgxCarouselItem>
+          <img src="{{img2}}" class="local" alt="local" class="imgCentrada" >
+        </ngx-item>
+        <ngx-item NgxCarouselItem>
+          <img src="{{img3}}" class="local" alt="local" class="imgCentrada" >
+        </ngx-item>
+        <button NgxCarouselPrev class='leftRs'>&lt;</button>
+        <button NgxCarouselNext class='rightRs'>&gt;</button>
+  </ngx-carousel-->
        <ng-select class="cabecera" [multiple]="false" [options]="myOptions" [ngModelOptions]="{standalone: true}"  (selected)="cambio()" [(ngModel)]="local">                     
       </ng-select>
       <div class="cabecera" *ngFor='let value of datosLocal let index = index'>        

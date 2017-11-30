@@ -20,6 +20,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NguiMapModule } from '@ngui/map';
 import { Ng2UploaderModule } from 'ng2-uploader';
 import { RecaptchaModule } from 'ng-recaptcha';
+import { NgxCarouselModule } from 'ngx-carousel';
+import 'hammerjs';
 
 //Componentes
 import { LoginComponent } from './login/login.component';
@@ -59,6 +61,7 @@ const appRoutes: Routes = [
     EncuestaComponent
   ],
   imports: [
+    NgxCarouselModule,
     BsDropdownModule.forRoot(),
     BrowserModule,
     FormsModule,
