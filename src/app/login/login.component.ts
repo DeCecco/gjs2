@@ -136,7 +136,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('Token', data);
             localStorage.setItem('Rol', rol);
 
-            // location.reload();
+            location.reload();
             this.router.navigate(['Productos']);
             // this.router.navigate(['Productos']);
             // set localStorage.setItem('Token', data);

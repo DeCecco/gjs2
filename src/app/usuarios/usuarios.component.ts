@@ -391,7 +391,7 @@ export class UsuariosComponent implements OnInit {
         console.info(data)
         if (data.ok) {
           this.cargarListado();
-          //window.location.reload();
+        window.location.reload();
         } else {
           alert('error')
         }
@@ -404,7 +404,7 @@ export class UsuariosComponent implements OnInit {
       this.WebserviceService.ModificarPersona(array).then(data => {
         if (data.ok) {
         this.cargarListado();
-         // window.location.reload();
+         window.location.reload();
         } else {
           alert('error')
         }
@@ -427,7 +427,7 @@ export class UsuariosComponent implements OnInit {
       this.WebserviceService.ModificarEstadoUsuario(array).then(data => {
         if (data.ok) {
           this.cargarListado();
-          //window.location.reload();
+        window.location.reload();
         } else {
           alert('error')
         }
