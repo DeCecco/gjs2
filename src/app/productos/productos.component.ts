@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DirectionsRenderer } from '@ngui/map';
 import { error } from 'util';
 import { NgxCarousel } from 'ngx-carousel';
+import { CombineLatestSubscriber } from 'rxjs/operator/combineLatest';
 //import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 //import { AppModule } from '../app.module';
 
@@ -82,6 +83,7 @@ export class ProductosComponent implements OnInit {
   handleUpload(data, Qimg): void {
     if (data && data.response) {
       data = JSON.parse(data.response);
+      console.info(data)
       switch (Qimg) {
         case 1:
           this.uploadFile = data;
