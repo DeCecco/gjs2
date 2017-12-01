@@ -282,14 +282,16 @@ class Persona
 	    $consulta->execute();			
 		return $consulta->fetchAll();	
 	}
-	public static function AgregarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta,$promocion,$imagen){
+	public static function AgregarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta,$promocion,$imagen,$imagen2,$imagen3){
 
-        $sql = " INSERT into productos (descripcion_corta,descripcion_larga,esoferta,imagen) values (:descripcion_corta,:descripcion_larga,:promocion,:imagen)";
+        $sql = " INSERT into productos (descripcion_corta,descripcion_larga,esoferta,imagen,imagen2,imagen3) values (:descripcion_corta,:descripcion_larga,:promocion,:imagen,:imagen2,:imagen3)";
 			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
 			$consulta->bindValue(':descripcion_larga', $descripcion_larga, PDO::PARAM_INT);
 			$consulta->bindValue(':descripcion_corta', $descripcion_corta, PDO::PARAM_STR);						
 			$consulta->bindValue(':promocion', $promocion, PDO::PARAM_STR);						
 			$consulta->bindValue(':imagen', $imagen, PDO::PARAM_STR);	
+			$consulta->bindValue(':imagen2', $imagen2, PDO::PARAM_STR);	
+			$consulta->bindValue(':imagen3', $imagen3, PDO::PARAM_STR);	
 		$consulta->execute();
 		$id=persona::UltimoIdProductoAdd();
 
@@ -299,12 +301,14 @@ class Persona
             $consulta->bindValue(':precio_venta', $precio_venta, PDO::PARAM_STR);			
 			$consulta->execute();
 	}	
-	public static function ModificarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta,$idprod,$promocion,$imagen){
+	public static function ModificarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta,$idprod,$promocion,$imagen,$imagen2,$imagen3){
 
         $sql = " UPDATE productos set descripcion_corta=:descripcion_corta,
 			descripcion_larga=:descripcion_larga,
 			esoferta=:promocion,
-			imagen=:imagen
+			imagen=:imagen,
+			imagen2=:imagen2,
+			imagen3=:imagen3
 			where idprod=:idprod ";
 			$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
 			$consulta->bindValue(':descripcion_larga', $descripcion_larga, PDO::PARAM_INT);
@@ -312,6 +316,8 @@ class Persona
 			$consulta->bindValue(':idprod', $idprod, PDO::PARAM_STR);
 			$consulta->bindValue(':promocion', $promocion, PDO::PARAM_STR);	
 			$consulta->bindValue(':imagen', $imagen, PDO::PARAM_STR);	
+			$consulta->bindValue(':imagen2', $imagen2, PDO::PARAM_STR);	
+			$consulta->bindValue(':imagen3', $imagen3, PDO::PARAM_STR);	
 		$consulta->execute();		
 
 		$sql= "UPDATE precios set precio_costo=:precio_costo,

@@ -127,7 +127,9 @@ export class WebserviceService {
       "precio_costo": formData[0].precio_costo,
       "precio_venta": formData[0].precio_venta,
       "promocion": formData[0].promocion,
-      "imagen": formData[0].imagen
+      "imagen": formData[0].imagen,
+      "imagen2": formData[0].imagen2,
+      "imagen3": formData[0].imagen3
     }
     
     return this.http.post(this.route + "producto/agregar", body).toPromise();
@@ -140,7 +142,9 @@ export class WebserviceService {
       "precio_venta": formData[0].precio_venta,
       "promocion": formData[0].promocion,
       "idprod": formData[0].idprod,
-      "imagen": formData[0].imagen
+      "imagen": formData[0].imagen,
+      "imagen2": formData[0].imagen2,
+      "imagen3": formData[0].imagen3
     }
     console.info(body)
     return this.http.post(this.route + "producto/modificar", body).toPromise();

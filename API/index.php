@@ -289,8 +289,10 @@ $app->post('/producto/agregar', function (Request $request, Response $response) 
 	$precio_costo = $request->getParam('precio_costo');
 	$precio_venta = $request->getParam('precio_venta');	
 	$promocion = $request->getParam('promocion');	
-	$imagen = $request->getParam('imagen');	
-	return $response->withJson(Persona::AgregarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta,$promocion,$imagen));     
+    $imagen = $request->getParam('imagen');	
+    $imagen2 = $request->getParam('imagen2');	
+    $imagen3 = $request->getParam('imagen3');	
+	return $response->withJson(Persona::AgregarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta,$promocion,$imagen,$imagen2,$imagen3));     
 });	
 /**
    * @api {any} /Modificar/  Modificar
@@ -311,9 +313,11 @@ $app->post('/producto/modificar', function (Request $request, Response $response
 	$precio_costo = $request->getParam('precio_costo');
 	$precio_venta = $request->getParam('precio_venta');	
 	$promocion = $request->getParam('promocion');	
-	$imagen = $request->getParam('imagen');	
+    $imagen = $request->getParam('imagen');	
+    $imagen2 = $request->getParam('imagen2');	
+    $imagen3 = $request->getParam('imagen3');	
 	$idprod = $request->getParam('idprod');	
-	return $response->withJson(Persona::ModificarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta,$idprod,$promocion,$imagen));     
+	return $response->withJson(Persona::ModificarProducto($descripcion_larga,$descripcion_corta,$precio_costo,$precio_venta,$idprod,$promocion,$imagen,$imagen2,$imagen3));     
 });
 /**
    * @api {any} /Alta/  Nuevo

@@ -19,7 +19,7 @@ export class ProductosComponent implements OnInit {
   @ViewChild(DirectionsRenderer) directionsRendererDirective: DirectionsRenderer;
   directionsRenderer: google.maps.DirectionsRenderer;
   directionsResult: google.maps.DirectionsResult;
-  
+
   public carouselOne: NgxCarousel;
   listadoProductos: any;
   pedidos: any;
@@ -50,15 +50,20 @@ export class ProductosComponent implements OnInit {
   usuario: string;
   promocion: boolean;
   uploadFile: any;
+  uploadFile2: any;
+  uploadFile3: any;
   hasBaseDropZoneOver: boolean = false;
   modoDeViaje = [];
   mdViaje: string;
   sinPedidos: boolean;
   mensajeError: boolean;
   img: string;
+  img2: string;
+  img3: string;
   paso: boolean;
+  titulo: string;
   public loading = false;
-  captcha : any;
+  captcha: any;
   options: Object = {
     //url: 'http://localhost/UTN/gjs2/API/file.php' //laburo
     //url: 'http://localhost/UTN/finallab/GJS2/API/file.php' //casa
@@ -74,10 +79,21 @@ export class ProductosComponent implements OnInit {
   };
   sizeLimit = 2000000;
 
-  handleUpload(data): void {
+  handleUpload(data, Qimg): void {
     if (data && data.response) {
       data = JSON.parse(data.response);
-      this.uploadFile = data;
+      switch (Qimg) {
+        case 1:
+          this.uploadFile = data;
+          break;
+        case 2:
+          this.uploadFile2 = data;
+          break;
+        case 3:
+          this.uploadFile3 = data;
+          break;
+      }
+
       // tslint:disable-next-line:no-console
       console.info('http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/' + this.uploadFile.originalName)
       alert('Archivo subido con exito')
@@ -106,9 +122,10 @@ export class ProductosComponent implements OnInit {
     this.sinPedidos = false;
     this.paso = false;
     this.mensajeError = false;
+    this.titulo = 'Productos';
     this.rolId = localStorage.getItem('Rol');
     this.carouselOne = {
-      grid: {xs: 1, sm: 1, md: 1, lg: 1, all: 0},
+      grid: { xs: 1, sm: 1, md: 1, lg: 1, all: 0 },
       slide: 1,
       speed: 400,
       interval: 4000,
@@ -135,11 +152,11 @@ export class ProductosComponent implements OnInit {
     this.formProductos = formBuilder.group({
       //VALIDACIONES      
       descripcion_corta: [this.descripcion_corta, Validators.compose([Validators.required, Validators.maxLength(80), Validators.pattern('^[A-Z a-z0-9ÑñáéíóúÁÉÍÓÚ\\-\\#]+$')])],
-      descripcion_larga: [this.descripcion_larga, Validators.compose([Validators.required, Validators.maxLength(200), Validators.pattern('^[A-Z a-z0-9ÑñáéíóúÁÉÍÓÚ\\-\\#]+$')])],
+      descripcion_larga: [this.descripcion_larga, Validators.compose([Validators.required, Validators.maxLength(200)])],
       precio_costo: [this.precio_costo, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
       precio_venta: [this.precio_venta, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
       promocion: [this.promocion]
-      
+
     });
     this.formPedido = formBuilder.group({
 
@@ -150,7 +167,7 @@ export class ProductosComponent implements OnInit {
       dpto: [Validators.compose([Validators.maxLength(3), Validators.pattern('[+-]?([0-9]*[.])?[0-9]+')])],
       entrecalles: [Validators.compose([Validators.maxLength(80), Validators.pattern('^[a-zA-Z,.´ ]+$')])],
       comentarios: [Validators.compose([Validators.maxLength(200), Validators.pattern('^[a-zA-Z,.´ ]+$')])],
-      captcha : [this.captcha]
+      captcha: [this.captcha]
 
     });
 
@@ -179,8 +196,8 @@ export class ProductosComponent implements OnInit {
     // carouselLoad will trigger this funnction when your load value reaches
     // it is helps to load the data by parts to increase the performance of the app
     // must use feature to all carousel
- }
-  listarprod(){
+  }
+  listarprod() {
     this.WebserviceService.ListarProductos().then(data => {
       this.listadoProductos = data;
       setTimeout(() => {
@@ -264,7 +281,7 @@ export class ProductosComponent implements OnInit {
     })
   }
   modificarProducto(x) {
-
+    this.titulo = "Modificar Producto"
     this.descripcion_corta = x.descripcion_corta;
     this.descripcion_larga = x.descripcion_larga;
     this.precio_costo = x.precio_costo;
@@ -272,14 +289,20 @@ export class ProductosComponent implements OnInit {
     this.idprod = x.idprod;
     this.promocion = x.esoferta;
     this.img = x.imagen;
+    this.img2 = x.imagen2;
+    this.img3 = x.imagen3;
     this.disa = false;
   }
   alta() {
+    this.titulo = "Alta de Producto"
     this.descripcion_corta = '';
     this.descripcion_larga = '';
     this.precio_costo = null;
     this.precio_venta = null;
     this.promocion = false;
+    this.img = null;
+    this.img2 = null;
+    this.img3 = null;
     this.disa = true;
   }
   update(x) {
@@ -288,15 +311,34 @@ export class ProductosComponent implements OnInit {
     } else {
       var imagenF = "http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/" + this.uploadFile.originalName;
     }
-
+    if (typeof this.uploadFile2 == 'undefined') {
+      var imagenF2 = 'http://pablodececco.com.ar/assets/img/peppy.jpg';
+    } else {
+      var imagenF2 = "http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/" + this.uploadFile2.originalName;
+    }
+    if (typeof this.uploadFile3 == 'undefined') {
+      var imagenF3 = 'http://pablodececco.com.ar/assets/img/peppy.jpg';
+    } else {
+      var imagenF3 = "http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/" + this.uploadFile3.originalName;
+    }
     if (this.img == null)
       this.img = imagenF
     else
       imagenF = this.img
 
+    if (this.img2 == null)
+      this.img2 = imagenF2
+    else
+      imagenF2 = this.img2
+
+    if (this.img3 == null)
+      this.img3 = imagenF3
+    else
+      imagenF3 = this.img3
+
     var array = [{
       "descripcion_corta": this.descripcion_corta, "descripcion_larga": this.descripcion_larga, "precio_costo": this.precio_costo,
-      "precio_venta": this.precio_venta, "idprod": this.idprod, "promocion": this.promocion, "imagen": imagenF
+      "precio_venta": this.precio_venta, "idprod": this.idprod, "promocion": this.promocion, "imagen": imagenF, "imagen2": imagenF2, "imagen3": imagenF3
     }];
     if (x == 1) {
       this.WebserviceService.ModificarProducto(array).then(data => {
@@ -345,7 +387,7 @@ export class ProductosComponent implements OnInit {
         array2['label'] = element['nombre'];
         array.push(array2);
       });
-      
+
       this.cmbClientes = array;
     })
   }
@@ -384,7 +426,7 @@ export class ProductosComponent implements OnInit {
         if (r == true) {
           this.router.navigate(['Encuesta']);
         } else {
-            
+
         }
       } else {
         alert('error al grabar');
