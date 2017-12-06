@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-11-2017 a las 21:30:55
+-- Tiempo de generación: 06-12-2017 a las 21:31:28
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -96,6 +96,45 @@ INSERT INTO `encuestas` (`idusuario`, `pregunta1`, `pregunta2`, `pregunta3`, `pr
 (13, 17, 23, 17, 1, 10, 32, 9, 14, 26, 16, 19, 2, 9, 1, 4, 31, 18, 16, 6, 13),
 (14, 21, 13, 9, 33, 6, 5, 4, 14, 22, 12, 6, 18, 7, 19, 7, 3, 39, 12, 27, 17),
 (20, 27, 16, 5, 32, 10, 9, 8, 9, 3, 9, 18, 7, 5, 2, 1, 33, 25, 20, 3, 6);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `encuestas2`
+--
+
+CREATE TABLE `encuestas2` (
+  `pregunta1` int(11) NOT NULL,
+  `pregunta2` int(11) NOT NULL,
+  `pregunta3` int(11) NOT NULL,
+  `pregunta4` int(11) NOT NULL,
+  `pregunta5` int(11) NOT NULL,
+  `pregunta6` int(11) NOT NULL,
+  `pregunta7` int(11) NOT NULL,
+  `pregunta8` int(11) NOT NULL,
+  `pregunta9` int(11) NOT NULL,
+  `pregunta10` int(11) NOT NULL,
+  `pregunta11` int(11) NOT NULL,
+  `pregunta12` int(11) NOT NULL,
+  `pregunta13` int(11) NOT NULL,
+  `pregunta14` int(11) NOT NULL,
+  `pregunta15` int(11) NOT NULL,
+  `pregunta16` int(11) NOT NULL,
+  `pregunta17` int(11) NOT NULL,
+  `pregunta18` int(11) NOT NULL,
+  `pregunta19` int(11) NOT NULL,
+  `pregunta20` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `encuestas2`
+--
+
+INSERT INTO `encuestas2` (`pregunta1`, `pregunta2`, `pregunta3`, `pregunta4`, `pregunta5`, `pregunta6`, `pregunta7`, `pregunta8`, `pregunta9`, `pregunta10`, `pregunta11`, `pregunta12`, `pregunta13`, `pregunta14`, `pregunta15`, `pregunta16`, `pregunta17`, `pregunta18`, `pregunta19`, `pregunta20`) VALUES
+(1, 5, 2, 2, 4, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(2, 5, 1, 1, 3, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(1, 4, 1, 1, 3, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(1, 6, 2, 3, 4, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -275,7 +314,21 @@ INSERT INTO `logsingreso` (`idusuario`, `fecha`) VALUES
 (1, '2017-11-30 16:11:26'),
 (3, '2017-11-30 16:11:33'),
 (1, '2017-11-30 17:17:14'),
-(3, '2017-11-30 17:27:38');
+(3, '2017-11-30 17:27:38'),
+(1, '2017-12-01 10:16:14'),
+(14, '2017-12-01 10:16:42'),
+(5, '2017-12-01 10:16:55'),
+(1, '2017-12-01 15:08:31'),
+(5, '2017-12-01 15:08:38'),
+(1, '2017-12-01 15:38:34'),
+(5, '2017-12-01 15:38:38'),
+(1, '2017-12-06 10:22:44'),
+(5, '2017-12-06 10:24:09'),
+(1, '2017-12-06 11:47:26'),
+(5, '2017-12-06 13:46:26'),
+(1, '2017-12-06 16:08:08'),
+(5, '2017-12-06 17:14:24'),
+(1, '2017-12-06 17:15:16');
 
 -- --------------------------------------------------------
 
@@ -347,7 +400,8 @@ INSERT INTO `pedido-detalle` (`idpedido`, `idproducto`, `cantidad`, `precio_vent
 (32, 8, 1, '155'),
 (33, 5, 1, '189'),
 (34, 5, 1, '189'),
-(35, 5, 1, '189');
+(35, 5, 1, '189'),
+(36, 6, 1, '198');
 
 -- --------------------------------------------------------
 
@@ -407,7 +461,8 @@ INSERT INTO `pedidos` (`idpedido`, `idusuarioC`, `idusuario`, `idestado`, `idloc
 (32, 27, 27, 1, 3, '2017-11-27 10:49:43', 'CIUDAD AUTONOMA BUENOS AIRES', ' Av Manuel Belgrano ', 600, 0, '', ' ', ''),
 (33, 28, 28, 1, 3, '2017-11-27 14:39:41', 'caba', 'Florida', 1369, 0, '', '', ''),
 (34, 28, 28, 1, 3, '2017-11-27 14:39:45', 'caba', 'Florida', 1369, 0, '', '', ''),
-(35, 26, 26, 1, 3, '2017-11-28 10:09:37', 'CABA', 'luis maria campos ', 1300, 1, '500', 'zaraza', 'rapido');
+(35, 26, 26, 1, 3, '2017-11-28 10:09:37', 'CABA', 'luis maria campos ', 1300, 1, '500', 'zaraza', 'rapido'),
+(36, 39, 3, 1, 2, '2017-11-30 17:43:02', 'CIUDAD AUTONOMA BUENOS AIRES', 'Federico Lacroze', 1369, 1, '5', '', '');
 
 -- --------------------------------------------------------
 
@@ -513,6 +568,8 @@ CREATE TABLE `productos` (
   `descripcion_corta` varchar(80) COLLATE utf8_spanish_ci NOT NULL,
   `descripcion_larga` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
   `imagen` varchar(200) COLLATE utf8_spanish_ci NOT NULL DEFAULT 'http://pablodececco.com.ar/assets/img/peppy.jpg',
+  `imagen2` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
+  `imagen3` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
   `esoferta` tinyint(1) NOT NULL DEFAULT '0',
   `estado` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -521,17 +578,17 @@ CREATE TABLE `productos` (
 -- Volcado de datos para la tabla `productos`
 --
 
-INSERT INTO `productos` (`idprod`, `descripcion_corta`, `descripcion_larga`, `imagen`, `esoferta`, `estado`) VALUES
-(2, 'Pizza mozzarella con anchoas', 'Salsa de tomates frescos, anchoas en aceite, oregano y aceitunas verdes.', 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/anchoa.jpg', 0, 1),
-(3, 'Pizza con anchoas', ' ', 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/anchoa.jpg', 0, 1),
-(4, 'Pizza napolitana', 'Salsa de tomates frescos, mozzarella, oregano y aceitunas verdes.', 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/napo.png', 0, 1),
-(5, 'Pizza de jamón de cerdo natural', 'Salsa de tomates frescos, mozzarella, jamón.', 'http://pablodececco.com.ar/assets/img/peppy.jpg', 0, 1),
-(6, 'Pizza de jamon de cerdo natural y morrones', 'Salsa de tomates frescos, mozzarella, jamon y morrones asados.', 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/morron.jpg', 0, 1),
-(7, 'Promo Manolo  ', 'Pizza grande a eleccion ', 'http://pablodececco.com.ar/assets/img/peppy.jpg', 1, 1),
-(8, 'Promo Francesca ', 'Pizza chica a eleccion y   dos empanadas a eleccion', 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/pizzaempa.jpg', 1, 1),
-(14, 'Pizza napolitana con tomates cherrys', 'Salsa de tomates frescos, mozzarella, tomates cherry, queso parmesano estacionado, ajo y hojas frescas de albahaca.', 'http://pablodececco.com.ar/assets/img/peppy.jpg', 0, 1),
-(15, 'Pizza campina', 'Campina completa', 'http://pablodececco.com.ar/assets/img/peppy.jpg', 0, 1),
-(16, 'pizza laponi', 'Pizza Laponi con PEPE y RONI', 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/Koala.jpg', 0, 1);
+INSERT INTO `productos` (`idprod`, `descripcion_corta`, `descripcion_larga`, `imagen`, `imagen2`, `imagen3`, `esoferta`, `estado`) VALUES
+(2, 'Pizza mozzarella con anchoas', 'Salsa de tomates frescos, anchoas en aceite, oregano y aceitunas verdes.', 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/anchoa.jpg', '', '', 0, 1),
+(3, 'Pizza con anchoas', ' ', 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/anchoa.jpg', '', '', 0, 1),
+(4, 'Pizza napolitana', 'Salsa de tomates frescos, mozzarella, oregano y aceitunas verdes.', 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/napo.png', '', '', 0, 1),
+(5, 'Pizza de jamón de cerdo natural', 'Salsa de tomates frescos, mozzarella, jamón.', 'http://pablodececco.com.ar/assets/img/peppy.jpg', '', '', 0, 1),
+(6, 'Pizza de jamon de cerdo natural y morrones', 'Salsa de tomates frescos, mozzarella, jamon y morrones asados.', 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/morron.jpg', '', '', 0, 1),
+(7, 'Promo Manolo  ', 'Pizza grande a eleccion ', 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/pizzamanolo.jpg', 'http://pablodececco.com.ar/assets/img/peppy.jpg', 'http://pablodececco.com.ar/assets/img/peppy.jpg', 1, 1),
+(8, 'Promo Francesca ', 'Pizza chica a eleccion y   dos empanadas a eleccion', 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/pizzaempa.jpg', '', '', 1, 1),
+(14, 'Pizza napolitana con tomates cherrys', 'Salsa de tomates frescos, mozzarella, tomates cherry, queso parmesano estacionado, ajo y hojas frescas de albahaca.', 'http://pablodececco.com.ar/assets/img/peppy.jpg', '', '', 0, 1),
+(15, 'Pizza campina', 'Campina completa', 'http://pablodececco.com.ar/assets/img/peppy.jpg', '', '', 0, 1),
+(16, 'pizza laponi', 'Pizza Laponi con PEPE y RONI', 'http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/Koala.jpg', '', '', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -721,7 +778,7 @@ ALTER TABLE `locales`
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `idpedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `idpedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
 --
