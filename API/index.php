@@ -477,6 +477,9 @@ $app->post('/estadisticas/preguntas', function (Request $request, Response $resp
     $pregunta = $request->getParam('pregunta');		
 	return $response->withJson(Persona::Preguntas($pregunta));     
 });
+$app->get('/estadisticas/ImportesPorDia', function (Request $request, Response $response){
+    return $response->withJson(Persona::ImportesPorDia());
+});
 /*----------------------------------FIN ESTADISTICAS--------------------------------*/
 $app->run();
 

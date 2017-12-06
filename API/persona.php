@@ -488,6 +488,15 @@ class Persona
 		$consulta->execute();
 		return $consulta->fetchAll();	
 	}
+	public static function ImportesPorDia(){	
+		$sql = "SELECT DATE_FORMAT(p.fecha, '%d-%m-%Y') fecha , SUM(pd.PRECIO_VENTA) total
+			from `pedido-detalle` pd
+			left join pedidos p on p.idpedido=pd.idpedido
+			group by YEAR(p.fecha), MONTH(p.fecha), DAY(p.fecha)";		
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
+		$consulta->execute();
+		return $consulta->fetchAll();	
+	}
 /*----------------------------------FIN ESTADISTICAS--------------------------------*/
 /*----------------------------------INICIO ENCUESTAS--------------------------------*/	
 /*SELECT preg.idpreg,preg.idpreg idpreg2, preg.descripcion as pregunta,resp.idresp, resp.descripcion as respuesta

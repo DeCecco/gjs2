@@ -258,6 +258,9 @@ export class WebserviceService {
   Preguntas(form) {
     var data = { "pregunta": form[0].pregunta }
     return this.http.post(this.route + "/estadisticas/preguntas", data).toPromise().then(data => data.json());
+  }
+  ImportesPorDia() {
+    return this.http.get(this.route + "/estadisticas/ImportesPorDia").toPromise().then(data => data.json());
   }        
   /*----------------------------------FIN ESTADISTICAS--------------------------------*/
   /*----------------------------------INICIO ENCUESTAS--------------------------------*/

@@ -106,7 +106,7 @@ export class EstadisticasComponent implements OnInit {
         this.ClientesYSusCompras();
         break;
       case "4":
-
+        this.ImportesPorDia();
         break;
       case "5":
         //this.ProductoMasVendidoEntreDosFechas()
@@ -120,6 +120,28 @@ export class EstadisticasComponent implements OnInit {
         this.pregchange()        
         break;
     }
+  }
+  ImportesPorDia(){
+    this.barChartLabels = [];
+    this.WebserviceService.ImportesPorDia().then(data => {
+
+      this.listado = data;
+      var ultimo = this.listado.length
+      var xr = [];
+      var myObj = {
+        data: [],
+        label: 'Importes por Dia'
+      };
+      this.listado.forEach(element => {
+
+        myObj.data.push(element.total);
+        this.barChartLabels.push(element.fecha)
+
+      });
+      xr.push(myObj)
+      this.barChartData = xr
+
+    })
   }
  /* Encuestas() {
     this.barChartLabels = [];
