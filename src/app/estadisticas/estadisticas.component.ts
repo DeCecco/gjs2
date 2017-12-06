@@ -13,15 +13,25 @@ export class EstadisticasComponent implements OnInit {
   informe: any;
   tipos = [];
   tipo: any;
+  preguntas = [];
+  pregunta: any;
   constructor(private WebserviceService: WebserviceService) {
     this.informes = [
       { value: '1', label: 'Ventas Por Local' },
-     // { value: '2', label: 'Ventas Por Local y Empleado' },
+      // { value: '2', label: 'Ventas Por Local y Empleado' },
       { value: '3', label: 'Clientes y Sus Compras' },
       { value: '4', label: 'Importes por dia de trabajo' },
       { value: '5', label: 'Producto mas Vendido' },
       { value: '6', label: 'Logueos' },
       { value: '7', label: 'Encuestas' }
+    ];
+    this.preguntas = [
+      { value: '1', label: '¿Le gusta el sabor de nuestra pizza?' },
+      { value: '2', label: '¿Cual es su grado de satisfacción con nuestra pizza?' },
+      { value: '3', label: '¿La comida es de Buena calidad y abundante?' },
+      { value: '4', label: 'Ofrece las mejores promociones' },
+      { value: '5', label: '¿Qué le parece la variedad del producto?' },
+      { value: '6', label: '¿Cómo se enteró de nosotros?' }
     ];
     this.tipos = [
       { value: '1', label: 'Circulo' },
@@ -38,7 +48,7 @@ export class EstadisticasComponent implements OnInit {
   }
   VentasPorLocal() {
     this.WebserviceService.VentasPorLocal().then(data => {
-      this.listado = data;      
+      this.listado = data;
       var ultimo = this.listado.length
       var xr = [];
       var myObj = {
@@ -54,7 +64,7 @@ export class EstadisticasComponent implements OnInit {
         }
       });
       this.barChartData = xr
-      
+
 
     })
   }
@@ -270,5 +280,27 @@ export class EstadisticasComponent implements OnInit {
         break;
     }
   }
+  pregchange() {
+    this.barChartLabels = [];
+    const array = [{ "pregunta": this.pregunta }];
+    this.WebserviceService.Preguntas(array).then(data => {
+      console.info(data)
+      this.listado = data;
+      var ultimo = this.listado.length
+      var xr = [];
+      var myObj = {
+        data: [],
+        label: 'Ventas Por Cliente'
+      };
+      this.listado.forEach(element => {
 
+        myObj.data.push(element.total);
+        this.barChartLabels.push(element.descripcion)
+
+      });
+      xr.push(myObj)
+      this.barChartData = xr
+
+    });
+  }
 }

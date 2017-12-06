@@ -472,11 +472,22 @@ class Persona
 		return $consulta->fetchAll();	
 	}	
 	public static function Encuestas2(){	
-		$sql = "SELECT pregunta1, count(1) 		from encuestas2 		group by pregunta1;";//		SELECT pregunta2, count(1) 		from encuestas2 		group by pregunta2;		SELECT pregunta3, count(1) 		from encuestas2 		group by pregunta3;		SELECT pregunta4, count(1) 		from encuestas2 		group by pregunta4;		SELECT pregunta5, count(1) 		from encuestas2 		group by pregunta5;		SELECT pregunta6, count(1) 		from encuestas2 		group by pregunta6;		";		
+		$sql = "SELECT r.descripcion, count(1) as total 		from encuestas2 as e
+		left join respuestas r on r.idresp=e.pregunta1
+		group by e.pregunta1;";
 		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
 		$consulta->execute();
 		return $consulta->fetchAll();	
 	}	
+	public static function preguntas($cual){	
+		$sql = 'SELECT r.descripcion, count(1) as total 
+		from encuestas2 as e
+		left join respuestas r on r.idresp=e.pregunta'.$cual.'
+		group by e.pregunta'.$cual.';';		
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
+		$consulta->execute();
+		return $consulta->fetchAll();	
+	}
 /*----------------------------------FIN ESTADISTICAS--------------------------------*/
 /*----------------------------------INICIO ENCUESTAS--------------------------------*/	
 /*SELECT preg.idpreg,preg.idpreg idpreg2, preg.descripcion as pregunta,resp.idresp, resp.descripcion as respuesta

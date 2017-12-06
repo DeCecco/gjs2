@@ -253,8 +253,12 @@ export class WebserviceService {
     return this.http.get(this.route + "/estadisticas/Encuestas").toPromise().then(data => data.json());
   } 
   Encuestas2() {
-    return this.http.get(this.route + "/estadisticas/Encuestas2").toPromise().then(data => data.json());
-  }           
+    return this.http.get(this.route + "/estadisticas/Encuestas").toPromise().then(data => data.json());
+  }   
+  Preguntas(form) {
+    var data = { "pregunta": form[0].pregunta }
+    return this.http.post(this.route + "/estadisticas/preguntas", data).toPromise().then(data => data.json());
+  }        
   /*----------------------------------FIN ESTADISTICAS--------------------------------*/
   /*----------------------------------INICIO ENCUESTAS--------------------------------*/
   ListadoPreguntas() {

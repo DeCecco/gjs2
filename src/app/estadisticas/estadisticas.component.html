@@ -13,7 +13,10 @@
   </ng-select>
   <ng-select class="cabecera" [multiple]="false" [options]="tipos" [ngModelOptions]="{standalone: true}" (selected)="tipochange()"
     [(ngModel)]="tipo">
-  </ng-select>
+  </ng-select>  
+  <ng-select *ngIf="informe==7" class="cabecera" [multiple]="false" [options]="preguntas" [ngModelOptions]="{standalone: true}" (selected)="pregchange()"
+  [(ngModel)]="pregunta">
+</ng-select>
 </div>
 <div class="row col-md-12 col-sm-8 col-xs-12 fondo" style="background-image: url('assets/img/fondo2.jpgs');">
   <div class="col-sm-6">

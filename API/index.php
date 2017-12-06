@@ -473,6 +473,10 @@ $app->get('/estadisticas/Encuestas', function (Request $request, Response $respo
 $app->get('/estadisticas/Encuestas2', function (Request $request, Response $response){
     return $response->withJson(Persona::Encuestas2());
 });
+$app->post('/estadisticas/preguntas', function (Request $request, Response $response) {    
+    $pregunta = $request->getParam('pregunta');		
+	return $response->withJson(Persona::Preguntas($pregunta));     
+});
 /*----------------------------------FIN ESTADISTICAS--------------------------------*/
 $app->run();
 
