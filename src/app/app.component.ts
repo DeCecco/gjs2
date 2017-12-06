@@ -20,12 +20,14 @@ export class AppComponent {
   img3: string;
   rol: any;
   position: string;  
+  listadolocales:string;
   public carouselOne: NgxCarousel;
 
   @Input() vieneNombre: string;
   @Output() public eventoLocal= new EventEmitter<any>();
   constructor(private WebserviceService: WebserviceService, private router: Router, private ModalModule: ModalModule) {
     this.verificarToken();
+    this.listadoL();
     const x = localStorage.getItem('Local');
     if (x == null) {
     this.local = '1';
@@ -58,13 +60,17 @@ export class AppComponent {
     // it is helps to load the data by parts to increase the performance of the app
     // must use feature to all carousel
  }
+ listadoL(){
+  this.WebserviceService.ListarLocales().then(data => {
+    this.listadolocales=data;
+  })
+}
   cambio() {
     localStorage.removeItem('Local');
     localStorage.setItem('Local', this.local);
     switch(this.local){
       case "1":      
-        this.position='Av. Santa Fe 2580 C1425BGN CABA';    
-        
+        this.position='Av. Santa Fe 2580 C1425BGN CABA';
       break;
       case "2":
         this.position='Av. Cabildo 356 C1426AAQ CABA';
@@ -79,7 +85,7 @@ export class AppComponent {
     this.eventoLocal.emit(this.local);
 
     var data = [{ "local": this.local }];
-    this.WebserviceService.TraerLocal(data).then(data => {      
+    this.WebserviceService.TraerLocal(data).then(data => {
       this.datosLocal = data;
       this.img=data[0].img;
       this.img2=data[0].img2;
