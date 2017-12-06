@@ -116,11 +116,12 @@ export class EstadisticasComponent implements OnInit {
         this.LogsUsuarios()
         break;
       case "7":
-        this.Encuestas()
+        this.pregunta="1"
+        this.pregchange()        
         break;
     }
   }
-  Encuestas() {
+ /* Encuestas() {
     this.barChartLabels = [];
     this.WebserviceService.Encuestas().then(data => {
 
@@ -152,7 +153,7 @@ export class EstadisticasComponent implements OnInit {
         this.barChartLabels.push(element.pregunta17);    myObj.data.push(element.pregunta17);   
         this.barChartLabels.push(element.pregunta18);    myObj.data.push(element.pregunta18);   
         this.barChartLabels.push(element.pregunta19);    myObj.data.push(element.pregunta19);   
-        this.barChartLabels.push(element.pregunta20);    myObj.data.push(element.pregunta20);  */
+        this.barChartLabels.push(element.pregunta20);    myObj.data.push(element.pregunta20);  
         //this.barChartLabels.push(element.nomap)     
         // myObj.data.push(element.nomap);
 
@@ -164,7 +165,7 @@ export class EstadisticasComponent implements OnInit {
     this.WebserviceService.Encuestas2().then(data => {
       console.info(data)
     });
-  }
+  }*/
   LogsUsuarios() {
     this.barChartLabels = [];
     this.WebserviceService.LogsUsuarios().then(data => {

@@ -7,14 +7,14 @@
 
   <!-- /.col-lg-12 -->
 </div>
-<div class="col-sm-4">
-  <ng-select class="cabecera" [multiple]="false" [options]="informes" [ngModelOptions]="{standalone: true}" (selected)="informechange()"
+<div class="col-sm-4">    
+  Encuestas: <ng-select class="cabecera" [multiple]="false" [options]="informes" [ngModelOptions]="{standalone: true}" (selected)="informechange()"
     [(ngModel)]="informe">
   </ng-select>
-  <ng-select class="cabecera" [multiple]="false" [options]="tipos" [ngModelOptions]="{standalone: true}" (selected)="tipochange()"
+  Tipo: <ng-select class="cabecera" [multiple]="false" [options]="tipos" [ngModelOptions]="{standalone: true}" (selected)="tipochange()"
     [(ngModel)]="tipo">
   </ng-select>  
-  <ng-select *ngIf="informe==7" class="cabecera" [multiple]="false" [options]="preguntas" [ngModelOptions]="{standalone: true}" (selected)="pregchange()"
+  <span  *ngIf="informe==7">Pregunta: </span><ng-select *ngIf="informe==7" class="cabecera" [multiple]="false" [options]="preguntas" [ngModelOptions]="{standalone: true}" (selected)="pregchange()"
   [(ngModel)]="pregunta">
 </ng-select>
 </div>

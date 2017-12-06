@@ -417,7 +417,7 @@ class Persona
 		return $consulta->fetchAll();	
 	} 
 	public static function VentasPorClientes(){	
-		$sql = "SELECT count(p.idpedido) total,p.idusuarioc,u.nombre,u.apellido
+		$sql = "SELECT count(p.idpedido) total,u.nombre,u.apellido,p.idusuarioc
 				FROM `pedidos`  p 
 				left join `usuarios` u on (p.idusuarioc=u.idusuario)
 				where p.idestado=3 and u.idrol=4
