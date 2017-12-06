@@ -323,7 +323,7 @@ export class ProductosComponent implements OnInit {
     } else {
       var imagenF3 = "http://buenaaccion.com.ar/UTN/finallab/GJS2/API/uploads/" + this.uploadFile3.originalName;
     }
-    if (this.img == null)
+    /*if (this.img == null)
       this.img = imagenF
     else
       imagenF = this.img
@@ -336,7 +336,7 @@ export class ProductosComponent implements OnInit {
     if (this.img3 == null)
       this.img3 = imagenF3
     else
-      imagenF3 = this.img3
+      imagenF3 = this.img3*/
 
     var array = [{
       "descripcion_corta": this.descripcion_corta, "descripcion_larga": this.descripcion_larga, "precio_costo": this.precio_costo,

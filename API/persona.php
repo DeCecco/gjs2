@@ -470,7 +470,13 @@ class Persona
 		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
 		$consulta->execute();
 		return $consulta->fetchAll();	
-	}		
+	}	
+	public static function Encuestas2(){	
+		$sql = "SELECT pregunta1, count(1) 		from encuestas2 		group by pregunta1;";//		SELECT pregunta2, count(1) 		from encuestas2 		group by pregunta2;		SELECT pregunta3, count(1) 		from encuestas2 		group by pregunta3;		SELECT pregunta4, count(1) 		from encuestas2 		group by pregunta4;		SELECT pregunta5, count(1) 		from encuestas2 		group by pregunta5;		SELECT pregunta6, count(1) 		from encuestas2 		group by pregunta6;		";		
+		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);				
+		$consulta->execute();
+		return $consulta->fetchAll();	
+	}	
 /*----------------------------------FIN ESTADISTICAS--------------------------------*/
 /*----------------------------------INICIO ENCUESTAS--------------------------------*/	
 /*SELECT preg.idpreg,preg.idpreg idpreg2, preg.descripcion as pregunta,resp.idresp, resp.descripcion as respuesta
@@ -485,7 +491,7 @@ order by preg.orden*/
 		return $consulta->fetchAll();	
 	} 
 	public static function ListadoRespuestas(){	
-		$sql = "SELECT r.*,pr.idpreg
+		$sql = "SELECT r.*,pr.idpreg, CONCAT('resp','',pr.idpreg) form
 		from respuestas as r 
 		join `preg-resp` pr on pr.idresp=r.idresp
 		order by r.orden
@@ -494,6 +500,20 @@ order by preg.orden*/
 		$consulta->execute();
 		return $consulta->fetchAll();	
 	} 
+	
+	public static function InsertarEncuestas($pregunta1,$pregunta2,$pregunta3,$pregunta4,$pregunta5,$pregunta6){
+		
+				$sql = 'INSERT INTO encuestas2 (pregunta1,pregunta2,pregunta3,pregunta4,pregunta5,pregunta6)
+				VALUES (:pregunta1, :pregunta2,:pregunta3,:pregunta4,:pregunta5,:pregunta6)';
+					$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);					
+					$consulta->bindValue(':pregunta1', $pregunta1, PDO::PARAM_STR);
+					$consulta->bindValue(':pregunta2', $pregunta2, PDO::PARAM_STR);
+					$consulta->bindValue(':pregunta3', $pregunta3, PDO::PARAM_STR);
+					$consulta->bindValue(':pregunta4', $pregunta4, PDO::PARAM_STR);
+					$consulta->bindValue(':pregunta5', $pregunta5, PDO::PARAM_STR);
+					$consulta->bindValue(':pregunta6', $pregunta6, PDO::PARAM_STR);
+					$consulta->execute();
+			}
 /*----------------------------------FIN ESTADISTICAS--------------------------------*/
 
 }

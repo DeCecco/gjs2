@@ -429,6 +429,15 @@ $app->get('/encuestas/preguntas', function (Request $request, Response $response
 $app->get('/encuestas/respuestas', function (Request $request, Response $response){
     return $response->withJson(Persona::ListadoRespuestas());
 });
+$app->post('/encuestas/agregar', function (Request $request, Response $response) {    
+    $pregunta1 = $request->getParam('pregunta1');	
+    $pregunta2 = $request->getParam('pregunta2');	
+    $pregunta3 = $request->getParam('pregunta3');	
+    $pregunta4 = $request->getParam('pregunta4');	
+    $pregunta5 = $request->getParam('pregunta5');	
+    $pregunta6 = $request->getParam('pregunta6');		
+	return $response->withJson(Persona::InsertarEncuestas($pregunta1,$pregunta2,$pregunta3,$pregunta4,$pregunta5,$pregunta6));     
+});	
 /*----------------------------------FIN ENCUESTAS--------------------------------*/
 /*----------------------------------INICIO ESTADISTICAS--------------------------------*/
 /**
@@ -460,6 +469,9 @@ $app->get('/estadisticas/LogsUsuarios', function (Request $request, Response $re
 });
 $app->get('/estadisticas/Encuestas', function (Request $request, Response $response){
     return $response->withJson(Persona::Encuestas());
+});
+$app->get('/estadisticas/Encuestas2', function (Request $request, Response $response){
+    return $response->withJson(Persona::Encuestas2());
 });
 /*----------------------------------FIN ESTADISTICAS--------------------------------*/
 $app->run();

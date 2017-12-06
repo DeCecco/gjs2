@@ -233,7 +233,7 @@ export class WebserviceService {
     var data = { "id": id }
     return this.http.post(this.route + clase, data).toPromise().then(data => data.json());
   }
-  /*----------------------------------INICIO LOCALES--------------------------------*/
+  /*----------------------------------INICIO ESTADISTICAS--------------------------------*/
   VentasPorLocal() {
     return this.http.get(this.route + "/estadisticas/ventasporlocal").toPromise().then(data => data.json());
   }
@@ -251,14 +251,28 @@ export class WebserviceService {
   }    
   Encuestas() {
     return this.http.get(this.route + "/estadisticas/Encuestas").toPromise().then(data => data.json());
+  } 
+  Encuestas2() {
+    return this.http.get(this.route + "/estadisticas/Encuestas2").toPromise().then(data => data.json());
   }           
-  /*----------------------------------FIN LOCALES--------------------------------*/
+  /*----------------------------------FIN ESTADISTICAS--------------------------------*/
   /*----------------------------------INICIO ENCUESTAS--------------------------------*/
   ListadoPreguntas() {
     return this.http.get(this.route + "/encuestas/preguntas").toPromise().then(data => data.json());
   }
   ListadoRespuestas() {
     return this.http.get(this.route + "/encuestas/respuestas").toPromise().then(data => data.json());
+  }
+  InsertarEncuestas(formData) {
+    var body = {
+      "pregunta1": formData[0].pregunta1,      
+      "pregunta2": formData[0].pregunta2,      
+      "pregunta3": formData[0].pregunta3,      
+      "pregunta4": formData[0].pregunta4,      
+      "pregunta5": formData[0].pregunta5,      
+      "pregunta6": formData[0].pregunta6,      
+    }
+    return this.http.post(this.route + "encuestas/agregar", body).toPromise();    
   }
   /*----------------------------------FIN ENCUESTAS--------------------------------*/
 }

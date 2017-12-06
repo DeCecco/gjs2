@@ -16,7 +16,7 @@ export class EstadisticasComponent implements OnInit {
   constructor(private WebserviceService: WebserviceService) {
     this.informes = [
       { value: '1', label: 'Ventas Por Local' },
-      { value: '2', label: 'Ventas Por Local y Empleado' },
+     // { value: '2', label: 'Ventas Por Local y Empleado' },
       { value: '3', label: 'Clientes y Sus Compras' },
       { value: '4', label: 'Importes por dia de trabajo' },
       { value: '5', label: 'Producto mas Vendido' },
@@ -151,6 +151,9 @@ export class EstadisticasComponent implements OnInit {
       this.barChartData = xr
 
     })
+    this.WebserviceService.Encuestas2().then(data => {
+      console.info(data)
+    });
   }
   LogsUsuarios() {
     this.barChartLabels = [];

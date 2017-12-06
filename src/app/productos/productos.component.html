@@ -12,66 +12,38 @@
   <div class="col-sm-1">
     <button *ngIf="rolId!=1 && rolId!=4" class="btn btn-primary btn-sm" (click)="myModal.open();alta()">Alta</button>
   </div>
+
+
   <div class="row col-sm-8"><!-- style="overflow-y:scroll !important;height:500px"-->
     <div class="col-sm-3" *ngFor='let value of listadoProductos let index = index'>
-      <div class="col-sm-12"><br>
+      <div class="margTit">
         <button *ngIf="rolId!=1 && rolId!=4" class="btn btn-xs" (click)="myModal.open();modificarProducto(value)">Modificar</button>&nbsp;&nbsp;&nbsp;
         <button class="btn btn-danger btn-xs" *ngIf="rolId!=1 && rolId!=4" (click)="eliminarProducto(value)">Eliminar</button>
       </div>
-      <div class="col-sm-12 fondoProductosT"> {{value.descripcion_corta}}</div>
+      <div class=" fondoProductosT"  style="height:38px"> {{value.descripcion_corta}}</div>
       <div class="col-sm-12">
         <ngx-carousel [inputs]="carouselOne" (carouselLoad)="myfunc($event)">
           <ngx-item NgxCarouselItem>
-            <img style="width: 100%;height: 20%;" src="{{value.imagen}}" alt="{{value.imagen}}" class="imgCentrada">
+            <img style="width: 100%;height: 150px;" src="{{value.imagen}}" alt="{{value.imagen}}" class="imgCentrada ">
           </ngx-item>
           <ngx-item NgxCarouselItem>
-            <img style="width: 100%;height: 20%;" src="{{value.imagen}}" alt="{{value.imagen}}" class="imgCentrada">
+            <img style="width: 100%;height: 150px;" src="{{value.imagen2}}" alt="{{value.imagen2}}" class="imgCentrada ">
           </ngx-item>
           <ngx-item NgxCarouselItem>
-            <img style="width: 100%;height: 20%;" src="{{value.imagen}}" alt="{{value.imagen}}" class="imgCentrada">
+            <img style="width: 100%;height: 150px;" src="{{value.imagen3}}" alt="{{value.imagen3}}" class="imgCentrada ">
           </ngx-item>
           <button NgxCarouselPrev class='leftRs btnhide'>&lt;</button>
           <button NgxCarouselNext class='rightRs btnhide'>&gt;</button>
         </ngx-carousel>
-        <!--img src="{{value.imagen}}" width="100%" alt=""-->
       </div>
       <div class="fondoProductosD col-sm-12">{{value.descripcion_larga}}</div>
-      <div class="col-sm-12">${{value.precio_venta}}
+      <div class="col-sm-12 ">${{value.precio_venta}}
         <button *ngIf="rolId!=1" class="btn btn-success btn-xs" (click)="agregar(value)">+</button>
       </div>
     </div>
-    <!--table style="height: 136px;" width="100%">
-      <tbody *ngFor='let value of listadoProductos let index = index'>
-        <tr>
-          <td>
-            <button *ngIf="rolId!=1 && rolId!=4" class="btn btn-xs" (click)="myModal.open();modificarProducto(value)">Modificar</button>
-          </td>
-        </tr>
-        <tr>
-          <td rowspan="2">
-            <img src="{{value.imagen}}" width="100%" alt="">
-            <br />
-            <button class="btn btn-danger btn-xs" *ngIf="rolId!=1 && rolId!=4" (click)="eliminarProducto(value)">Eliminar</button>
-            <br />
-          </td>
-          <td class="fondoProductos">{{value.descripcion_corta}}
-            <i class="fa fa-plus" aria-hidden="true"></i>
-          </td>
-          <td style="width: 10%;">
-            <div *ngIf="value.esoferta">
-              <img src="assets/img/promo.png" width="100%" alt="">
-            </div>
-            <div>${{value.precio_venta}}
-              <button *ngIf="rolId!=1" class="btn btn-success btn-xs" (click)="agregar(value)">+</button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td class="fondoProductos" style=" width: 80%;">{{value.descripcion_larga}}</td>
-        </tr>
-      </tbody>
-    </table-->
   </div>
+
+
   <div class="col-sm-3">
     <h3>Pedido</h3>
     <!--input type="number" [(ngModel)]="self['answer'+index]" class="form-control" name="cantidad" id="cantidad" style="width: 100%;"-->
