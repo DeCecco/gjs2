@@ -41,6 +41,8 @@ ng serve
 
 La Documentacion para Angular CLI se encuentra en este repositorio [wiki](https://github.com/angular/angular-cli/wiki).
 
+<h1>Screen del Sistema</h1><br>
+<img src='https://pablodececco.com.ar/assets/img/screen.jpg'/><br>
 La Documentacion para GJS2 se encuentra en este link [GJS2](http://pablodececco.com.ar/doc).
 
 ## Licencia

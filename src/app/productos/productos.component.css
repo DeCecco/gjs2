@@ -13,6 +13,11 @@
     text-align: center;
     font-weight: bold;    
 }
+.fondoProductosTPromo{    
+    margin: 5px 0px 6px 0px;
+    text-align: center;
+    font-weight: bold;    
+}
 .fondoProductosD{
     background-color:rgba(250,235,215,0.6);      
     margin: 4px 0px 3px 0px;

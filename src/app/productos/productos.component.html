@@ -18,9 +18,10 @@
     <div class="col-sm-3" *ngFor='let value of listadoProductos let index = index'>
       <div class="margTit">
         <button *ngIf="rolId!=1 && rolId!=4" class="btn btn-xs" (click)="myModal.open();modificarProducto(value)">Modificar</button>&nbsp;&nbsp;&nbsp;
-        <button class="btn btn-danger btn-xs" *ngIf="rolId!=1 && rolId!=4" (click)="eliminarProducto(value)">Eliminar</button>
+        <button class="btn btn-danger btn-xs" *ngIf="rolId!=1 && rolId!=4" (click)="eliminarProducto(value)">Eliminar</button>          
       </div>
-      <div class=" fondoProductosT"  style="height:38px"> {{value.descripcion_corta}}</div>
+      <div *ngIf="value.esoferta==0" class=" fondoProductosT"  style="height:38px"> {{value.descripcion_corta}}</div>
+      <div *ngIf="value.esoferta==1" class=" fondoProductosTPromo" style="height:38px; background-image: url('assets/img/promo.jpg');"> {{value.descripcion_corta}}</div>
       <div class="col-sm-12">
         <ngx-carousel [inputs]="carouselOne" (carouselLoad)="myfunc($event)">
           <ngx-item NgxCarouselItem>
@@ -38,7 +39,7 @@
       </div>
       <div class="fondoProductosD col-sm-12">{{value.descripcion_larga}}</div>
       <div class="col-sm-12 ">${{value.precio_venta}}
-        <button *ngIf="rolId!=1" class="btn btn-success btn-xs" (click)="agregar(value)">+</button>
+        <button *ngIf="rolId!=1" class="btn btn-success btn-xs" (click)="agregar(value)">+</button>        
       </div>
     </div>
   </div>

@@ -83,7 +83,7 @@ export class ProductosComponent implements OnInit {
   handleUpload(data, Qimg): void {
     if (data && data.response) {
       data = JSON.parse(data.response);
-      console.info(data)
+      
       switch (Qimg) {
         case 1:
           this.uploadFile = data;
@@ -202,6 +202,7 @@ export class ProductosComponent implements OnInit {
   listarprod() {
     this.WebserviceService.ListarProductos().then(data => {
       this.listadoProductos = data;
+      console.info(data)
       setTimeout(() => {
         this.loading = false;
       }, 1000);
@@ -294,6 +295,9 @@ export class ProductosComponent implements OnInit {
     this.img2 = x.imagen2;
     this.img3 = x.imagen3;
     this.disa = false;
+    this.uploadFile=null;
+    this.uploadFile2=null;
+    this.uploadFile3=null;
   }
   alta() {
     this.titulo = "Alta de Producto"
@@ -305,6 +309,9 @@ export class ProductosComponent implements OnInit {
     this.img = null;
     this.img2 = null;
     this.img3 = null;
+    this.uploadFile=null;
+    this.uploadFile2=null;
+    this.uploadFile3=null;
     this.disa = true;
   }
   update(x) {
@@ -346,7 +353,7 @@ export class ProductosComponent implements OnInit {
       this.WebserviceService.ModificarProducto(array).then(data => {
         if (data.ok) {
           this.listarprod();
-          //window.location.reload();
+          window.location.reload();
         } else {
           alert('error al grabar');
         }
@@ -355,7 +362,7 @@ export class ProductosComponent implements OnInit {
       this.WebserviceService.AgregarProducto(array).then(data => {
         if (data.ok) {
           this.listarprod();
-          //window.location.reload();
+          window.location.reload();
         } else {
           alert('error al grabar');
         }

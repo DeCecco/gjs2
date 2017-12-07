@@ -276,7 +276,7 @@ class Persona
 		$sql = "SELECT productos.*,precios.precio_venta,precios.precio_costo,0 cantidad,productos.idprod FROM `productos` 
 				left JOIN `precios` on precios.idprod=productos.idprod
 				where productos.estado=1
-				order by esoferta desc";
+				order by esoferta desc,precios.precio_venta";
         $consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
 		
 	    $consulta->execute();			
