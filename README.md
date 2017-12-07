@@ -52,24 +52,24 @@ La Documentacion para GJS2 se encuentra en este link [GJS2](http://pablodececco.
 	Al ingresar por primera vez el usuario debera registrarse como se ve en pantalla; Completando los datos obligatorios que estan en rojo y completar el captcha para finalizar el registro.
 </div>
 <br><br>
-<img src="assets/img/registro.jpg" alt="registro">
+<img src="https://pablodececco.com.ar/assets/img/registro.jpg" alt="registro">
 <br><br><br><br>
 <div>
 	Una vez registrado se redirigira a la pantalla de productos, donde podemos visualizar todos los productos disponibles para realizar un pedido.
 </div>
 <br><br>
-<img src="assets/img/pedidos.jpg" alt="pedidos">
+<img src="https://pablodececco.com.ar/assets/img/pedidos.jpg" alt="pedidos">
 <br><br><br><br>
 <div>
 	Cuando el usuario finalice de seleccionar las pizzas elegidas debera completar un pequeño captcha.
 </div>
-<img src="assets/img/pedidos2.jpg" alt="pedidos2">
+<img src="https://pablodececco.com.ar/assets/img/pedidos2.jpg" alt="pedidos2">
 <br><br><br><br>
 <div>
 	Luego de completar el captcha confirmará lo elegido junto con su direccion y el sistema informará el tiempo de demora que toma llevar el pedido a su casa. El usuario en esta pantalla podra cambiar la direccion alternando el tiempo de entrega de su pedido.
 </div>
 <br><br>
-<img src="assets/img/confirmacionpedido.jpg" alt="confirmacionpedido">
+<img src="https://pablodececco.com.ar/assets/img/confirmacionpedido.jpg" alt="confirmacionpedido">
 <br><br><br><br>
 <div>
 	Finalizada la confirmacion el usuario tendra la opcion de completar una pequeña encuesta.<br>
@@ -78,7 +78,7 @@ La Documentacion para GJS2 se encuentra en este link [GJS2](http://pablodececco.
 </div>
 
 <br><br>
-<img src="assets/img/pedidos3.jpg" alt="pedidos3">
+<img src="https://pablodececco.com.ar/assets/img/pedidos3.jpg" alt="pedidos3">
 <br><br><br><br>
 <div>
 	
