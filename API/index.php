@@ -436,7 +436,11 @@ $app->post('/encuestas/agregar', function (Request $request, Response $response)
     $pregunta4 = $request->getParam('pregunta4');	
     $pregunta5 = $request->getParam('pregunta5');	
     $pregunta6 = $request->getParam('pregunta6');		
-	return $response->withJson(Persona::InsertarEncuestas($pregunta1,$pregunta2,$pregunta3,$pregunta4,$pregunta5,$pregunta6));     
+    $pregunta7 = $request->getParam('pregunta7');		
+    $pregunta8 = $request->getParam('pregunta8');		
+    $pregunta9 = $request->getParam('pregunta9');		
+    $pregunta10 = $request->getParam('pregunta10');		
+	return $response->withJson(Persona::InsertarEncuestas($pregunta1,$pregunta2,$pregunta3,$pregunta4,$pregunta5,$pregunta6,$pregunta7,$pregunta8,$pregunta9,$pregunta10));     
 });	
 /*----------------------------------FIN ENCUESTAS--------------------------------*/
 /*----------------------------------INICIO ESTADISTICAS--------------------------------*/

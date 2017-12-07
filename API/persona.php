@@ -330,14 +330,10 @@ class Persona
 			$consulta->execute();
 	}		
 	public static function EliminarProducto($id){
-		$sql=" DELETE from productos where idprod=:id";
+		$sql=" UPDATE productos set estado=0 where idprod=:id";
 		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
 		$consulta->bindValue(':id', $id, PDO::PARAM_STR);
-		$consulta->execute();
-		$sql=" DELETE from precios where idprod=:id";
-		$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);
-		$consulta->bindValue(':id', $id, PDO::PARAM_STR);
-		$consulta->execute();
+		$consulta->execute();		
 		return true;	
 	}
 	public static function UltimoIdProductoAdd(){
@@ -521,10 +517,10 @@ order by preg.orden*/
 		return $consulta->fetchAll();	
 	} 
 	
-	public static function InsertarEncuestas($pregunta1,$pregunta2,$pregunta3,$pregunta4,$pregunta5,$pregunta6){
+	public static function InsertarEncuestas($pregunta1,$pregunta2,$pregunta3,$pregunta4,$pregunta5,$pregunta6,$pregunta7,$pregunta8,$pregunta9,$pregunta10){
 		
-				$sql = 'INSERT INTO encuestas2 (pregunta1,pregunta2,pregunta3,pregunta4,pregunta5,pregunta6)
-				VALUES (:pregunta1, :pregunta2,:pregunta3,:pregunta4,:pregunta5,:pregunta6)';
+				$sql = 'INSERT INTO encuestas2 (pregunta1,pregunta2,pregunta3,pregunta4,pregunta5,pregunta6,pregunta7,pregunta8,pregunta9,pregunta10)
+				VALUES (:pregunta1, :pregunta2,:pregunta3,:pregunta4,:pregunta5,:pregunta6,:pregunta7,:pregunta8,:pregunta9,:pregunta10)';
 					$consulta = AccesoDatos::ObtenerObjetoAccesoDatos()->ObtenerConsulta($sql);					
 					$consulta->bindValue(':pregunta1', $pregunta1, PDO::PARAM_STR);
 					$consulta->bindValue(':pregunta2', $pregunta2, PDO::PARAM_STR);
@@ -532,6 +528,10 @@ order by preg.orden*/
 					$consulta->bindValue(':pregunta4', $pregunta4, PDO::PARAM_STR);
 					$consulta->bindValue(':pregunta5', $pregunta5, PDO::PARAM_STR);
 					$consulta->bindValue(':pregunta6', $pregunta6, PDO::PARAM_STR);
+					$consulta->bindValue(':pregunta7', $pregunta7, PDO::PARAM_STR);
+					$consulta->bindValue(':pregunta8', $pregunta8, PDO::PARAM_STR);
+					$consulta->bindValue(':pregunta9', $pregunta9, PDO::PARAM_STR);
+					$consulta->bindValue(':pregunta10', $pregunta10, PDO::PARAM_STR);
 					$consulta->execute();
 			}
 /*----------------------------------FIN ESTADISTICAS--------------------------------*/

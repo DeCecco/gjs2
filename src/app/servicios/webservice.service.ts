@@ -278,6 +278,10 @@ route: string = "http://buenaaccion.com.ar/UTN/finallab/GJS2/API/index.php/"; //
       "pregunta4": formData[0].pregunta4,      
       "pregunta5": formData[0].pregunta5,      
       "pregunta6": formData[0].pregunta6,      
+      "pregunta7": formData[0].pregunta7,      
+      "pregunta8": formData[0].pregunta8,      
+      "pregunta9": formData[0].pregunta9,      
+      "pregunta10": formData[0].pregunta10,      
     }
     return this.http.post(this.route + "encuestas/agregar", body).toPromise();    
   }

@@ -31,7 +31,11 @@ export class EstadisticasComponent implements OnInit {
       { value: '3', label: '¿La comida es de Buena calidad y abundante?' },
       { value: '4', label: 'Ofrece las mejores promociones' },
       { value: '5', label: '¿Qué le parece la variedad del producto?' },
-      { value: '6', label: '¿Cómo se enteró de nosotros?' }
+      { value: '6', label: '¿Cómo se enteró de nosotros?' },
+      { value: '7', label: '¿Cómo considera el tiempo de espera?' },
+      { value: '8', label: '¿Nos recomendarias?' },
+      { value: '9', label: '¿Pudo armar rapidamente su pedido?' },
+      { value: '10', label: '¿Cual es su grado de satisfacción con respecto a nuestra atencion?' }
     ];
     this.tipos = [
       { value: '1', label: 'Circulo' },

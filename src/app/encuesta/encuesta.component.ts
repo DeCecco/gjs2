@@ -24,6 +24,10 @@ export class EncuestaComponent implements OnInit {
   resp4 : string;
   resp5 : string;
   resp6 : string;
+  resp7 : string;
+  resp8 : string;
+  resp9 : string;
+  resp10 : string;
   resp61 : boolean;
   resp62 : boolean;
   resp63 : boolean;
@@ -45,6 +49,10 @@ export class EncuestaComponent implements OnInit {
       resp4 : [this.resp4, Validators.compose([Validators.required,])],
       resp5 : [this.resp5, Validators.compose([Validators.required,])],
       resp6 : [this.resp6, Validators.compose([Validators.required,])],
+      resp7 : [this.resp7, Validators.compose([Validators.required,])],
+      resp8 : [this.resp8, Validators.compose([Validators.required,])],
+      resp9 : [this.resp9, Validators.compose([Validators.required,])],
+      resp10 : [this.resp10, Validators.compose([Validators.required,])],
       resp61 : [this.resp61],
       resp62 : [this.resp62],
       resp63 : [this.resp63],
@@ -94,7 +102,9 @@ export class EncuestaComponent implements OnInit {
   encuestaF() {
     let array = [{
       "pregunta1": this.resp1, "pregunta2": this.resp2, "pregunta3": this.resp3,"pregunta4": this.resp4,"pregunta5": this.resp5,"pregunta6": this.resp6,
+      "pregunta7": this.resp7,"pregunta8": this.resp8,"pregunta9": this.resp9,"pregunta10": this.resp10,
     }];
+    console.info(array)
     this.WebserviceService.InsertarEncuestas(array).then(data => {
       if (data.ok) {        
         alert('Gracias por cargar la encuesta!!');

@@ -55,7 +55,8 @@ La Documentacion para GJS2 se encuentra en este link [GJS2](http://pablodececco.
 <img src="https://pablodececco.com.ar/assets/img/registro.jpg" alt="registro">
 <br><br><br><br>
 <div>
-	Una vez registrado se redirigira a la pantalla de productos, donde podemos visualizar todos los productos disponibles para realizar un pedido.
+	Una vez registrado se redirigira a la pantalla de productos, donde podemos visualizar todos los productos disponibles para realizar un pedido.<br>
+	El usuario contará con el boton verde de "+" para agregar productos a su carrito y con el boton "-" de color rojo para eliminarlos.
 </div>
 <br><br>
 <img src="https://pablodececco.com.ar/assets/img/pedidos.jpg" alt="pedidos">
@@ -83,6 +84,8 @@ La Documentacion para GJS2 se encuentra en este link [GJS2](http://pablodececco.
 <div>
 	
 </div>
+
+
 ## Licencia
 
-MIT 
+MIT
